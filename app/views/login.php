@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../styles/login.css">
 </head>
 <body>
-    <form action="router.php" method="post">
+    <form action="?page=login&action=submit" method="post">
         <h2>Login</h2>
         <input type="text" name="username" placeholder="Username" required>
         <input type="password" name="password" placeholder="Password" required>
