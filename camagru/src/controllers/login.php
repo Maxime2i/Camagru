@@ -3,7 +3,7 @@
 class LoginController {
     public function index() {
         // Affiche le formulaire de connexion
-        include 'app/views/login.php';
+        include 'src/views/login.php';
     }
 
     public function submit() {
@@ -26,7 +26,7 @@ class LoginController {
         } else {
             // En cas d'échec de l'authentification, afficher à nouveau le formulaire de connexion avec un message d'erreur
             $error = "Identifiants invalides. Veuillez réessayer.";
-            include 'app/views/login.php';
+            include 'src/views/login.php';
         }
     }
 }
