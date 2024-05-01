@@ -1,0 +1,9 @@
+main{
+    background: red;
+}
+
+.videoElement {
+    width: 640px; /* Largeur prédéfinie */
+    height: 480px; /* Hauteur prédéfinie */
+    border: 1px solid black; /* Cadre */
+}

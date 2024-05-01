@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../styles/login.css">
 </head>
 <body>
+    <?php include 'header.php'; ?>
     HOMEPAGE
 </body>
 </html>
