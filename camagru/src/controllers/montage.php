@@ -5,6 +5,9 @@ class MontageController {
         // Affiche le formulaire de connexion
         include 'src/views/montage.php';
     }
+
+
+
 }
 
 ?>

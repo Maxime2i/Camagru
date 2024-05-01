@@ -7,3 +7,8 @@ main{
     height: 480px; /* Hauteur prédéfinie */
     border: 1px solid black; /* Cadre */
 }
+
+.newImg{
+    width: 50%;
+    height: auto;
+}
