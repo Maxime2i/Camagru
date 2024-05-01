@@ -7,26 +7,31 @@ class LoginController {
     }
 
     public function submit() {
-        // Traitement du formulaire de connexion
-        // Récupération des données soumises
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+        include 'src/controllers/database.php';
+        if (isset($_POST['submit'])){
+            extract($_POST);
+        
+            if ($username != '' && $password != '') {
+                $req = $connexion->prepare("SELECT * FROM users WHERE username = :username AND pass = :pass");
+                $req->execute(
+                    array(
+                        "username" => $username,
+                        "pass" => $password,
+                    )
+                );
+                $rep = $req->fetch();
+                if ($rep['id'] != false){
+                    echo 'vous etes connecte';
+                    header("Location: index.php?page=homepage");
+                    exit();
+                } else {
+                    echo 'error';
+                    header("Location: index.php?page=login");
+                }
+            }
 
-        //DEBUG
-        if ($password === '1')
-            $test = true;
-        else
-            $test = false;
-        // Validation des données, vérification de l'authentification, etc.
-
-        // Redirection vers la page appropriée
-        if ($test) {
-            header("Location: index.php?page=homepage");
-            exit();
-        } else {
-            // En cas d'échec de l'authentification, afficher à nouveau le formulaire de connexion avec un message d'erreur
-            $error = "Identifiants invalides. Veuillez réessayer.";
-            include 'src/views/login.php';
         }
+
+
     }
 }

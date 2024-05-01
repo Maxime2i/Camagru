@@ -3,6 +3,8 @@
 // Routeur pour gérer les différentes requêtes
 
 
+require_once 'src/controllers/database.php';
+
 // Inclusion du modèle
 require_once 'src/models/Model.php';
 //require_once 'config/setup.php';

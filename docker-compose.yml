@@ -19,19 +19,23 @@ services:
       dockerfile: docker/fpm/fpm.Dockerfile
     volumes:
       - ./camagru:/var/www/camagru
-  db: 
-    image: mysql:latest
-    environment:
-      - MYSQL_DATABASE=php_docker
-      - MYSQL_USER=php_docker
-      - MYSQL_PASSWORD='test' # this should live in a env var
-      - MYSQL_ALLOW_EMPTY_PASSWORD=1 # equivalent to True
-    volumes:
-      - "./db:/docker-entrypoint-initdb.d" # this is how we persist a sql db even when container stops
+  mysql:
+      image: mysql:8
+      environment:
+        # 🚨 Changer si vous utilisez cette configuration en production
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: camagru
+        MYSQL_USER: user
+        MYSQL_PASSWORD: password
+      volumes:
+        - dbdat:/var/lib/mysql
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    ports:
-      - 8001:80
     environment:
-      - PMA_HOST=db
-      - PMA_PORT=3306
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8081:80"
+
+volumes:
+  dbdat:
