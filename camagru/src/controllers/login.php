@@ -3,6 +3,7 @@
 class LoginController {
     public function index() {
         // Affiche le formulaire de connexion
+        echo 'loginnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn';
         include 'src/views/login.php';
     }
 

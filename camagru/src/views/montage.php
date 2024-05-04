@@ -41,23 +41,21 @@
     }
    
     captureButton.addEventListener("click", function() {
-        const context = canvas.getContext('2d');
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        // Conversion de l'image en format base64
-        const imageData = canvas.toDataURL('image/jpeg');
+        var video = document.getElementById('videoElement');
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, 640, 480);
+        var imageData = canvas.toDataURL('image/png');
 
         // Envoi de l'image au serveur
-        const xhr = new XMLHttpRequest();
+        var xhr = new XMLHttpRequest();
         xhr.open('POST', 'src/save_image.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                console.log('Image enregistrée avec succès.', xhr, imageData);
-            }
+        xhr.onload = function() {
+            console.log('Image saved:', xhr.responseText);
         };
         xhr.send('image=' + encodeURIComponent(imageData));
-
     });
 });
 
