@@ -9,6 +9,8 @@ class RegisterController {
 
     public function submit() {
         include 'src/controllers/database.php';
+        session_start();
+
         if (isset($_POST['submit'])){
             extract($_POST);
             try {
@@ -22,8 +24,10 @@ class RegisterController {
                         "pass" => $password,
                     )
                 );
-                echo"inscription reussi";
-                header("Location: index.php?page=homepage");
+
+    
+                    header("Location: index.php?page=login");
+                    exit();
             } catch (PDOException $e) {
                 echo "Erreur lors de l'ajout de l'utilisateur : " . $e->getMessage();
                 header("Location: index.php?page=register");

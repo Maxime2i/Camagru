@@ -2,13 +2,13 @@
 
 class LoginController {
     public function index() {
-        // Affiche le formulaire de connexion
-        echo 'loginnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn';
         include 'src/views/login.php';
     }
 
     public function submit() {
         include 'src/controllers/database.php';
+        session_start();
+
         if (isset($_POST['submit'])){
             extract($_POST);
         
@@ -23,6 +23,8 @@ class LoginController {
                 $rep = $req->fetch();
                 if ($rep['id'] != false){
                     echo 'vous etes connecte';
+                    $_SESSION['user_id'] = $rep['id'];
+                    $_SESSION['username'] = $rep['username'];
                     header("Location: index.php?page=homepage");
                     exit();
                 } else {

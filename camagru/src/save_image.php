@@ -1,5 +1,7 @@
 <?php
 include 'controllers/database.php';
+session_start();
+
 if (isset($_POST['image'])) {
     $data = $_POST['image'];
     $data = str_replace('data:image/png;base64,', '', $data);
@@ -14,7 +16,7 @@ if (isset($_POST['image'])) {
     
     echo $fileName;
 
-    $user_id = 1;
+    $user_id = $_SESSION['user_id'];
 
     $requete = $connexion->prepare("INSERT INTO gallery VALUES (0, :img, :user_id)");
     $requete->execute(
