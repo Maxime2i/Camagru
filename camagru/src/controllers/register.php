@@ -24,11 +24,9 @@ class RegisterController {
                         "pass" => $password,
                     )
                 );
-
-    
-                    header("Location: index.php?page=login");
-                    exit();
-            } catch (PDOException $e) {
+                header("Location: index.php?page=login");
+                exit();
+        } catch (PDOException $e) {
                 echo "Erreur lors de l'ajout de l'utilisateur : " . $e->getMessage();
                 header("Location: index.php?page=register");
             }

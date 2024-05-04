@@ -10,6 +10,7 @@
     <?php include 'header.php'; ?>
     <main>
         galerie
+        <img src="src/uploads/webcam_image_6635fcdf32a8b.png" alt="Webcam Image">
     </main>
 </body>
 
