@@ -68,13 +68,11 @@ document.addEventListener("DOMContentLoaded", function() {
             var image_id = event.target.id;
 
             console.log('Image cliquée:', event.target.id);
-            // Vous pouvez maintenant utiliser l'URL de l'image pour effectuer des actions comme ajouter un like, etc.
-
 
             if (event.target.src.endsWith("unlike.png")) {
-                event.target.src = "like.png"; // Si l'image du like est 'like.png', la changer en 'unlike.png'
+                event.target.src = "like.png";
             } else {
-                event.target.src = "unlike.png"; // Sinon, la changer en 'like.png'
+                event.target.src = "unlike.png";
             }
 
             var xhr = new XMLHttpRequest();
