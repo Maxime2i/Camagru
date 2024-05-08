@@ -1,14 +1,56 @@
-main{
-    background: red;
+ body{
+    overflow: hidden;
 }
+
+main{
+    background: #1A1A1A;
+    height: 90vh;
+    
+   display: flex;
+    justify-content: center;
+}
+
+.cameraCol{
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
 
 .videoElement {
-    width: 640px; /* Largeur prédéfinie */
-    height: 480px; /* Hauteur prédéfinie */
-    border: 1px solid black; /* Cadre */
+    border: 1px solid black;
+    position: relative; 
 }
 
-.newImg{
-    width: 50%;
-    height: auto;
+.captureButton{
+    background: #BAFE66;
+    border: none;
+    border-radius: 20px;
+    margin-top: 5%;
+    height: 5%;
+    width: 15%;
+    cursor: pointer;
+}
+
+.filterCol{
+    width: 20%;
+    margin-left: 15px;
+    margin-top: 10%;
+    margin-bottom: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+} 
+
+
+.filterImage{
+    display: none;
+    position: absolute;
+}
+
+.filterButton{
+    width: 80%;
 }
