@@ -16,7 +16,19 @@
                     <?php $username = isset($usernames[$image['user_id']]) ? $usernames[$image['user_id']] : 'Utilisateur inconnu'; ?>
                     <div class="post">
                         <img src="src/uploads/<?php echo $images[$i]['img']; ?>" alt="<?php echo $images[$i]['user_id']; ?>">
-                        <span class="info">Utilisateur : <?php echo '@', $username; ?> <img id="<?php echo $image['img']; ?>" class="like" src="unlike.png" alt="like" width="16" height="16"></span>
+                            <span class="info">Utilisateur : <?php echo '@', $username; ?> 
+                                <?php
+                                    if (strpos($images[$i]['liked_by'], ";" . $images[$i]['user_id'] . ";") !== false) {
+                                        ?>
+                                        <img id="<?php echo $images[$i]['id']; ?>" class="like" src="like.png" alt="like" width="16" height="16">
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <img id="<?php echo $images[$i]['id']; ?>" class="like" src="unlike.png" alt="like" width="16" height="16">
+                                        <?php
+                                    }
+                                ?>
+                            </span>
                     </div>
                 <?php endfor; ?>
             </div>
@@ -25,7 +37,19 @@
                     <?php $username = isset($usernames[$image['user_id']]) ? $usernames[$image['user_id']] : 'Utilisateur inconnu';?>
                     <div class="post">
                         <img src="src/uploads/<?php echo $images[$i]['img']; ?>" alt="<?php echo $images[$i]['user_id']; ?>">
-                        <span class="info">Utilisateur : <?php echo '@', $username; ?> <img id="<?php echo $image['img']; ?>" class="like" src="unlike.png" alt="like" width="16" height="16"></span>
+                            <span class="info">Utilisateur : <?php echo '@', $username; ?>
+                                <?php
+                                    if (strpos($images[$i]['liked_by'], ";" . $images[$i]['user_id'] . ";") !== false) {
+                                        ?>
+                                        <img id="<?php echo $images[$i]['id']; ?>" class="like" src="like.png" alt="like" width="16" height="16">
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <img id="<?php echo $images[$i]['id']; ?>" class="like" src="unlike.png" alt="like" width="16" height="16">
+                                        <?php
+                                    }
+                                ?>
+                            </span>
                     </div>
                 <?php endfor; ?>
             </div>
@@ -41,7 +65,9 @@ document.addEventListener("DOMContentLoaded", function() {
             
            
             var imageSrc = event.target.parentNode.previousElementSibling.src;
-            console.log('Image cliquée:', imageSrc, event.target.src);
+            var image_id = event.target.id;
+
+            console.log('Image cliquée:', event.target.id);
             // Vous pouvez maintenant utiliser l'URL de l'image pour effectuer des actions comme ajouter un like, etc.
 
 
@@ -50,6 +76,14 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
                 event.target.src = "unlike.png"; // Sinon, la changer en 'like.png'
             }
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'src/like_image.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                console.log('Images saved:', xhr.responseText);
+            };
+            xhr.send('image_id=' + image_id);
         });
     });
 });

@@ -34,8 +34,10 @@ try {
     $sql = "CREATE TABLE IF NOT EXISTS gallery (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         img VARCHAR(100) NOT NULL,
-        user_id INT(6) UNSIGNED,
+        user_id INT(6) UNSIGNED, 
+        liked_by VARCHAR(100),
         FOREIGN KEY (user_id) REFERENCES users(id)
+       
     )";
 
     $connexion->exec($sql);

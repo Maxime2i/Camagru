@@ -36,11 +36,12 @@ if (isset($_POST['image']) && isset($_POST['filtered_image'])) {
 
     // Insertion dans la base de données
     $user_id = $_SESSION['user_id'];
-    $requete = $connexion->prepare("INSERT INTO gallery VALUES (0, :img, :user_id)");
+    $requete = $connexion->prepare("INSERT INTO gallery VALUES (0, :img, :user_id, :liked_by)");
     $requete->execute(
         array(
             "img" => $fileName,
             "user_id" => $user_id,
+            "liked_by" => '',
         )
     );
 
