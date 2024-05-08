@@ -65,8 +65,10 @@
 
         var imageData = canvas.toDataURL('image/png');
 
+        if (SelectFilter === 0)
+            return;
         var filterImage = new Image();
-        filterImage.src = 'filtre1.png';
+        filterImage.src = 'filtre' + SelectFilter + '.png';
 
         filterImage.onload = function() {
         // Dessiner l'image du filtre sur le canevas
@@ -126,28 +128,3 @@
 
 </script>
 </html>
-
-captureButton.addEventListener("click", function() {
-        // Dessiner la vidéo de la caméra sur le canvas
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-        // Dessiner une image superposée
-        var image = new Image();
-        image.src = 'chemin/vers/votre/image.png'; // Chemin de votre image à superposer
-        image.onload = function() {
-            // Dessiner l'image superposée sur le canvas
-            context.drawImage(image, 0, 0, canvas.width, canvas.height);
-            
-            // Convertir le contenu du canvas en image
-            var imageData = canvas.toDataURL('image/png');
-
-            // Envoi de l'image au serveur
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'src/save_image.php', true);
-            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xhr.onload = function() {
-                console.log('Image saved:', xhr.responseText);
-            };
-            xhr.send('image=' + encodeURIComponent(imageData));
-        };
-    });

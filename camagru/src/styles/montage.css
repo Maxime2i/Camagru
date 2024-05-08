@@ -1,9 +1,10 @@
  body{
     overflow: hidden;
+    background: #1A1A1A;
 }
 
 main{
-    background: #1A1A1A;
+    
     height: 90vh;
     
    display: flex;
