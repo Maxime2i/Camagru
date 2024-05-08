@@ -36,6 +36,7 @@ try {
         img VARCHAR(100) NOT NULL,
         user_id INT(6) UNSIGNED, 
         liked_by VARCHAR(100),
+        nb_like INT(6) UNSIGNED, 
         FOREIGN KEY (user_id) REFERENCES users(id)
        
     )";

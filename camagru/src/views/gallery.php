@@ -20,11 +20,17 @@
                                 <?php
                                     if (strpos($images[$i]['liked_by'], ";" . $images[$i]['user_id'] . ";") !== false) {
                                         ?>
-                                        <img id="<?php echo $images[$i]['id']; ?>" class="like" src="like.png" alt="like" width="16" height="16">
+                                            <span class="spanLike">
+                                                <span class="nb_like"><?php echo $images[$i]['nb_like']; ?></span> 
+                                                <img id="<?php echo $images[$i]['id']; ?>" class="like" src="like.png" alt="like" width="16" height="16">
+                                            </span>
                                         <?php
                                     } else {
                                         ?>
-                                        <img id="<?php echo $images[$i]['id']; ?>" class="like" src="unlike.png" alt="like" width="16" height="16">
+                                            <span class="spanLike">
+                                                <span class="nb_like"><?php echo $images[$i]['nb_like']; ?></span> 
+                                                <img id="<?php echo $images[$i]['id']; ?>" class="like" src="unlike.png" alt="like" width="16" height="16">
+                                            </span>
                                         <?php
                                     }
                                 ?>
@@ -41,11 +47,17 @@
                                 <?php
                                     if (strpos($images[$i]['liked_by'], ";" . $images[$i]['user_id'] . ";") !== false) {
                                         ?>
-                                        <img id="<?php echo $images[$i]['id']; ?>" class="like" src="like.png" alt="like" width="16" height="16">
+                                            <span class="spanLike">
+                                                <span class="nb_like"><?php echo $images[$i]['nb_like']; ?></span> 
+                                                <img id="<?php echo $images[$i]['id']; ?>" class="like" src="like.png" alt="like" width="16" height="16">
+                                            </span>
                                         <?php
                                     } else {
                                         ?>
-                                        <img id="<?php echo $images[$i]['id']; ?>" class="like" src="unlike.png" alt="like" width="16" height="16">
+                                            <span class="spanLike">
+                                                <span class="nb_like"><?php echo $images[$i]['nb_like']; ?></span> 
+                                                <img id="<?php echo $images[$i]['id']; ?>" class="like" src="unlike.png" alt="like" width="16" height="16">
+                                            </span>
                                         <?php
                                     }
                                 ?>
@@ -63,15 +75,17 @@ document.addEventListener("DOMContentLoaded", function() {
     likeButtons.forEach(function(button) {
         button.addEventListener("click", function(event) {
             
-           
-            var imageSrc = event.target.parentNode.previousElementSibling.src;
             var image_id = event.target.id;
-
-            console.log('Image cliquée:', event.target.id);
 
             if (event.target.src.endsWith("unlike.png")) {
                 event.target.src = "like.png";
+                console.log(event.target.parentNode.querySelector('.nb_like'))
+                
+                var nbLikeSpan = event.target.parentNode.querySelector('.nb_like');
+                nbLikeSpan.textContent = parseInt(nbLikeSpan.textContent) + 1;
             } else {
+                var nbLikeSpan = event.target.parentNode.querySelector('.nb_like');
+                nbLikeSpan.textContent = parseInt(nbLikeSpan.textContent) - 1;
                 event.target.src = "unlike.png";
             }
 

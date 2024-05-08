@@ -22,10 +22,12 @@ main {
 
 .column:first-child {
     margin-right: 8%;
+    margin-top: 30px;
 }
 
 .column:last-child {
     margin-left: 8%;
+    margin-top: 30px;
 }
 
 .column img {
@@ -45,6 +47,6 @@ main {
     justify-content: space-between;
 }
 
-.like{
-    margin: 2%;
+.spanLike{
+    width: 12%;
 }
