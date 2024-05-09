@@ -35,7 +35,12 @@ class LoginController {
             }
 
         }
+    }
 
-
+    public function logout() {
+        session_start();
+        session_destroy();
+        header("Location: index.php?page=login&action=index");
+        exit();
     }
 }

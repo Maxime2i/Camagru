@@ -22,9 +22,19 @@
         </nav>
     </div>
     <div class="profile">
-        <img src="profil.jpg" alt="Photo de profil">
+        <!-- <img src="profil.jpg" alt="Photo de profil"> -->
+        <button id="logout">Logout</button>
     </div>
 </header>
 
 </body>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('logout').addEventListener('click', function(event) {
+                event.preventDefault();
+                window.location.href = "index.php?page=login&action=logout";
+                
+            });
+        });
+    </script>
 </html>
