@@ -25,10 +25,31 @@ class AccountController {
 
     public function update() {
         session_start();
+
+       
+            if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])) {
+                // Récupérer les données soumises par le formulaire
+                $username = $_POST['username'];
+                $email = $_POST['email'];
+                $password = $_POST['password'];
+
+                // Mettez à jour les informations dans la base de données en utilisant le modèle approprié
+                $success = AccountModel::updateUserInfo($username, $email, $password);
+
+                if ($success) {
+                    // Envoyez une réponse de succès
+                    echo 'Informations mises à jour avec succès';
+                } else {
+                    // Envoyez une réponse d'erreur
+                    echo 'Erreur lors de la mise à jour des informations';
+                }
+            } else {
+                // Envoyez une réponse d'erreur si les données du formulaire sont manquantes
+                echo 'Données manquantes';
+            }
         
-        echo"tttttt";
-        include 'src/views/account.php';
     }
+        
 }
 
 

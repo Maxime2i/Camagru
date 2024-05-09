@@ -11,12 +11,12 @@
     <main>
         <div class="divInfo">
             <h2>My infos</h2>
-                <form class="formInfo" action="index.php?page=account&action=update" method="post">
-                    <input type="text" name="username" placeholder="Username" value="<?php echo $username; ?>" required>
-                    <input type="email" name="email" placeholder="Email" value="<?php echo $email; ?>" required>
-                    <input type="password" name="password" placeholder="Password" required>
-                    <input type="submit" value="Update" name="submit">
-                </form>
+            <form class="formInfo" id="updateForm">
+                <input type="text" name="username" placeholder="Username" value="<?php echo $username; ?>" required>
+                <input type="email" name="email" placeholder="Email" value="<?php echo $email; ?>" required>
+                <input type="password" name="password" placeholder="Password" id="password" required>
+                <input type="submit" value="Update" name="submit">
+            </form>
         </div>
         <div class="divImage">
             <h2>My images</h2>
@@ -32,5 +32,32 @@
 
         
     </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('updateForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // Empêcher le comportement de soumission par défaut
+                
+                // Récupérer les données du formulaire
+                var formData = new FormData(this);
+                
+                // Envoyer une requête AJAX
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'index.php?page=account&action=update', true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            // Mettre à jour la page en fonction de la réponse du serveur
+                            // Par exemple, afficher un message de réussite ou d'erreur
+                            console.log(xhr.responseText);
+                            document.getElementById('password').value = '';
+                        } else {
+                            console.error('Une erreur s\'est produite');
+                        }
+                    }
+                };
+                xhr.send(formData);
+            });
+        });
+    </script>
 </body>
 </html>
