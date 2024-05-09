@@ -1,32 +1,22 @@
-<?php
-
+ <?php
+require_once("src/models/gallery.php");
 class GalleryController {
     public function index() {
-        include "src/controllers/database.php";
-       
-
+        // Utilisation du modèle pour récupérer les images de la galerie
+        $images = GalleryModel::getAllImages();
         
-        $requete = $connexion->prepare('SELECT * FROM gallery');
-        $requete->execute();
-        $images = $requete->fetchAll();
-        
-        // Récupérer les noms d'utilisateur associés à chaque image
+        // Récupération des noms d'utilisateur associés à chaque image
         $usernames = [];
         foreach ($images as $image) {
-            $requete_user = $connexion->prepare('SELECT username FROM users WHERE id = :user_id');
-            $requete_user->execute(array('user_id' => $image['user_id']));
-            $user = $requete_user->fetch();
-            $usernames[$image['user_id']] = $user['username'];
+            $usernames[$image['user_id']] = GalleryModel::getUsername($image['user_id']);
         }
         
         // Inclure la vue
         include 'src/views/gallery.php';
-        
     }
 
-
-
-
+    // Autres méthodes pour d'autres actions de contrôle si nécessaire
 }
 
-?>
+
+?> 

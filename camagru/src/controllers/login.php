@@ -25,6 +25,7 @@ class LoginController {
                     echo 'vous etes connecte';
                     $_SESSION['user_id'] = $rep['id'];
                     $_SESSION['username'] = $rep['username'];
+                    $_SESSION['email'] = $rep['email'];
                     header("Location: index.php?page=homepage");
                     exit();
                 } else {

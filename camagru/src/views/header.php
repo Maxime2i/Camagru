@@ -17,6 +17,7 @@
             <ul>
                 <li><a href="index.php?page=montage">Montage</a></li>
                 <li><a href="index.php?page=gallery">Galerie</a></li>
+                <li><a href="index.php?page=account">Account</a></li>
             </ul>
         </nav>
     </div>
