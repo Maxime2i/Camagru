@@ -15,7 +15,9 @@ try {
         lastname VARCHAR(30) NOT NULL,
         username VARCHAR(30) NOT NULL,
         email VARCHAR(100) NOT NULL, 
-        pass VARCHAR(100) NOT NULL
+        pass VARCHAR(100) NOT NULL,
+        token VARCHAR(100) NOT NULL,
+        is_verified BOOLEAN DEFAULT 0,
     )";
 
     $connexion->exec($sql);

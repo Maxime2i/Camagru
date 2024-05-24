@@ -1,0 +1,25 @@
+body {
+    background: #1A1A1A;
+    
+}
+
+main {
+    margin: 4% 2%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+   
+}
+
+.images-container {
+    overflow-x: auto;
+}
+
+.images {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.image {
+    margin-right: 10px;
+}
