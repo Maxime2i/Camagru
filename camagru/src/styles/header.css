@@ -1,0 +1,54 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333; /* Couleur de fond du header */
+    color: #fff; /* Couleur du texte */
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.logo img {
+    width: 50px; /* Largeur du logo */
+    height: auto; /* Hauteur automatique pour conserver les proportions */
+}
+
+.spacer {
+    flex-grow: 1; /* Fait en sorte que cet élément prenne autant d'espace que possible */
+    margin: 2%;
+}
+
+.profile img {
+    width: 50px; /* Largeur de la photo de profil */
+    height: auto; /* Hauteur automatique pour conserver les proportions */
+    border-radius: 50%; /* Pour obtenir une forme de cercle */
+    border: 2px solid #fff; /* Bordure autour de la photo de profil */
+}
+
+.nav {
+
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    display: inline;
+}
+
+a {
+    display: inline-block;
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    background-color: #555; /* Couleur de fond au survol */
+}

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="src/styles/login2.css">
+    <link rel="stylesheet" href="src/styles/login.css">
     <script>
         // Définition de la fonction à exécuter au clic
         function GoToRegister() {
