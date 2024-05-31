@@ -3,7 +3,6 @@ require_once("src/models/account.php");
 class AccountController {
     public function index() {
         session_start();
-        
         // Vérifier si l'utilisateur est connecté
         if (isset($_SESSION['user_id'])) {
             $user_id = $_SESSION['user_id'];

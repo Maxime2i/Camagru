@@ -50,3 +50,31 @@ main {
 .spanLike{
     width: 12%;
 }
+
+.images{
+    
+}
+
+.pagination{
+    height: 10%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    bottom: 10%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.current-page{
+    margin-bottom: 10px;
+    font: bold;
+    font-size: 1.5rem;
+    color: #B9FE65;
+}
+
+.pages{
+}
