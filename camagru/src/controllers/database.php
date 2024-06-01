@@ -44,6 +44,20 @@ try {
     )";
 
     $connexion->exec($sql);
+
+
+    
+    $sql = "CREATE TABLE IF NOT EXISTS comments (
+        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        gallery_id INT(6) UNSIGNED,
+        user_id INT(6) UNSIGNED,
+        comment TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (gallery_id) REFERENCES gallery(id),
+        FOREIGN KEY (user_id) REFERENCES users(id)
+    )";
+
+    $connexion->exec($sql);
     
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();

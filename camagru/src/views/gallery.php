@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="src/styles/gallery.css">
 </head>
 <body>
+                <li><?php var_dump($imageComments[98]); ?></li>
+  
     <?php include 'header.php'; ?>
     <main>
         <div class="images">
@@ -36,6 +38,19 @@
                                     }
                                 ?>
                             </span>
+                            <span class="info">Utilisateur : <?php echo '@', $usernames[$image['user_id']]; ?></span>
+        <span class="info">Commentaires :</span>
+        <ul>
+        <?php echo $images[$i]['id']; ?>
+            <?php foreach ($imageComments[$images[$i]['id']] as $comment): ?>
+                <li><?php echo $comment['comment']; ?></li>
+            <?php endforeach; ?>
+        </ul>
+                            <form action="?page=gallery" method="post">
+            <input type="hidden" name="image_id" value="<?php echo $images[$i]['id']; ?>">
+            <textarea name="comment" placeholder="Ajouter un commentaire"></textarea>
+            <button type="submit">Ajouter</button>
+        </form>
                     </div>
                 <?php endfor; ?>
             </div>

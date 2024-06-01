@@ -21,6 +21,28 @@ class GalleryController {
         foreach ($images as $image) {
             $usernames[$image['user_id']] = GalleryModel::getUsername($image['user_id']);
         }
+
+        
+        $imageComments = [];
+        foreach ($images as $image) {
+            $imageComments[$image['id']] = GalleryModel::getImageComments($image['id']);
+        }
+
+        
+        //var_dump($imageComments);
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment']) && isset($_POST['image_id'])) {
+            $imageId = $_POST['image_id'];
+            $userId = 1; // ID de l'utilisateur actuel, à remplacer par la vraie valeur
+            $comment = $_POST['comment'];
+
+            // Appel à la fonction pour ajouter le commentaire
+            GalleryModel::addComment($imageId, $userId, $comment);
+
+            // Rediriger vers la page actuelle pour éviter de soumettre à nouveau le formulaire lors du rechargement de la page
+            header("Location: {$_SERVER['REQUEST_URI']}");
+            exit();
+        }
         
         // Inclure la vue avec les images paginées
         include 'src/views/gallery.php';

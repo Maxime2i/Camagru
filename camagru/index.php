@@ -1,5 +1,4 @@
 <?php
-
 // Routeur pour gérer les différentes requêtes
 
 require_once 'src/controllers/database.php';
