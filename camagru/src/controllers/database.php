@@ -6,9 +6,11 @@ $password = "password";
 $dbname = "camagru";
 
 try {
-
+    // Créer une nouvelle connexion PDO
     $connexion = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
+    // Créer la table users
     $sql = "CREATE TABLE IF NOT EXISTS users (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         firstname VARCHAR(30) NOT NULL,
@@ -17,22 +19,12 @@ try {
         email VARCHAR(100) NOT NULL, 
         pass VARCHAR(100) NOT NULL,
         token VARCHAR(100) NOT NULL,
-        is_verified BOOLEAN DEFAULT 0,
+        is_verified BOOLEAN DEFAULT 0
     )";
-
     $connexion->exec($sql);
+    //echo "Table 'users' créée avec succès.<br>";
 
-
-
-} catch (PDOException $e) {
-
-    echo "Error: " . $e->getMessage();
-    die();
-}
-
-try {
-    $connexion = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    
+    // Créer la table gallery
     $sql = "CREATE TABLE IF NOT EXISTS gallery (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         img VARCHAR(100) NOT NULL,
@@ -40,13 +32,11 @@ try {
         liked_by VARCHAR(100),
         nb_like INT(6) UNSIGNED, 
         FOREIGN KEY (user_id) REFERENCES users(id)
-       
     )";
-
     $connexion->exec($sql);
+    //echo "Table 'gallery' créée avec succès.<br>";
 
-
-    
+    // Créer la table comments
     $sql = "CREATE TABLE IF NOT EXISTS comments (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         gallery_id INT(6) UNSIGNED,
@@ -56,10 +46,12 @@ try {
         FOREIGN KEY (gallery_id) REFERENCES gallery(id),
         FOREIGN KEY (user_id) REFERENCES users(id)
     )";
-
     $connexion->exec($sql);
-    
+    //echo "Table 'comments' créée avec succès.<br>";
+
 } catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
+    echo "Erreur : " . $e->getMessage();
     die();
 }
+
+?>

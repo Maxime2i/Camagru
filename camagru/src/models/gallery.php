@@ -39,25 +39,21 @@ class GalleryModel {
 
     public static function addComment($imageId, $userId, $comment) {
         include "src/controllers/database.php";
-
+    
         // Vérifier si l'image existe
         $requete_check_image = $connexion->prepare("SELECT COUNT(*) AS total FROM gallery WHERE id = ?");
         $requete_check_image->execute([$imageId]);
         $result = $requete_check_image->fetch(PDO::FETCH_ASSOC);
-
+    
         if ($result['total'] == 0) {
             // L'image n'existe pas, retourner une erreur ou effectuer une autre action appropriée
             return false;
         }
-
+    
         // Insérer le commentaire dans la table des commentaires
         $requete_add_comment = $connexion->prepare("INSERT INTO comments (gallery_id, user_id, comment) VALUES (?, ?, ?)");
         $requete_add_comment->execute([$imageId, $userId, $comment]);
-
-        // Mettre à jour la colonne 'comments' dans la table 'gallery' pour ajouter le nouveau commentaire
-        $requete_update_gallery = $connexion->prepare("UPDATE gallery SET comments = CONCAT(IFNULL(comments, ''), ?, '\n') WHERE id = ?");
-        $requete_update_gallery->execute([$comment, $imageId]);
-
+    
         return true;
     }
 

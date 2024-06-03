@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="src/styles/gallery.css">
 </head>
 <body>
-                <li><?php var_dump($imageComments[98]); ?></li>
   
     <?php include 'header.php'; ?>
     <main>
