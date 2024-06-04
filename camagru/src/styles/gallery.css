@@ -10,35 +10,54 @@ main {
 
 .gallery {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
+    height: 80%;
 }
 
 .column {
-    flex: 0 0 48%;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .column:first-child {
-    margin-right: 8%;
+    margin-right: 0%;
     margin-top: 30px;
 }
 
 .column:last-child {
-    margin-left: 8%;
+    margin-left: 0%;
     margin-top: 30px;
 }
 
 .column img {
     max-width: 100%;
-    height: auto;
 }
 
-.post{
+.post2{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
     background: #484848;
+    height: 25%;
+    width: 90%;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+.post1{
+    display: flex;
+    flex-direction: row-reverse;
+    background: #484848;
+    height: 25%;
+    width: 90%;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+.img{
 }
 
 .info{
@@ -77,4 +96,60 @@ main {
 }
 
 .pages{
+}
+
+.comments{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.commentList{
+    flex: 2;
+    height: 80%;
+    width: 100%;
+}
+
+.commentInfo{
+    background: grey;
+    width: 100%;
+}
+
+.commentUsername{
+    font-weight: bold;
+}
+
+.comment{
+    width: 50%;
+}
+
+.commentForm{
+    bottom: 0%;
+    height: 20%;
+    display: flex;
+    flex-direction: row;
+}
+
+.commentUl{
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    overflow: scroll;
+}
+
+.commentArea{
+    resize: none;
+    height: auto;
+    background: rgb(94, 94, 94);
+    border-radius: 5px;
+}
+
+.commentArea::placeholder{
+    color: #262626;
+}
+
+.send{
+    width: 100%;
+    height: 100%;
+
 }

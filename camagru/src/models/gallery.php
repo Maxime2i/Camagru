@@ -60,7 +60,12 @@ class GalleryModel {
     public static function getImageComments($imageId) {
         include "src/controllers/database.php";
 
-        $requete = $connexion->prepare("SELECT * FROM comments WHERE gallery_id = ?");
+        $requete = $connexion->prepare(
+        "SELECT comments.*, users.username 
+         FROM comments 
+         JOIN users ON comments.user_id = users.id 
+         WHERE comments.gallery_id = ?"
+        );
         $requete->execute([$imageId]);
         $comments = $requete->fetchAll(PDO::FETCH_ASSOC);
         return $comments;
