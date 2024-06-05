@@ -11,11 +11,19 @@ main{
     justify-content: center;
 }
 
+.montage{
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    height: 100%;
+}
+
 .cameraCol{
-    height: 90vh;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     
 }
@@ -30,19 +38,17 @@ main{
     background: #BAFE66;
     border: none;
     border-radius: 20px;
-    margin-top: 5%;
-    height: 5%;
-    width: 15%;
+    height: 6%;
+    width: 20%;
     cursor: pointer;
 }
 
 .filterCol{
-    width: 20%;
-    margin-left: 15px;
-    margin-top: 10%;
-    margin-bottom: 15%;
+    width: 100%;
+    margin-top: 5%;
+    height: 8%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-evenly;
 } 
 
@@ -54,4 +60,48 @@ main{
 
 .filterButton{
     width: 80%;
+}
+
+.recentImages{
+    height: 100%;
+    position: absolute;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    background: #333333;
+}
+
+.recentImages h2{
+    color: white;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.images{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: scroll;
+    height: 85%;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.img{
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.filterButton1{
+    background: url(../../filtre1.png) no-repeat center center;
+    background-size: 100% 100%;
+}
+
+.filterButton2{
+    background: url(../../filtre2.png) no-repeat center center;
+    background-size: 100% 100%;
 }

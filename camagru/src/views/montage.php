@@ -9,27 +9,40 @@
 <body>
     <?php include 'header.php'; ?>
     <main>
-        <div class="cameraCol">
-            <video id="videoElement" autoplay></video>
-            <button id="captureButton" class="captureButton">Capture Photo</button>
-            <canvas id="canvas" style="display: none;"></canvas>
-            <img id="filterImage" class="filterImage">
-            <form method="POST" name="form1">
-                <input name="hidden_data" id='hidden_data' type="hidden"/>
-            </form>
+        <div class="montage">
+            <div class="cameraCol">
+                <video id="videoElement" autoplay></video>
+                <button id="captureButton" class="captureButton">Capture Photo</button>
+                <canvas id="canvas" style="display: none;"></canvas>
+                <img id="filterImage" class="filterImage">
+                <form method="POST" name="form1">
+                    <input name="hidden_data" id='hidden_data' type="hidden"/>
+                </form>
+            </div>
+            <div class="filterCol">
+                <button id="filterButton" class="filterButton1">Filtre 1</button>
+                <button id="filterButton2" class="filterButton2">Filtre 2</button>
+                <button id="filterButton3" class="filterButton3">Filtre 3</button>
+                <button id="filterButton4" class="filterButton4">Filtre 4</button>
+                <button id="filterButton5" class="filterButton5">Filtre 5</button>
+                <button id="filterButton6" class="filterButton6">Filtre 6</button>
+                <button id="filterButton7" class="filterButton7">Filtre 7</button>
+                <button id="filterButton8" class="filterButton8">Filtre 8</button>
+                <button id="filterButton9" class="filterButton9">Filtre 9</button>
+                <button id="filterButton10" class="filterButton10">Sans Filtre</button>
+                
+            </div>
         </div>
-        <div class="filterCol">
-            <button id="filterButton" class="filterButton">Filtre 1</button>
-            <button id="filterButton2" class="filterButton">Filtre 2</button>
-            <button id="filterButton3" class="filterButton">Filtre 3</button>
-            <button id="filterButton4" class="filterButton">Filtre 4</button>
-            <button id="filterButton5" class="filterButton">Filtre 5</button>
-            <button id="filterButton6" class="filterButton">Filtre 6</button>
-            <button id="filterButton7" class="filterButton">Filtre 7</button>
-            <button id="filterButton8" class="filterButton">Filtre 8</button>
-            <button id="filterButton9" class="filterButton">Filtre 9</button>
-            <button id="filterButton10" class="filterButton">Sans Filtre</button>
-            
+
+        <div class="recentImages">
+            <h2>Les 10 dernieres images</h2>
+                <div class="images">
+                    <?php foreach ($recentImages as $image): ?>
+                        <div class="image">
+                            <img class="img" src="src/uploads/<?php echo $image['img']; ?>" alt="Image">
+                        </div>
+                    <?php endforeach; ?>
+                </div>
         </div>
     </main>
 </body>
