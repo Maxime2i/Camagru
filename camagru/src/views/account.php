@@ -15,7 +15,7 @@
                 <input type="text" name="username" placeholder="Username" value="<?php echo $username; ?>" required>
                 <input type="email" name="email" placeholder="Email" value="<?php echo $email; ?>" required>
                 <input type="password" name="password" placeholder="Password" id="password" required>
-                <input type="submit" value="Update" name="submit">
+                <button type="submit" name="submit">Update</button>
             </form>
         </div>
         <div class="divImage">
