@@ -16,7 +16,7 @@
         
                 
                     <div class="image">
-                        <img src="src/filtre1.png" alt="Image">
+                        <img src="src/assets/filtre1.png" alt="Image">
                     </div>
                
             </div>

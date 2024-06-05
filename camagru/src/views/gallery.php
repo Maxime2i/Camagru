@@ -25,14 +25,14 @@
                                         ?>
                                             <span class="spanLike">
                                                 <span class="nb_like"><?php echo $images[$i]['nb_like']; ?></span> 
-                                                <img id="<?php echo $images[$i]['id']; ?>" class="like" src="like.png" alt="like" width="16" height="16">
+                                                <img id="<?php echo $images[$i]['id']; ?>" class="like" src="src/assets/like.png" alt="like" width="16" height="16">
                                             </span>
                                         <?php
                                     } else {
                                         ?>
                                             <span class="spanLike">
                                                 <span class="nb_like"><?php echo $images[$i]['nb_like']; ?></span> 
-                                                <img id="<?php echo $images[$i]['id']; ?>" class="like" src="unlike.png" alt="like" width="16" height="16">
+                                                <img id="<?php echo $images[$i]['id']; ?>" class="like" src="src/assets/unlike.png" alt="like" width="16" height="16">
                                             </span>
                                         <?php
                                     }
@@ -69,14 +69,14 @@
                                         ?>
                                             <span class="spanLike">
                                                 <span class="nb_like"><?php echo $images[$i]['nb_like']; ?></span> 
-                                                <img id="<?php echo $images[$i]['id']; ?>" class="like" src="like.png" alt="like" width="16" height="16">
+                                                <img id="<?php echo $images[$i]['id']; ?>" class="like" src="src/assets/like.png" alt="like" width="16" height="16">
                                             </span>
                                         <?php
                                     } else {
                                         ?>
                                             <span class="spanLike">
                                                 <span class="nb_like"><?php echo $images[$i]['nb_like']; ?></span> 
-                                                <img id="<?php echo $images[$i]['id']; ?>" class="like" src="unlike.png" alt="like" width="16" height="16">
+                                                <img id="<?php echo $images[$i]['id']; ?>" class="like" src="src/assets/unlike.png" alt="like" width="16" height="16">
                                             </span>
                                         <?php
                                     }
@@ -132,8 +132,8 @@ document.addEventListener("DOMContentLoaded", function() {
             
             var image_id = event.target.id;
 
-            if (event.target.src.endsWith("unlike.png")) {
-                event.target.src = "like.png";
+            if (event.target.src.endsWith("src/assets/unlike.png")) {
+                event.target.src = "src/assets/like.png";
                 console.log(event.target.parentNode.querySelector('.nb_like'))
                 
                 var nbLikeSpan = event.target.parentNode.querySelector('.nb_like');
@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
                 var nbLikeSpan = event.target.parentNode.querySelector('.nb_like');
                 nbLikeSpan.textContent = parseInt(nbLikeSpan.textContent) - 1;
-                event.target.src = "unlike.png";
+                event.target.src = "src/assets/unlike.png";
             }
 
             var xhr = new XMLHttpRequest();

@@ -110,7 +110,7 @@
                 document.getElementById('filterImage').src = img.src;
                 document.getElementById('filterImage').style.display = 'block';
             };
-            img.src = 'filtre1.png';
+            img.src = 'src/assets/filtre1.png';
             SelectFilter = 1;
         });
 
@@ -120,7 +120,7 @@
             document.getElementById('filterImage').src = img.src;
             document.getElementById('filterImage').style.display = 'block';
         };
-        img.src = 'filtre2.png';
+        img.src = 'src/assets/filtre2.png';
         SelectFilter = 2;
     });
 

@@ -165,7 +165,7 @@ main {
 }
 
 .submitBtn{
-    background: url(../../send.png) no-repeat center center;
+    background: url(../assets/send.png) no-repeat center center;
     background-color: #808080;
     background-size: 20px 20px;
     width: 20%;
