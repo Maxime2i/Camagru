@@ -50,8 +50,8 @@
                         </div>
                         <form action="?page=gallery" method="post" class="commentForm">
                             <input class="commentInput" type="hidden" name="image_id" value="<?php echo $images[$i]['id']; ?>">
-                            <textarea class="commentArea" name="comment" placeholder="Ajouter un commentaire"></textarea>
-                            <button type="submit">ajouter</button>
+                            <textarea class="commentArea1" name="comment" placeholder="..."></textarea>
+                            <button type="submit" class="submitBtn"></button>
                         </form>
                         </div>
                     </div>
@@ -94,8 +94,8 @@
                         </div>
                         <form action="?page=gallery" method="post" class="commentForm">
                             <input class="commentInput" type="hidden" name="image_id" value="<?php echo $images[$i]['id']; ?>">
-                            <textarea class="commentArea" name="comment" placeholder="Ajouter un commentaire"></textarea>
-                            <button type="submit">ajouter</button>
+                            <textarea class="commentArea2" name="comment" placeholder="..."></textarea>
+                            <button type="submit" class="submitBtn"></button>
                         </form>
                         </div>
                     </div>

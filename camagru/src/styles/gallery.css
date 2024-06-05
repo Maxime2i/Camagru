@@ -120,7 +120,7 @@ main {
 }
 
 .comment{
-    width: 50%;
+    width: 100%;
 }
 
 .commentForm{
@@ -137,14 +137,24 @@ main {
     overflow: scroll;
 }
 
-.commentArea{
+.commentArea1{
     resize: none;
     height: auto;
     background: rgb(94, 94, 94);
-    border-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
-.commentArea::placeholder{
+.commentArea2{
+    resize: none;
+    height: auto;
+    background: rgb(94, 94, 94);
+}
+
+.commentArea1::placeholder{
+    color: #262626;
+}
+
+.commentArea2::placeholder{
     color: #262626;
 }
 
@@ -152,4 +162,12 @@ main {
     width: 100%;
     height: 100%;
 
+}
+
+.submitBtn{
+    background: url(../../send.png) no-repeat center center;
+    background-color: #808080;
+    background-size: 20px 20px;
+    width: 20%;
+    border: none;
 }
