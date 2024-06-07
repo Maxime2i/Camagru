@@ -69,37 +69,42 @@
         console.log("getUserMedia n'est pas pris en charge par ce navigateur.");
     }
    
-    captureButton.addEventListener("click", function() {
+captureButton.addEventListener("click", function() {
+    var video = document.getElementById('videoElement');
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        var video = document.getElementById('videoElement');
-        var canvas = document.getElementById('canvas');
-        var context = canvas.getContext('2d');
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    var imageData = canvas.toDataURL('image/png');
 
-        var imageData = canvas.toDataURL('image/png');
+    if (SelectFilter === 0) {
+        return;
+    }
+    
+    var filterImage = new Image();
+    filterImage.src = 'src/assets/filtre' + SelectFilter + '.png';
 
-        if (SelectFilter === 0)
-            return;
-        var filterImage = new Image();
-        filterImage.src = 'filtre' + SelectFilter + '.png';
-
-        filterImage.onload = function() {
+    filterImage.onload = function() {
         // Dessiner l'image du filtre sur le canevas
-            context.drawImage(filterImage, 0, 0, canvas.width, canvas.height);
+        context.drawImage(filterImage, 0, 0, canvas.width, canvas.height);
 
-            // Récupérer les données de l'image avec le filtre
-            var filteredImageData = canvas.toDataURL('image/png');
+        // Récupérer les données de l'image avec le filtre
+        var filteredImageData = canvas.toDataURL('image/png');
 
-            // Envoi des données au serveur
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'src/save_image.php', true);
-            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xhr.onload = function() {
-                console.log('Images saved:', xhr.responseText);
-            };
-            xhr.send('image=' + encodeURIComponent(imageData) + '&filtered_image=' + encodeURIComponent(filteredImageData));
+        // Envoi des données au serveur
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'src/save_image.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            console.log('Images saved:', xhr.responseText);
         };
-    });
+        xhr.send('image=' + encodeURIComponent(imageData) + '&filtered_image=' + encodeURIComponent(filteredImageData));
+    };
+
+    filterImage.onerror = function() {
+        console.log("Error loading filter image.");
+    };
+});
 
 
 
@@ -125,15 +130,14 @@
     });
 
     document.getElementById('filterButton10').addEventListener('click', function() {
-        var img = new Image();
-        img.onload = function() {
-            document.getElementById('filterImage').src = img.src;
-            document.getElementById('filterImage').style.display = 'none';
-        };
-        img.src = 'filtre1.png';
+        // Réinitialiser le filtre sélectionné
         SelectFilter = 0;
-    });
 
+        // Cacher l'image du filtre
+        var filterImage = document.getElementById('filterImage');
+        filterImage.src = '';  // Réinitialiser la source
+        filterImage.style.display = 'none';  // Cacher l'élément
+    });
 
 
 });
