@@ -20,7 +20,7 @@
                 </form>
             </div>
             <div class="filterCol">
-                <button id="filterButton1" class="filterButton1">Filtre 1</button>
+                <button id="filterButton" class="filterButton1">Filtre 1</button>
                 <button id="filterButton2" class="filterButton2">Filtre 2</button>
                 <button id="filterButton3" class="filterButton3">Filtre 3</button>
                 <button id="filterButton4" class="filterButton4">Filtre 4</button>
@@ -69,42 +69,47 @@
         console.log("getUserMedia n'est pas pris en charge par ce navigateur.");
     }
    
-    captureButton.addEventListener("click", function() {
+captureButton.addEventListener("click", function() {
+    var video = document.getElementById('videoElement');
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        var video = document.getElementById('videoElement');
-        var canvas = document.getElementById('canvas');
-        var context = canvas.getContext('2d');
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    var imageData = canvas.toDataURL('image/png');
 
-        var imageData = canvas.toDataURL('image/png');
+    if (SelectFilter === 0) {
+        return;
+    }
+    
+    var filterImage = new Image();
+    filterImage.src = 'src/assets/filtre' + SelectFilter + '.png';
 
-        if (SelectFilter === 0)
-            return;
-        var filterImage = new Image();
-        filterImage.src = 'filtre' + SelectFilter + '.png';
-
-        filterImage.onload = function() {
+    filterImage.onload = function() {
         // Dessiner l'image du filtre sur le canevas
-            context.drawImage(filterImage, 0, 0, canvas.width, canvas.height);
+        context.drawImage(filterImage, 0, 0, canvas.width, canvas.height);
 
-            // Récupérer les données de l'image avec le filtre
-            var filteredImageData = canvas.toDataURL('image/png');
+        // Récupérer les données de l'image avec le filtre
+        var filteredImageData = canvas.toDataURL('image/png');
 
-            // Envoi des données au serveur
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'src/save_image.php', true);
-            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xhr.onload = function() {
-                console.log('Images saved:', xhr.responseText);
-            };
-            xhr.send('image=' + encodeURIComponent(imageData) + '&filtered_image=' + encodeURIComponent(filteredImageData));
+        // Envoi des données au serveur
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'src/save_image.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            console.log('Images saved:', xhr.responseText);
         };
-    });
+        xhr.send('image=' + encodeURIComponent(imageData) + '&filtered_image=' + encodeURIComponent(filteredImageData));
+    };
+
+    filterImage.onerror = function() {
+        console.log("Error loading filter image.");
+    };
+});
 
 
 
 
-    document.getElementById('filterButton1').addEventListener('click', function() {
+    document.getElementById('filterButton').addEventListener('click', function() {
             var img = new Image();
             img.onload = function() {
                 document.getElementById('filterImage').src = img.src;
@@ -124,86 +129,15 @@
         SelectFilter = 2;
     });
 
-    document.getElementById('filterButton3').addEventListener('click', function() {
-        var img = new Image();
-        img.onload = function() {
-            document.getElementById('filterImage').src = img.src;
-            document.getElementById('filterImage').style.display = 'block';
-        };
-        img.src = 'src/assets/filtre3.png';
-        SelectFilter = 3;
-    });
-
-    document.getElementById('filterButton4').addEventListener('click', function() {
-        var img = new Image();
-        img.onload = function() {
-            document.getElementById('filterImage').src = img.src;
-            document.getElementById('filterImage').style.display = 'block';
-        };
-        img.src = 'src/assets/filtre4.png';
-        SelectFilter = 4;
-    });
-
-    document.getElementById('filterButton5').addEventListener('click', function() {
-        var img = new Image();
-        img.onload = function() {
-            document.getElementById('filterImage').src = img.src;
-            document.getElementById('filterImage').style.display = 'block';
-        };
-        img.src = 'src/assets/filtre5.png';
-        SelectFilter = 5;
-    });
-
-    document.getElementById('filterButton6').addEventListener('click', function() {
-        var img = new Image();
-        img.onload = function() {
-            document.getElementById('filterImage').src = img.src;
-            document.getElementById('filterImage').style.display = 'block';
-        };
-        img.src = 'src/assets/filtre6.png';
-        SelectFilter = 6;
-    });
-
-    document.getElementById('filterButton7').addEventListener('click', function() {
-        var img = new Image();
-        img.onload = function() {
-            document.getElementById('filterImage').src = img.src;
-            document.getElementById('filterImage').style.display = 'block';
-        };
-        img.src = 'src/assets/filtre7.png';
-        SelectFilter = 7;
-    });
-
-    document.getElementById('filterButton8').addEventListener('click', function() {
-        var img = new Image();
-        img.onload = function() {
-            document.getElementById('filterImage').src = img.src;
-            document.getElementById('filterImage').style.display = 'block';
-        };
-        img.src = 'src/assets/filtre8.png';
-        SelectFilter = 8;
-    });
-
-    document.getElementById('filterButton9').addEventListener('click', function() {
-        var img = new Image();
-        img.onload = function() {
-            document.getElementById('filterImage').src = img.src;
-            document.getElementById('filterImage').style.display = 'block';
-        };
-        img.src = 'src/assets/filtre9.png';
-        SelectFilter = 9;
-    });
-
     document.getElementById('filterButton10').addEventListener('click', function() {
-        var img = new Image();
-        img.onload = function() {
-            document.getElementById('filterImage').src = img.src;
-            document.getElementById('filterImage').style.display = 'none';
-        };
-        img.src = '';
+        // Réinitialiser le filtre sélectionné
         SelectFilter = 0;
-    });
 
+        // Cacher l'image du filtre
+        var filterImage = document.getElementById('filterImage');
+        filterImage.src = '';  // Réinitialiser la source
+        filterImage.style.display = 'none';  // Cacher l'élément
+    });
 
 
 });
