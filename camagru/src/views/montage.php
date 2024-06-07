@@ -20,7 +20,7 @@
                 </form>
             </div>
             <div class="filterCol">
-                <button id="filterButton" class="filterButton1">Filtre 1</button>
+                <button id="filterButton1" class="filterButton1">Filtre 1</button>
                 <button id="filterButton2" class="filterButton2">Filtre 2</button>
                 <button id="filterButton3" class="filterButton3">Filtre 3</button>
                 <button id="filterButton4" class="filterButton4">Filtre 4</button>
@@ -109,7 +109,7 @@ captureButton.addEventListener("click", function() {
 
 
 
-    document.getElementById('filterButton').addEventListener('click', function() {
+document.getElementById('filterButton1').addEventListener('click', function() {
             var img = new Image();
             img.onload = function() {
                 document.getElementById('filterImage').src = img.src;
@@ -127,6 +127,76 @@ captureButton.addEventListener("click", function() {
         };
         img.src = 'src/assets/filtre2.png';
         SelectFilter = 2;
+    });
+
+    document.getElementById('filterButton3').addEventListener('click', function() {
+        var img = new Image();
+        img.onload = function() {
+            document.getElementById('filterImage').src = img.src;
+            document.getElementById('filterImage').style.display = 'block';
+        };
+        img.src = 'src/assets/filtre3.png';
+        SelectFilter = 3;
+    });
+
+    document.getElementById('filterButton4').addEventListener('click', function() {
+        var img = new Image();
+        img.onload = function() {
+            document.getElementById('filterImage').src = img.src;
+            document.getElementById('filterImage').style.display = 'block';
+        };
+        img.src = 'src/assets/filtre4.png';
+        SelectFilter = 4;
+    });
+
+    document.getElementById('filterButton5').addEventListener('click', function() {
+        var img = new Image();
+        img.onload = function() {
+            document.getElementById('filterImage').src = img.src;
+            document.getElementById('filterImage').style.display = 'block';
+        };
+        img.src = 'src/assets/filtre5.png';
+        SelectFilter = 5;
+    });
+
+    document.getElementById('filterButton6').addEventListener('click', function() {
+        var img = new Image();
+        img.onload = function() {
+            document.getElementById('filterImage').src = img.src;
+            document.getElementById('filterImage').style.display = 'block';
+        };
+        img.src = 'src/assets/filtre6.png';
+        SelectFilter = 6;
+    });
+
+    document.getElementById('filterButton7').addEventListener('click', function() {
+        var img = new Image();
+        img.onload = function() {
+            document.getElementById('filterImage').src = img.src;
+            document.getElementById('filterImage').style.display = 'block';
+        };
+        img.src = 'src/assets/filtre7.png';
+        SelectFilter = 7;
+    });
+
+    document.getElementById('filterButton8').addEventListener('click', function() {
+        var img = new Image();
+        img.onload = function() {
+            document.getElementById('filterImage').src = img.src;
+            document.getElementById('filterImage').style.display = 'block';
+        };
+        img.src = 'src/assets/filtre8.png';
+        SelectFilter = 8;
+    });
+
+    document.getElementById('filterButton9').addEventListener('click', function() {
+        var img = new Image();
+        img.onload = function() {
+            document.getElementById('filterImage').src = img.src;
+            document.getElementById('filterImage').style.display = 'block';
+        };
+        img.src = 'src/assets/filtre9.png';
+        SelectFilter = 9;
     });
 
     document.getElementById('filterButton10').addEventListener('click', function() {
