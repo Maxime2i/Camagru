@@ -12,6 +12,11 @@ if (isset($_POST['image']) && isset($_POST['filtered_image'])) {
     $data_superposee = str_replace('data:image/png;base64,', '', $data_superposee);
     $data_superposee = str_replace(' ', '+', $data_superposee);
     $imageDataSuperposee = base64_decode($data_superposee);
+
+    $filterTop = $_POST['filter_top'];
+    $filterLeft = $_POST['filter_left'];
+    $filterWidth = $_POST['filter_width'];
+    $filterHeight = $_POST['filter_height'];
     
     // Charger l'image de fond
     $image_fond = imagecreatefromstring($imageDataFond);
@@ -22,7 +27,16 @@ if (isset($_POST['image']) && isset($_POST['filtered_image'])) {
     // Superposer l'image à superposer sur l'image de fond
     $x = 0; // Position horizontale de l'image superposée sur l'image de fond
     $y = 0; // Position verticale de l'image superposée sur l'image de fond
-    imagecopy($image_fond, $image_superposee, $x, $y, 0, 0, imagesx($image_superposee), imagesy($image_superposee));
+
+
+    $resized_filter_image = imagecreatetruecolor($filterWidth, $filterHeight);
+    imagealphablending($resized_filter_image, false);
+    imagesavealpha($resized_filter_image, true);
+    imagecopyresampled($resized_filter_image, $image_superposee, 0, 0, 0, 0, $filterWidth, $filterHeight, imagesx($image_superposee), imagesy($image_superposee));
+
+
+
+    imagecopy($image_fond, $resized_filter_image, $filterLeft, $filterTop, 0, 0, $filterWidth, $filterHeight);
 
     // Nom de fichier unique
     $fileName = 'superposed_image_' . uniqid() . '.png';

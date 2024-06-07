@@ -11,10 +11,12 @@
     <main>
         <div class="montage">
             <div class="cameraCol">
-                <video id="videoElement" autoplay></video>
+                <div class="videoContainer">
+                    <video id="videoElement" autoplay></video>
+                    <img id="filterImage" class="filterImage">
+                </div>
                 <button id="captureButton" class="captureButton">Capture Photo</button>
                 <canvas id="canvas" style="display: none;"></canvas>
-                <img id="filterImage" class="filterImage">
                 <form method="POST" name="form1">
                     <input name="hidden_data" id='hidden_data' type="hidden"/>
                 </form>
@@ -69,42 +71,52 @@
         console.log("getUserMedia n'est pas pris en charge par ce navigateur.");
     }
    
-captureButton.addEventListener("click", function() {
-    var video = document.getElementById('videoElement');
-    var canvas = document.getElementById('canvas');
-    var context = canvas.getContext('2d');
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    captureButton.addEventListener("click", function() {
+        var video = document.getElementById('videoElement');
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+        var x, y
+        context.drawImage(video, x, y, canvas.width, canvas.height);
+console.log(x, y)
+        var imageData = canvas.toDataURL('image/png');
 
-    var imageData = canvas.toDataURL('image/png');
+        if (SelectFilter === 0) {
+            return;
+        }
 
-    if (SelectFilter === 0) {
-        return;
-    }
-    
-    var filterImage = new Image();
-    filterImage.src = 'src/assets/filtre' + SelectFilter + '.png';
+        var filterImage = document.getElementById('filterImage');
+        
+        console.log(filterImage.offsetTop , filterImage.offsetLeft);
+        var filterSrc = filterImage.src;
+        var filterWidth = parseFloat(filterImage.width);
+        var filterHeight = parseFloat(filterImage.height);
+        var filterTop = parseFloat(filterImage.offsetTop);
+        var filterLeft = parseFloat(filterImage.offsetLeft);
+        console.log(filterTop, filterLeft, filterWidth, filterHeight)
+        var filterImageObj = new Image();
+        filterImageObj.src = filterSrc;
+        filterImageObj.onload = function() {
+            context.drawImage(filterImageObj, filterLeft, filterTop, filterWidth, filterHeight);
+            var filteredImageData = canvas.toDataURL('image/png');
 
-    filterImage.onload = function() {
-        // Dessiner l'image du filtre sur le canevas
-        context.drawImage(filterImage, 0, 0, canvas.width, canvas.height);
-
-        // Récupérer les données de l'image avec le filtre
-        var filteredImageData = canvas.toDataURL('image/png');
-
-        // Envoi des données au serveur
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'src/save_image.php', true);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onload = function() {
-            console.log('Images saved:', xhr.responseText);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'src/save_image.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                console.log('Images saved:', xhr.responseText);
+            };
+            xhr.send('image=' + encodeURIComponent(imageData) +
+                     '&filtered_image=' + encodeURIComponent(filteredImageData) +
+                     '&filter_top=' + filterTop +
+                     '&filter_left=' + filterLeft +
+                     '&filter_width=' + filterWidth +
+                     '&filter_height=' + filterHeight);
         };
-        xhr.send('image=' + encodeURIComponent(imageData) + '&filtered_image=' + encodeURIComponent(filteredImageData));
-    };
 
-    filterImage.onerror = function() {
-        console.log("Error loading filter image.");
-    };
-});
+        filterImageObj.onerror = function() {
+            console.log("Error loading filter image.");
+        };
+    });
 
 
 
@@ -134,6 +146,11 @@ document.getElementById('filterButton1').addEventListener('click', function() {
         img.onload = function() {
             document.getElementById('filterImage').src = img.src;
             document.getElementById('filterImage').style.display = 'block';
+            document.getElementById('filterImage').style.width = "50%";
+            document.getElementById('filterImage').style.height = "50%";
+            document.getElementById('filterImage').style.top = "51%";
+            document.getElementById('filterImage').style.left = "5%";
+
         };
         img.src = 'src/assets/filtre3.png';
         SelectFilter = 3;
