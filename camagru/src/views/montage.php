@@ -70,53 +70,46 @@
     } else {
         console.log("getUserMedia n'est pas pris en charge par ce navigateur.");
     }
-   
-    captureButton.addEventListener("click", function() {
-        var video = document.getElementById('videoElement');
-        var canvas = document.getElementById('canvas');
-        var context = canvas.getContext('2d');
-        var x, y
-        context.drawImage(video, x, y, canvas.width, canvas.height);
-console.log(x, y)
-        var imageData = canvas.toDataURL('image/png');
 
-        if (SelectFilter === 0) {
-            return;
-        }
+    var captureButton = document.getElementById("captureButton");
+captureButton.addEventListener("click", function() {
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
 
-        var filterImage = document.getElementById('filterImage');
-        
-        console.log(filterImage.offsetTop , filterImage.offsetLeft);
-        var filterSrc = filterImage.src;
-        var filterWidth = parseFloat(filterImage.width);
-        var filterHeight = parseFloat(filterImage.height);
-        var filterTop = parseFloat(filterImage.offsetTop);
-        var filterLeft = parseFloat(filterImage.offsetLeft);
-        console.log(filterTop, filterLeft, filterWidth, filterHeight)
-        var filterImageObj = new Image();
-        filterImageObj.src = filterSrc;
-        filterImageObj.onload = function() {
-            context.drawImage(filterImageObj, filterLeft, filterTop, filterWidth, filterHeight);
-            var filteredImageData = canvas.toDataURL('image/png');
+    // Dessiner l'image de la caméra sur le canvas
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    var imageData = canvas.toDataURL('image/png');
 
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'src/save_image.php', true);
-            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xhr.onload = function() {
-                console.log('Images saved:', xhr.responseText);
-            };
-            xhr.send('image=' + encodeURIComponent(imageData) +
-                     '&filtered_image=' + encodeURIComponent(filteredImageData) +
-                     '&filter_top=' + filterTop +
-                     '&filter_left=' + filterLeft +
-                     '&filter_width=' + filterWidth +
-                     '&filter_height=' + filterHeight);
-        };
+    var filterImageUrl = '';
+    if (SelectFilter !== 0) {
+        filterImageUrl = 'assets/filtre' + SelectFilter + '.png';
+    }
 
-        filterImageObj.onerror = function() {
-            console.log("Error loading filter image.");
-        };
-    });
+    // Coordonnées de la position de l'image superposée
+    var x = 100; // Exemple : position horizontale
+    var y = 50;  // Exemple : position verticale
+
+    // Dimensions de l'image superposée
+    var width = document.getElementById('filterImage').style.width;  // Exemple : largeur de l'image superposée
+    var height = document.getElementById('filterImage').style.height; // Exemple : hauteur de l'image superposée
+
+    // Envoyer les données des images, les coordonnées de la position et les dimensions au serveur
+    sendImage(imageData, filterImageUrl, x, y, width, height);
+});
+
+function sendImage(imageData, filterImageUrl, x, y, width, height) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'src/save_image.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+        console.log('Images saved:', xhr.responseText);
+    };
+    xhr.send('image=' + encodeURIComponent(imageData) + '&filter_image_url=' + encodeURIComponent(filterImageUrl) + '&x=' + encodeURIComponent(x) + '&y=' + encodeURIComponent(y) + '&width=' + encodeURIComponent(width) + '&height=' + encodeURIComponent(height));
+}
+
+
+
+
 
 
 
