@@ -11,10 +11,12 @@
     <main>
         <div class="montage">
             <div class="cameraCol">
-                <video id="videoElement" autoplay></video>
+                <div class="videoContainer">
+                    <video id="videoElement" autoplay></video>
+                    <img id="filterImage" class="filterImage">
+                </div>
                 <button id="captureButton" class="captureButton">Capture Photo</button>
                 <canvas id="canvas" style="display: none;"></canvas>
-                <img id="filterImage" class="filterImage">
                 <form method="POST" name="form1">
                     <input name="hidden_data" id='hidden_data' type="hidden"/>
                 </form>
@@ -68,43 +70,46 @@
     } else {
         console.log("getUserMedia n'est pas pris en charge par ce navigateur.");
     }
-   
+
+    var captureButton = document.getElementById("captureButton");
 captureButton.addEventListener("click", function() {
-    var video = document.getElementById('videoElement');
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
+    // Dessiner l'image de la caméra sur le canvas
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
     var imageData = canvas.toDataURL('image/png');
 
-    if (SelectFilter === 0) {
-        return;
+    var filterImageUrl = '';
+    if (SelectFilter !== 0) {
+        filterImageUrl = 'assets/filtre' + SelectFilter + '.png';
     }
-    
-    var filterImage = new Image();
-    filterImage.src = 'src/assets/filtre' + SelectFilter + '.png';
 
-    filterImage.onload = function() {
-        // Dessiner l'image du filtre sur le canevas
-        context.drawImage(filterImage, 0, 0, canvas.width, canvas.height);
+    // Coordonnées de la position de l'image superposée
+    var x = 100; // Exemple : position horizontale
+    var y = 50;  // Exemple : position verticale
 
-        // Récupérer les données de l'image avec le filtre
-        var filteredImageData = canvas.toDataURL('image/png');
+    // Dimensions de l'image superposée
+    var width = document.getElementById('filterImage').style.width;  // Exemple : largeur de l'image superposée
+    var height = document.getElementById('filterImage').style.height; // Exemple : hauteur de l'image superposée
 
-        // Envoi des données au serveur
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'src/save_image.php', true);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onload = function() {
-            console.log('Images saved:', xhr.responseText);
-        };
-        xhr.send('image=' + encodeURIComponent(imageData) + '&filtered_image=' + encodeURIComponent(filteredImageData));
-    };
-
-    filterImage.onerror = function() {
-        console.log("Error loading filter image.");
-    };
+    // Envoyer les données des images, les coordonnées de la position et les dimensions au serveur
+    sendImage(imageData, filterImageUrl, x, y, width, height);
 });
+
+function sendImage(imageData, filterImageUrl, x, y, width, height) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'src/save_image.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+        console.log('Images saved:', xhr.responseText);
+    };
+    xhr.send('image=' + encodeURIComponent(imageData) + '&filter_image_url=' + encodeURIComponent(filterImageUrl) + '&x=' + encodeURIComponent(x) + '&y=' + encodeURIComponent(y) + '&width=' + encodeURIComponent(width) + '&height=' + encodeURIComponent(height));
+}
+
+
+
+
 
 
 
@@ -134,6 +139,11 @@ document.getElementById('filterButton1').addEventListener('click', function() {
         img.onload = function() {
             document.getElementById('filterImage').src = img.src;
             document.getElementById('filterImage').style.display = 'block';
+            document.getElementById('filterImage').style.width = "50%";
+            document.getElementById('filterImage').style.height = "50%";
+            document.getElementById('filterImage').style.top = "51%";
+            document.getElementById('filterImage').style.left = "5%";
+
         };
         img.src = 'src/assets/filtre3.png';
         SelectFilter = 3;
