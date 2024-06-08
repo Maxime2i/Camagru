@@ -85,26 +85,19 @@ captureButton.addEventListener("click", function() {
         filterImageUrl = 'assets/filtre' + SelectFilter + '.png';
     }
 
-    // Coordonnées de la position de l'image superposée
-    var x = 100; // Exemple : position horizontale
-    var y = 50;  // Exemple : position verticale
-
-    // Dimensions de l'image superposée
-    var width = document.getElementById('filterImage').style.width;  // Exemple : largeur de l'image superposée
-    var height = document.getElementById('filterImage').style.height; // Exemple : hauteur de l'image superposée
-
+   
     // Envoyer les données des images, les coordonnées de la position et les dimensions au serveur
-    sendImage(imageData, filterImageUrl, x, y, width, height);
+    sendImage(imageData, filterImageUrl);
 });
 
-function sendImage(imageData, filterImageUrl, x, y, width, height) {
+function sendImage(imageData, filterImageUrl) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'src/save_image.php', true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.onload = function() {
         console.log('Images saved:', xhr.responseText);
     };
-    xhr.send('image=' + encodeURIComponent(imageData) + '&filter_image_url=' + encodeURIComponent(filterImageUrl) + '&x=' + encodeURIComponent(x) + '&y=' + encodeURIComponent(y) + '&width=' + encodeURIComponent(width) + '&height=' + encodeURIComponent(height));
+    xhr.send('image=' + encodeURIComponent(imageData) + '&filter_image_url=' + encodeURIComponent(filterImageUrl));
 }
 
 
@@ -139,11 +132,6 @@ document.getElementById('filterButton1').addEventListener('click', function() {
         img.onload = function() {
             document.getElementById('filterImage').src = img.src;
             document.getElementById('filterImage').style.display = 'block';
-            document.getElementById('filterImage').style.width = "50%";
-            document.getElementById('filterImage').style.height = "50%";
-            document.getElementById('filterImage').style.top = "51%";
-            document.getElementById('filterImage').style.left = "5%";
-
         };
         img.src = 'src/assets/filtre3.png';
         SelectFilter = 3;

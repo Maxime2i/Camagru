@@ -17,28 +17,20 @@ if (isset($_POST['image']) && isset($_POST['filter_image_url'])) {
         // Charger l'image du filtre à partir de l'URL
         $image_superposee = imagecreatefrompng($filter_image_url);
 
-        // Redimensionner l'image superposée en préservant la transparence
-        $new_width = 100;  // Nouvelle largeur de l'image superposée
-        $new_height = 100; // Nouvelle hauteur de l'image superposée
+        // Redimensionner l'image superposée pour qu'elle ait la même taille que l'image de fond
+        $new_width = imagesx($image_fond);
+        $new_height = imagesy($image_fond);
 
-        // Créer une nouvelle image avec des dimensions spécifiques et préserver la transparence
-        $image_superposee_resized = imagecreatetruecolor($new_width, $new_height);
-        imagealphablending($image_superposee_resized, false);
-        imagesavealpha($image_superposee_resized, true);
-        $transparent = imagecolorallocatealpha($image_superposee_resized, 0, 0, 0, 127);
-        imagefill($image_superposee_resized, 0, 0, $transparent);
-
-        // Copier et redimensionner l'image superposée d'origine dans la nouvelle image vide
-        imagecopyresampled($image_superposee_resized, $image_superposee, 0, 0, 0, 0, $new_width, $new_height, imagesx($image_superposee), imagesy($image_superposee));
+        $resized_superposee = imagescale($image_superposee, $new_width, $new_height, IMG_BILINEAR_FIXED);
 
         // Superposer l'image redimensionnée sur l'image de fond
         $x = 0; // Position horizontale de l'image superposée sur l'image de fond
-        $y = 50; // Position verticale de l'image superposée sur l'image de fond
-        imagecopy($image_fond, $image_superposee_resized, $x, $y, 0, 0, $new_width, $new_height);
+        $y = 0; // Position verticale de l'image superposée sur l'image de fond
+        imagecopy($image_fond, $resized_superposee, $x, $y, 0, 0, $new_width, $new_height);
 
         // Libérer la mémoire
         imagedestroy($image_superposee);
-        imagedestroy($image_superposee_resized);
+        imagedestroy($resized_superposee);
     }
 
     // Nom de fichier unique
