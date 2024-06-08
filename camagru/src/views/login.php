@@ -33,6 +33,18 @@
         var username = document.getElementById("username").value;
         var usernameError = document.getElementById("username-error");
 
+         // Vérification de l'absence de balises HTML
+         var htmlRegex = /<\/?[a-z][\s\S]*>/i;
+        if (htmlRegex.test(username) || htmlRegex.test(password)) {
+            if (htmlRegex.test(username)) {
+                usernameError.textContent = "Les balises HTML ne sont pas autorisées.";
+            }
+            if (htmlRegex.test(password)) {
+                passwordError.textContent = "Les balises HTML ne sont pas autorisées.";
+            }
+            return false;
+        }
+
         if (username.length < 3) {
             usernameError.textContent = "Le nom d'utilisateur doit contenir au moins 3 caractères.";
             return false;
@@ -63,6 +75,8 @@
         } else {
             passwordError.textContent = "";
         }
+
+       
 
 
         return true;

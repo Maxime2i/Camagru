@@ -11,6 +11,15 @@ class LoginController {
 
         if (isset($_POST['submit'])){
             extract($_POST);
+
+            if (strip_tags($username) !== $username || strip_tags($password) !== $password) {
+                die('Les balises HTML ne sont pas autorisées.');
+            }
+        
+            // Échappement des Caractères HTML
+            $username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
+            $password = htmlspecialchars($password, ENT_QUOTES, 'UTF-8');
+        
         
             if ($username != '' && $password != '') {
                 $req = $connexion->prepare("SELECT * FROM users WHERE username = :username AND pass = :pass");

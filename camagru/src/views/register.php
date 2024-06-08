@@ -26,44 +26,41 @@
 
 <script>
     function validateForm() {
-        var password = document.getElementById("password").value;
-        var passwordError = document.getElementById("password-error");
-        var username = document.getElementById("username").value;
-        var usernameError = document.getElementById("username-error");
+        var fields = ['firstname', 'lastname', 'username', 'email', 'password'];
+        var valid = true;
 
-        if (username.length < 3) {
-            usernameError.textContent = "Le nom d'utilisateur doit contenir au moins 3 caractères.";
-            return false;
-        } else {
-            usernameError.textContent = "";
-        }
+        fields.forEach(function(field) {
+            var value = document.getElementById(field).value;
+            var errorElement = document.getElementById(field + '-error');
+            var htmlRegex = /<\/?[a-z][\s\S]*>/i;
 
-        if (password.length < 8) {
-            passwordError.textContent = "Le mot de passe doit contenir au moins 8 caractères.";
-            return false;
-        } else {
-            passwordError.textContent = "";
-        }
+            if (htmlRegex.test(value)) {
+                errorElement.textContent = 'Les balises HTML ne sont pas autorisées.';
+                valid = false;
+            } else {
+                errorElement.textContent = '';
+            }
 
-        var uppercaseRegex = /[A-Z]/;
-        if (!uppercaseRegex.test(password)) {
-            passwordError.textContent = "Le mot de passe doit contenir au moins une lettre majuscule.";
-            return false;
-        } else {
-            passwordError.textContent = "";
-        }
+            if (field === 'username' && value.length < 3) {
+                errorElement.textContent = "Le nom d'utilisateur doit contenir au moins 3 caractères.";
+                valid = false;
+            } else if (field === 'password') {
+                if (value.length < 8) {
+                    errorElement.textContent = "Le mot de passe doit contenir au moins 8 caractères.";
+                    valid = false;
+                } else if (!/[A-Z]/.test(value)) {
+                    errorElement.textContent = "Le mot de passe doit contenir au moins une lettre majuscule.";
+                    valid = false;
+                } else if (!/\d/.test(value)) {
+                    errorElement.textContent = "Le mot de passe doit contenir au moins un chiffre.";
+                    valid = false;
+                } else {
+                    errorElement.textContent = '';
+                }
+            }
+        });
 
-        // Vérifie si le mot de passe contient au moins un chiffre
-        var digitRegex = /\d/;
-        if (!digitRegex.test(password)) {
-            passwordError.textContent = "Le mot de passe doit contenir au moins un chiffre.";
-            return false;
-        } else {
-            passwordError.textContent = "";
-        }
-
-
-        return true;
+        return valid;
     }
 </script>
 </html>
