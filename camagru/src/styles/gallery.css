@@ -4,6 +4,12 @@ body {
 
 main {
     height: 90vh;
+    width: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.images{
     display: flex;
     justify-content: center;
 }
@@ -13,9 +19,11 @@ main {
     flex-direction: row;
     justify-content: space-between;
     height: 80%;
+    width: 80%;
 }
 
 .column {
+    width: 45%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -55,6 +63,7 @@ main {
     width: 90%;
     border: 1px solid grey;
     border-radius: 5px;
+
 }
 
 .img{
@@ -98,10 +107,14 @@ main {
 .pages{
 }
 
+.imagesAndInfo{
+}
+
 .comments{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 45%;
 }
 
 .commentList{
@@ -120,7 +133,7 @@ main {
 }
 
 .comment{
-    width: 100%;
+    width: 95%;
 }
 
 .commentForm{
@@ -134,7 +147,25 @@ main {
     display: flex;
     flex-direction: column;
     height: 80%;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-wrap: break-word;
+}
+
+.commentUl::-webkit-scrollbar {
+    width: 6px;
+}
+
+.commentUl::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.commentUl::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+}
+
+.commentUl::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .commentArea1{
@@ -170,4 +201,125 @@ main {
     background-size: 20px 20px;
     width: 20%;
     border: none;
+}
+
+
+
+/* Pour les écrans de petite taille (tels que les smartphones) */
+@media only screen and (max-width: 600px) {
+    body{
+        height: 100vh;
+    }
+    main {
+        width: 100%;
+       
+    }
+
+    .gallery{
+        flex-direction: column;
+        align-items: center;
+        justify-content: initial;
+        width: 100%;
+    }
+
+    .column {
+        width: 45%;
+        display: flex;
+        flex-direction: column;
+    }
+    .column:first-child {
+        margin-right: 0%;
+        margin-top: 0;
+    }
+    
+    .column:last-child {
+        margin-left: 0%;
+        margin-top: 0;
+    }
+
+    .images{
+        height: 200%;
+        flex-direction: column;
+    }
+    
+    .post1{
+        width: 180%;
+        height: auto;
+        margin: 15px 0px;
+    }
+
+    .post2{
+        width: 180%;
+        height: auto;
+        margin: 15px 0px;
+    }
+
+    .pagination{
+        position: relative;
+        bottom: 0%;
+    }
+
+    .numberPage{
+        padding: 5px 10px;
+    }
+}
+
+/* Pour les écrans de taille moyenne à grande */
+@media only screen and (min-width: 601px) {
+    body{
+        height: 100vh;
+    }
+    main {
+        width: 100%;
+       
+    }
+
+    .gallery{
+        flex-direction: column;
+        align-items: center;
+        justify-content: initial;
+        width: 100%;
+    }
+
+    .column {
+        width: 45%;
+        display: flex;
+        flex-direction: column;
+    }
+    .column:first-child {
+        margin-right: 0%;
+        margin-top: 0;
+    }
+    
+    .column:last-child {
+        margin-left: 0%;
+        margin-top: 0;
+    }
+
+    .images{
+        height: 160%;
+        flex-direction: column;
+    }
+    
+    .post1{
+        width: 180%;
+        height: auto;
+        margin: 15px 0px;
+    }
+
+    .post2{
+        width: 180%;
+        height: auto;
+        margin: 15px 0px;
+    }
+
+    .pagination{
+        position: relative;
+        bottom: 0%;
+    }
+
+    .numberPage{
+        padding: 5px 10px;
+    }
+
 }

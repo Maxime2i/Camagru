@@ -160,3 +160,87 @@ main{
     background-size: 100% 100%;
 }
 
+
+/* Pour les écrans de petite taille (tels que les smartphones) */
+@media only screen and (max-width: 600px) {
+    main {
+        flex-direction: column;
+        align-items: center;
+    }
+
+
+    .filterCol {
+        flex-wrap: wrap;
+        width: 80%;
+        margin: auto;
+        margin-top: 5%;
+    }  
+    .cameraCol {
+        height: 80%;
+        width: 100%;
+        justify-content: initial;
+    }
+
+    .recentImages{
+        right: auto;
+        bottom: 0%;
+        height: 20%;
+        width: 100%;
+    }
+
+    .recentImages h2{
+        margin-top: 2%;
+    }
+
+    .images{
+        flex-direction: row;
+        width: 100%;
+        height: 100%;
+    }
+
+    .img{
+        width: auto;
+        height: 100%;
+        padding: 10px;
+    }
+}
+
+/* Pour les écrans de taille moyenne à grande */
+@media only screen and (min-width: 601px) {
+    main {
+        flex-direction: column;
+        align-items: center;
+    }
+    .filterCol {
+        flex-wrap: wrap;
+        width: 80%;
+        margin: auto;
+        margin-top: 5%;
+    }  
+    .cameraCol {
+        height: 100%;
+        width: 100%;
+    }
+
+    .recentImages{
+        right: auto;
+        bottom: 0%;
+        height: 20%;
+        width: 100%;
+    }
+
+    .recentImages h2{
+        margin-top: 2%;
+    }
+
+    .images{
+        flex-direction: row;
+        width: 100%;
+        height: 100%;
+    }
+
+    .img{
+        width: auto;
+        height: 100%;
+    }
+}

@@ -52,3 +52,32 @@ a {
 a:hover {
     background-color: #555; /* Couleur de fond au survol */
 }
+
+
+
+/* Pour les écrans de petite taille (tels que les smartphones) */
+@media only screen and (max-width: 600px) {
+    .logo img {
+        width: 40px;
+    }
+    header{
+        width: 96%;
+        padding: 2%;
+    }
+    ul{
+    }
+    
+
+    .profile {
+        margin-left: auto;
+    }
+
+    .profile button {
+        padding: 5px 10px;
+    }
+}
+
+/* Pour les écrans de taille moyenne à grande */
+@media only screen and (min-width: 601px) {
+
+}
