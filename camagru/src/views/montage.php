@@ -13,9 +13,11 @@
             <div class="cameraCol">
                 <div class="videoContainer">
                     <video id="videoElement" autoplay></video>
+                    <img id="uploadedImage" class="uploadedImage" style="display:none;">
                     <img id="filterImage" class="filterImage">
                 </div>
                 <button id="captureButton" class="captureButton">Capture Photo</button>
+                <input type="file" id="uploadImage" class="uploadImage" accept="image/*">
                 <canvas id="canvas" style="display: none;"></canvas>
                 <form method="POST" name="form1">
                     <input name="hidden_data" id='hidden_data' type="hidden"/>
@@ -53,8 +55,11 @@
 <script>
     let SelectFilter = 0;
     document.addEventListener("DOMContentLoaded", function() {
-    // Récupérer l'élément vidéo
+    // Récupérer les éléments vidéo et image téléchargée
     var video = document.getElementById("videoElement");
+    var uploadedImage = document.getElementById("uploadedImage");
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
 
     // Vérifier si le navigateur prend en charge l'API MediaDevices
     if (navigator.mediaDevices.getUserMedia) {
@@ -72,34 +77,74 @@
     }
 
     var captureButton = document.getElementById("captureButton");
-captureButton.addEventListener("click", function() {
-    var canvas = document.getElementById('canvas');
-    var context = canvas.getContext('2d');
+    captureButton.addEventListener("click", function() {
+        // Définir les dimensions du canvas en fonction des dimensions de la vidéo
 
-    // Dessiner l'image de la caméra sur le canvas
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    var imageData = canvas.toDataURL('image/png');
+        // canvas.width = video.videoWidth;
+        // canvas.height = video.videoHeight;
 
-    var filterImageUrl = '';
-    if (SelectFilter !== 0) {
-        filterImageUrl = 'assets/filtre' + SelectFilter + '.png';
+        // Dessiner l'image de la caméra ou l'image téléchargée redimensionnée sur le canvas
+        if (uploadedImage.style.display === 'none') {
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        } else {
+            context.drawImage(uploadedImage, 0, 0, canvas.width, canvas.height);
+        }
+
+        var imageData = canvas.toDataURL('image/png');
+
+        var filterImageUrl = '';
+        if (SelectFilter !== 0) {
+            filterImageUrl = 'assets/filtre' + SelectFilter + '.png';
+        }
+
+        // Envoyer les données des images redimensionnées au serveur
+        sendImage(imageData, filterImageUrl);
+    });
+
+    function sendImage(imageData, filterImageUrl) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'src/save_image.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            console.log('Images saved:', xhr.responseText);
+        };
+        xhr.send('image=' + encodeURIComponent(imageData) + '&filter_image_url=' + encodeURIComponent(filterImageUrl));
     }
 
-   
-    // Envoyer les données des images, les coordonnées de la position et les dimensions au serveur
-    sendImage(imageData, filterImageUrl);
-});
+    var uploadImage = document.getElementById('uploadImage');
+    uploadImage.addEventListener('change', function(event) {
+        var file = event.target.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var img = new Image();
+                img.onload = function() {
+                    // Définir les dimensions du canvas en fonction des dimensions de la vidéo
 
-function sendImage(imageData, filterImageUrl) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'src/save_image.php', true);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.onload = function() {
-        console.log('Images saved:', xhr.responseText);
-    };
-    xhr.send('image=' + encodeURIComponent(imageData) + '&filter_image_url=' + encodeURIComponent(filterImageUrl));
-}
+        // canvas.width = video.videoWidth;
+        // canvas.height = video.videoHeight;
 
+                    // Dessiner l'image téléchargée redimensionnée sur le canvas
+                    context.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                    // Convertir le canvas en URL de données
+                    var imageData = canvas.toDataURL('image/png');
+
+
+
+                    // Afficher l'image redimensionnée dans l'élément uploadedImage
+                    uploadedImage.src = imageData;
+                    uploadedImage.style.display = 'block';
+                    video.style.display = 'none';
+
+                    // Envoyer l'image redimensionnée au serveur
+                    sendImage(imageData, '');
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 
 
 
