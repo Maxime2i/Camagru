@@ -16,3 +16,4 @@ try {
     die();
 }
 ?>
+test
