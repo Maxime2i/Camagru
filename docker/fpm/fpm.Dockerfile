@@ -5,6 +5,24 @@ ADD docker/fpm/conf/php.ini /usr/local/etc/php/php.ini
 RUN apt-get update \
 && docker-php-ext-install pdo pdo_mysql
 
+RUN apt-get update && apt-get install -y msmtp
+
+# Créer le fichier de configuration /etc/msmtprc
+RUN echo 'defaults\n\
+tls on\n\
+tls_trust_file /etc/ssl/certs/ca-certificates.crt\n\
+logfile /var/log/msmtp.log\n\
+\n\
+account gmail\n\
+host smtp.gmail.com\n\
+port 587\n\
+auth on\n\
+user $GMAIL_USER\n\
+password $GMAIL_PASSWORD\n\
+from $GMAIL_USER\n\
+\n\
+account default : gmail' > /etc/msmtprc
+
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
