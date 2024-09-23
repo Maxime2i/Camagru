@@ -17,6 +17,9 @@ services:
     build:
       context: .
       dockerfile: docker/fpm/fpm.Dockerfile
+    environment:
+      GMAIL_USER: ${GMAIL_USER}
+      GMAIL_PASSWORD: ${GMAIL_PASSWORD}
     volumes:
       - ./camagru:/var/www/camagru
   mysql:

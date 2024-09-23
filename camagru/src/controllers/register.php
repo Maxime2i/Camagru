@@ -24,6 +24,7 @@ class RegisterController {
             $firstname = htmlspecialchars($firstname, ENT_QUOTES, 'UTF-8');
             $lastname = htmlspecialchars($lastname, ENT_QUOTES, 'UTF-8');
             $email = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
+            $token = bin2hex(random_bytes(50));
 
             try {
                 $requete = $connexion->prepare("INSERT INTO users VALUES (0, :firstname, :lastname, :username, :email, :pass, :token, :isVerified)");
@@ -34,50 +35,33 @@ class RegisterController {
                         "username" => $username,
                         "email" => $email,
                         "pass" => $password,
-                        "token" => "token",
+                        "token" => $token,
                         "isVerified" => true
                     )
                 );
 
-                // envoi mail
 
-    //             $token = bin2hex(random_bytes(50));
+                
 
-    //             $to = $email;
-    //             $subject = "Confirmez votre inscription";
-    //             $message = "Cliquez sur ce lien pour confirmer votre compte : ";
-    //             $message .= "http://votre-site.com/index.php?page=confirm&email=$email&token=$token";
-    //             $headers = 'From: maxime.lngls21@gmail.com' . "\r\n" .
-    // 'Reply-To: maxime.lngls21@gmail.com' . "\r\n" .
-    // 'X-Mailer: PHP/' . phpversion();
-
-    // $email = htmlspecialchars($_POST['email']);
-	// 	$headers = 'From: Admin<admin@camagru.42.fr>' . "\r\n" .
-	// 		'Reply-To: <admin@camagru.42.fr>' . "\r\n" .
-	// 		'X-Mailer: PHP/' . phpversion();
-
-	// 	$salt = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-	// 	$stryolo = "";
-	// 	for ($i=0; $i <= strlen($salt)/2; $i++){
-	// 		$stryolo .= $salt[rand() % strlen($salt)];
-	// 	}
-	// 	$yolohash = htmlspecialchars(hash('md5', $stryolo.$email));
-	// 	$link = "http://localhost:8000/client/views/resetpassword.php?reset=".$yolohash;
-	// 	$msg = "Please click on the below link to reset your password : \n" . $link;
-
-	// 	mail($email, "Reset Password", $msg, $headers);
+                $to = $email;
+                $subject = "Confirmez votre inscription";
+                $message = "Cliquez sur ce lien pour confirmer votre compte : ";
+                $message .= "http://localhost:8098/index.php?page=account&action=confirmAccount&email=$email&token=$token";
+                $headers = 'From: maxime.lngls21@gmail.com' . "\r\n" .
+    'Reply-To: maxime.lngls21@gmail.com' . "\r\n" .
+    'X-Mailer: PHP/' . phpversion();
 
 
                 
 
-// if (mail($to, $subject, $message, $headers)) // Envoi du message
-// {
-//     echo 'Votre message a bien été envoyé ';
-// }
-// else // Non envoyé
-// {
-//     echo "Votre message n'a pas pu être envoyé  " . (@error_get_last()['message'] ?? '');
-// }
+if (mail($to, $subject, $message, $headers)) // Envoi du message
+{
+    echo 'Votre message a bien été envoyé ';
+}
+else // Non envoyé
+{
+    echo "Votre message n'a pas pu être envoyé  " . (@error_get_last()['message'] ?? '');
+}
 
 
                 header("Location: index.php?page=login");

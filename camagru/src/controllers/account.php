@@ -48,8 +48,31 @@ class AccountController {
             }
         
     }
+
+
+    public function confirmAccount() {
+        if (isset($_GET['email']) && isset($_GET['token'])) {
+            $email = htmlspecialchars($_GET['email'], ENT_QUOTES, 'UTF-8');
+            $token = htmlspecialchars($_GET['token'], ENT_QUOTES, 'UTF-8');
+
+            try {
+                $user = AccountModel::confirmUserAccount($email, $token);
+
+                if ($user) {
+                    AccountModel::verifyUser($email);
+                    echo "Votre compte a été vérifié avec succès.";
+                } else {
+                    echo "Lien de confirmation invalide.";
+                }
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }
+        } else {
+            echo "Paramètres manquants.";
+        }
+    }
         
 }
 
 
-?> 
+?>
