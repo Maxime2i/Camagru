@@ -44,18 +44,24 @@ if (isset($_POST['image']) && isset($_POST['filter_image_url'])) {
 
     // Insertion dans la base de données
     $user_id = $_SESSION['user_id'];
-    $requete = $connexion->prepare("INSERT INTO gallery VALUES (0, :img, :user_id, :liked_by, :nb_like)");
+    $requete = $connexion->prepare("INSERT INTO gallery VALUES (0, :img, :user_id, :liked_by, :nb_like, :description)");
     $requete->execute(
         array(
             "img" => $fileName,
             "user_id" => $user_id,
             "liked_by" => '',
             "nb_like" => 0,
+            "description" => '',
         )
     );
 
-    echo $fileName; // Envoyer le nom du fichier superposé au client
+    // Récupérer l'ID de l'image insérée
+    $image_id = $connexion->lastInsertId();
+
+    // Envoyer l'ID de l'image en réponse
+    echo json_encode(array("image_id" => $image_id));
+    
 } else {
-    echo 'No image data received';
+    echo json_encode(array("error" => "No image data received"));
 }
 ?>

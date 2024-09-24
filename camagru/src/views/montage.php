@@ -106,7 +106,15 @@
         xhr.open('POST', 'src/save_image.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xhr.onload = function() {
-            console.log('Images saved:', xhr.responseText);
+            if (xhr.status === 200) {
+                // Traiter la réponse du serveur ici
+                var response = JSON.parse(xhr.responseText);
+                console.log('Images saved:', response.image_id);
+                // Rediriger vers la page de l'image sauvegardée
+                window.location.href = 'index.php?page=image&action=show&id=' + response.image_id;
+            } else {
+                console.error('Erreur lors de la sauvegarde de l\'image:', xhr.statusText);
+            }
         };
         xhr.send('image=' + encodeURIComponent(imageData) + '&filter_image_url=' + encodeURIComponent(filterImageUrl));
     }

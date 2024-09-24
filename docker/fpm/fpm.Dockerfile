@@ -7,8 +7,11 @@ RUN apt-get update \
 
 RUN apt-get update && apt-get install -y msmtp
 
+ARG GMAIL_USER
+ARG GMAIL_PASSWORD
+
 # Créer le fichier de configuration /etc/msmtprc
-RUN echo 'defaults\n\
+RUN echo "defaults\n\
 tls on\n\
 tls_trust_file /etc/ssl/certs/ca-certificates.crt\n\
 logfile /var/log/msmtp.log\n\
@@ -17,11 +20,11 @@ account gmail\n\
 host smtp.gmail.com\n\
 port 587\n\
 auth on\n\
-user $GMAIL_USER\n\
-password $GMAIL_PASSWORD\n\
-from $GMAIL_USER\n\
+user ${GMAIL_USER}\n\
+password ${GMAIL_PASSWORD}\n\
+from ${GMAIL_USER}\n\
 \n\
-account default : gmail' > /etc/msmtprc
+account default : gmail" > /etc/msmtprc
 
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
