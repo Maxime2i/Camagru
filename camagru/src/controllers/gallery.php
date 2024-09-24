@@ -2,6 +2,7 @@
 require_once("src/models/gallery.php");
 class GalleryController {
     public function index() {
+        session_start();
         // Paramètres de pagination
         $imagesPerPage = 6;
         $currentPage = isset($_GET['page_number']) ? intval($_GET['page_number']) : 1;
@@ -33,8 +34,16 @@ class GalleryController {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment']) && isset($_POST['image_id'])) {
             $imageId = $_POST['image_id'];
-            $userId = 1; // ID de l'utilisateur actuel, à remplacer par la vraie valeur
+            // Récupération du user_id depuis la session
+            $userId = $_SESSION['user_id'] ?? null;
             $comment = $_POST['comment'];
+
+            // Vérification que l'utilisateur est connecté
+            if ($userId === null) {
+                // Rediriger vers la page de connexion ou afficher un message d'erreur
+                header("Location: /login");
+                exit();
+            }
 
             // Appel à la fonction pour ajouter le commentaire
             GalleryModel::addComment($imageId, $userId, $comment);
@@ -53,4 +62,4 @@ class GalleryController {
 }
 
 
-?> 
+?>

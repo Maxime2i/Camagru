@@ -63,7 +63,7 @@
                     <?php $username = isset($usernames[$image['user_id']]) ? $usernames[$image['user_id']] : 'Utilisateur inconnu';?>
                     <div class="post2">
                         <div class="imageAndInfo">
-                        <img src="src/uploads/<?php echo $images[$i]['img']; ?>" alt="<?php echo $images[$i]['user_id']; ?>">
+                        <img class="img" src="src/uploads/<?php echo $images[$i]['img']; ?>" alt="<?php echo $images[$i]['user_id']; ?>">
                             <span class="info">Utilisateur : <?php echo '@', $username; ?>
                                 <?php
                                     if (strpos($images[$i]['liked_by'], ";" . $images[$i]['user_id'] . ";") !== false) {

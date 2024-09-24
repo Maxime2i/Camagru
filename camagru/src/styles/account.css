@@ -1,23 +1,28 @@
 body {
-    background: #1A1A1A;
+    background: #CCCCCC; /* Modifié pour correspondre au design de la galerie */
     
 }
 
 main {
-    margin: 10%;
+    margin: 5%;
     display: flex;
     justify-content: center;
     flex-direction: column;
-   
+    align-items: center; /* Ajouté pour centrer les éléments */
 }
 
-h2{
-    color: white;
+h2 {
+    color: #E1E1E1; /* Modifié pour correspondre au design de la galerie */
     text-align: center;
 
 }
 
-.divInfo{
+.divInfo {
+    background-color: #fff; /* Modifié pour correspondre au design de la galerie */
+    padding: 20px; /* Ajouté pour espacer le contenu */
+    border-radius: 10px; /* Ajouté pour des coins arrondis */
+    border: 2px solid #AAAAAA; /* Bordure plus épaisse pour la div montage */
+    width: 50%;
 }
 
 .formInfo{
@@ -28,40 +33,55 @@ h2{
     margin: auto;
 }
 
-.divImage{
-    
+.divImage {
+    display: flex; /* Ajouté pour aligner les images */
+    justify-content: center; /* Ajouté pour centrer les images */
+    flex-wrap: wrap; /* Ajouté pour permettre le retour à la ligne des images */
+    gap: 10px; /* Ajouté pour espacer les images */
 }
 
 .images{
     display: flex;
     flex-wrap: wrap;
+    justify-content: center; /* Modifié pour centrer les images */
+    gap: 10px; /* Ajouté pour espacer les images */
 }
 
 .image{
-    flex: 0 0 31%;
-    padding: 10px;
+    flex: 0 0 30%; /* Modifié pour ajuster la taille des images */
+    padding: 5px; /* Modifié pour réduire l'espacement */
     width: 100%;
     height: auto;
     display: block;
+    border: 2px solid #AAAAAA; /* Bordure plus épaisse pour la div montage */
+    border-radius: 5px; /* Ajouté pour des coins arrondis */
+    background-color: #fff;
 }
 
 .formInfo input {
     width: 100%;
     padding: 10px 0;
     font-size: 16px;
-    color: #fff;
+    color: #000000; /* Modifié pour correspondre au design de la galerie */
     margin-bottom: 30px;
     border: none;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid #555555; /* Modifié pour correspondre au design de la galerie */
     outline: none;
     background: transparent;
-  }
-  
-  .formInfo button{
+}
+
+.formInfo button{
     height: 40px;
-    color: black;
+    color: #fff; /* Modifié pour correspondre au design de la galerie */
+    background-color: #333333; /* Modifié pour correspondre au design de la galerie */
     width: 50%;
     margin: auto;
-  }
-  
-  
+    border: 1px solid #555555; /* Modifié pour correspondre au design de la galerie */
+    border-radius: 5px; /* Ajouté pour des coins arrondis */
+    cursor: pointer; /* Ajouté pour changer le curseur au survol */
+    transition: background-color 0.3s; /* Ajouté pour une transition douce */
+}
+
+.formInfo button:hover {
+    background-color: #444444; /* Modifié pour correspondre au design de la galerie */
+}

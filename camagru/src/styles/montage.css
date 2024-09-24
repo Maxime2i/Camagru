@@ -1,6 +1,7 @@
  body{
     overflow: hidden;
-    background: #1A1A1A;
+    background: #F0F0F0; /* Couleur de fond de la page galerie */
+    border: 1px solid #CCCCCC; /* Bordure similaire à la page galerie */
 }
 
 main{
@@ -14,11 +15,17 @@ main{
     display: flex;
     flex-direction: column-reverse;
     justify-content: space-between;
-    height: 100%;
+    width: 60%; /* Plus large */
+    height: 85%; /* Moins haute */
+    background: #fff; /* Fond différent pour la div montage */
+    border: 2px solid #AAAAAA; /* Bordure plus épaisse pour la div montage */
+    border-radius: 15px; /* Bordure arrondie */
+    padding: 20px; /* Espacement intérieur */
+    margin: 20px; /* Espacement extérieur */
 }
 
 .cameraCol{
-    height: 100%;
+    height: 80%; /* Ajustement de la hauteur pour s'adapter à l'encadrement */
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -34,7 +41,7 @@ main{
 }
 
 .captureButton{
-    background: #BAFE66;
+    background: #FF5733; /* Couleur du bouton de capture de la page galerie */
     border: none;
     border-radius: 20px;
     height: 6%;
@@ -81,16 +88,21 @@ main{
 }
 
 .recentImages{
+    background: #fff; /* Couleur de fond des images récentes de la page galerie */
+    border: 2px solid #AAAAAA; /* Bordure plus épaisse pour la div montage */
+    border-radius: 10px; /* Bordure arrondie */
     height: 100%;
     position: absolute;
-    right: 0;
+    right: 20px; /* Ajout d'un espace à droite */
     display: flex;
     flex-direction: column;
-    background: #333333;
+    padding: 20px 0; /* Espacement intérieur */
+    margin: 20px 0 ; /* Espacement extérieur */
 }
 
 .recentImages h2{
-    color: white;
+    color: #333333; /* Couleur du texte des titres des images récentes de la page galerie */
+    border-bottom: 1px solid #CCCCCC; /* Bordure similaire à la page galerie */
     margin-top: 0;
     margin-bottom: 0;
     margin-left: auto;

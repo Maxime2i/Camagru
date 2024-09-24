@@ -1,325 +1,203 @@
+/* Styles généraux */
 body {
-    background: #1A1A1A;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+/* Styles pour la zone de commentaire */
+.commentArea1, .commentArea2 {
+    width: 100%;
+    height: 60px; /* Hauteur fixe */
+    resize: none; /* Empêche le redimensionnement */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    overflow-y: auto; /* Ajoute une barre de défilement verticale si nécessaire */
+    box-sizing: border-box; /* Inclut le padding dans la largeur/hauteur totale */
+    resize: none;
 }
 
-main {
-    height: 90vh;
-    width: auto;
+/* Styles supplémentaires pour s'assurer que le textarea reste fixe */
+.commentForm {
+    margin-top: 15px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
 }
 
-.images{
-    display: flex;
-    justify-content: center;
+.submitBtn {
+    margin-top: 5px;
+    align-self: flex-end;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submitBtn:hover {
+    background-color: #45a049;
 }
 
 .gallery {
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
-    height: 80%;
-    width: 80%;
+    width: 95%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
 }
 
 .column {
-    width: 45%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-.column:first-child {
-    margin-right: 0%;
-    margin-top: 30px;
-}
-
-.column:last-child {
-    margin-left: 0%;
-    margin-top: 30px;
-}
-
-.column img {
-    max-width: 100%;
-}
-
-.post2{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    background: #484848;
-    height: 25%;
-    width: 90%;
-    border: 1px solid grey;
-    border-radius: 5px;
-}
-
-.post1{
-    display: flex;
-    flex-direction: row-reverse;
-    background: #484848;
-    height: 25%;
-    width: 90%;
-    border: 1px solid grey;
-    border-radius: 5px;
-
-}
-
-.img{
-}
-
-.info{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.spanLike{
-    width: 12%;
-}
-
-.images{
-    
-}
-
-.pagination{
-    height: 10%;
-    position: absolute;
+    width: 49%; /* Réduit l'espace entre les colonnes */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    bottom: 10%;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
 }
 
-.current-page{
-    margin-bottom: 10px;
-    font: bold;
-    font-size: 1.5rem;
-    color: #B9FE65;
+/* Styles pour chaque post */
+.post1, .post2 {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 15px;
+    width: 100%;
+    max-width: 500px;
 }
 
-.pages{
+/* Styles pour l'image et les informations */
+.imageAndInfo {
+    position: relative;
 }
 
-.imagesAndInfo{
+.img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
 }
 
-.comments{
+.info {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: space-between;
-    width: 45%;
+    font-size: 14px; /* Ajustez cette valeur selon vos besoins */
+    margin-top: 5px;
 }
 
-.commentList{
-    flex: 2;
-    height: 80%;
-    width: 100%;
+/* Styles pour les likes */
+.spanLike {
+    display: flex;
+    align-items: center;
 }
 
-.commentInfo{
-    background: grey;
-    width: 100%;
+.nb_like {
+    margin-right: 5px;
+    font-size: 14px; /* Ajustez cette valeur selon vos besoins */
 }
 
-.commentUsername{
+.like {
+    cursor: pointer;
+    width: 16px; /* Taille fixe pour l'icône */
+    height: 16px; /* Taille fixe pour l'icône */
+}
+
+/* Styles pour les commentaires */
+.comments {
+    margin-top: 15px;
+}
+
+.commentInfo {
     font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
 }
 
-.comment{
-    width: 95%;
+.commentUl {
+    list-style-type: none;
+    padding: 0;
 }
 
-.commentForm{
-    bottom: 0%;
-    height: 20%;
+.comment {
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 8px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column; /* Affiche les éléments en colonne */
 }
 
-.commentUl{
+.commentUsername {
+    font-weight: bold;
+    margin-bottom: 5px; /* Ajoute un espace entre le nom d'utilisateur et le contenu du commentaire */
+}
+
+.commentContent {
+    margin-left: 0; /* Supprime la marge à gauche pour aligner avec le nom d'utilisateur */
+}
+
+/* Styles pour le formulaire de commentaire */
+.commentForm {
+    margin-top: 15px;
     display: flex;
     flex-direction: column;
-    height: 80%;
-    overflow-y: scroll;
-    overflow-wrap: break-word;
 }
 
-.commentUl::-webkit-scrollbar {
-    width: 6px;
-}
-
-.commentUl::-webkit-scrollbar-track {
-    background-color: transparent;
-}
-
-.commentUl::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 3px;
-}
-
-.commentUl::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.commentArea1{
-    resize: none;
-    height: auto;
-    background: rgb(94, 94, 94);
-    border-bottom-left-radius: 5px;
-}
-
-.commentArea2{
-    resize: none;
-    height: auto;
-    background: rgb(94, 94, 94);
-}
-
-.commentArea1::placeholder{
-    color: #262626;
-}
-
-.commentArea2::placeholder{
-    color: #262626;
-}
-
-.send{
+.commentArea1, .commentArea2 {
     width: 100%;
-    height: 100%;
-
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
 }
 
-.submitBtn{
-    background: url(../assets/send.png) no-repeat center center;
-    background-color: #808080;
-    background-size: 20px 20px;
-    width: 20%;
+.submitBtn {
+    background-color: #4CAF50;
+    color: white;
     border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
-
-
-/* Pour les écrans de petite taille (tels que les smartphones) */
-@media only screen and (max-width: 600px) {
-    body{
-        height: 100vh;
-    }
-    main {
-        width: 100%;
-       
-    }
-
-    .gallery{
-        flex-direction: column;
-        align-items: center;
-        justify-content: initial;
-        width: 100%;
-    }
-
-    .column {
-        width: 45%;
-        display: flex;
-        flex-direction: column;
-    }
-    .column:first-child {
-        margin-right: 0%;
-        margin-top: 0;
-    }
-    
-    .column:last-child {
-        margin-left: 0%;
-        margin-top: 0;
-    }
-
-    .images{
-        height: 200%;
-        flex-direction: column;
-    }
-    
-    .post1{
-        width: 180%;
-        height: auto;
-        margin: 15px 0px;
-    }
-
-    .post2{
-        width: 180%;
-        height: auto;
-        margin: 15px 0px;
-    }
-
-    .pagination{
-        position: relative;
-        bottom: 0%;
-    }
-
-    .numberPage{
-        padding: 5px 10px;
-    }
+.submitBtn:hover {
+    background-color: #45a049;
 }
 
-/* Pour les écrans de taille moyenne à grande */
-@media only screen and (min-width: 601px) and (max-width: 768px) {
-    body{
-        height: 100vh;
-    }
-    main {
-        width: 100%;
-       
-    }
+/* Styles pour la pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
-    .gallery{
-        flex-direction: column;
-        align-items: center;
-        justify-content: initial;
-        width: 100%;
-    }
+.pagination a, .pagination span {
+    color: #333;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+}
 
-    .column {
-        width: 45%;
-        display: flex;
-        flex-direction: column;
-    }
-    .column:first-child {
-        margin-right: 0%;
-        margin-top: 0;
-    }
-    
-    .column:last-child {
-        margin-left: 0%;
-        margin-top: 0;
-    }
+.pagination a:hover {
+    background-color: #ddd;
+}
 
-    .images{
-        height: 160%;
-        flex-direction: column;
-    }
-    
-    .post1{
-        width: 180%;
-        height: auto;
-        margin: 15px 0px;
-    }
+.pagination .active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
 
-    .post2{
-        width: 180%;
-        height: auto;
-        margin: 15px 0px;
-    }
-
-    .pagination{
-        position: relative;
-        bottom: 0%;
-    }
-
-    .numberPage{
-        padding: 5px 10px;
-    }
-
+.pagination .disabled {
+    color: #ddd;
+    pointer-events: none;
 }

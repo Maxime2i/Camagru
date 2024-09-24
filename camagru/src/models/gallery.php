@@ -39,7 +39,6 @@ class GalleryModel {
 
     public static function addComment($imageId, $userId, $comment) {
         include "src/controllers/database.php";
-    
         // Vérifier si l'image existe
         $requete_check_image = $connexion->prepare("SELECT COUNT(*) AS total FROM gallery WHERE id = ?");
         $requete_check_image->execute([$imageId]);
