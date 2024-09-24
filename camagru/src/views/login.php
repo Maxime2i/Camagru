@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,6 +23,22 @@
             <span id="username-error" style="color: red;"></span>
             <input type="password" name="password" id="password" placeholder="Password" required>
             <span id="password-error" style="color: red;"></span>
+            <?php if (isset($_SESSION['login_error'])): ?>
+                <div class="error-message" style="color: red;">
+                    <?php 
+                    echo $_SESSION['login_error'];
+                    unset($_SESSION['login_error']); // Effacer le message après l'avoir affiché
+                    ?>
+                </div>
+            <?php endif; ?>
+            <?php if (isset($_SESSION['login_message'])): ?>
+                <div class="success-message" style="color: green;">
+                    <?php 
+                    echo $_SESSION['login_message'];
+                    unset($_SESSION['login_message']); // Effacer le message après l'avoir affiché
+                    ?>
+                </div>
+            <?php endif; ?>
             <input type="submit" value="Login" name="submit">
             <button type="button" onClick="GoToRegister()" class="registerBtn">register</button>
         </form>

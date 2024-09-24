@@ -36,7 +36,7 @@ class RegisterController {
                         "email" => $email,
                         "pass" => $password,
                         "token" => $token,
-                        "isVerified" => true
+                        "isVerified" => 0
                     )
                 );
 

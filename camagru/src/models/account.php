@@ -48,7 +48,7 @@ class AccountModel {
         include "src/controllers/database.php";
 
         try {
-            $update = $connexion->prepare("UPDATE users SET is_verified = false WHERE email = :email");
+            $update = $connexion->prepare("UPDATE users SET is_verified = true WHERE email = :email");
             $update->execute(array("email" => $email));
         } catch (PDOException $e) {
             throw new Exception("Erreur lors de la mise à jour de l'utilisateur : " . $e->getMessage());
