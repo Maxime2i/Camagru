@@ -3,6 +3,12 @@
 class LoginController {
     public function index() {
         include 'src/views/login.php';
+
+        session_start();
+        if (isset($_SESSION['user_id'])) {
+            header("Location: index.php?page=homepage");
+            exit();
+        }
     }
 
     public function submit() {
