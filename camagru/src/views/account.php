@@ -14,7 +14,6 @@
             <form class="formInfo" id="updateForm">
                 <input type="text" name="username" placeholder="Nom d'utilisateur" value="<?php echo $username; ?>" required>
                 <input type="email" name="email" placeholder="E-mail" value="<?php echo $email; ?>" required>
-                <input type="password" name="password" placeholder="Mot de passe" id="password" required>
                 <!-- Nouvelle case à cocher pour les notifications par e-mail -->
                 <label>
                     <input type="checkbox" name="email_notifications" <?php echo $mail_notification ? 'checked' : ''; ?>>
@@ -55,7 +54,6 @@
                             // Mettre à jour la page en fonction de la réponse du serveur
                             // Par exemple, afficher un message de réussite ou d'erreur
                             console.log(xhr.responseText);
-                            document.getElementById('password').value = '';
                         } else {
                             console.error('Une erreur s\'est produite');
                         }

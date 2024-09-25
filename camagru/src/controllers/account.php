@@ -27,11 +27,10 @@ class AccountController {
     public function update() {
         session_start();
 
-        if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])) {
-            // Récupérer les données soumises par le formulaire
+        if (isset($_POST['username']) && isset($_POST['email'])) {
+            // Récupérer les données soumises par le formulair
             $username = $_POST['username'];
             $email = $_POST['email'];
-            $password = $_POST['password'];
             $mail_notification = $_POST['email_notifications'];
             
             if ($mail_notification == "on") {
@@ -43,7 +42,7 @@ class AccountController {
             // Mettez à jour les informations dans la base de données en utilisant le modèle approprié
             
 
-            $success = AccountModel::updateUserInfo($username, $email, $password, $mail_notification);
+            $success = AccountModel::updateUserInfo($username, $email, $mail_notification);
 
             if ($success) {
                 // Envoyez une réponse de succès
@@ -102,6 +101,9 @@ class AccountController {
         header("Location: index.php?page=account");
         exit();
     }
+
+
+    
         
         
 }

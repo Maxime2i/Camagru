@@ -86,3 +86,10 @@ input[type="submit"]:hover {
 .login-btn:hover {
     color: #45a049;
 }
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    text-align: center;
+}

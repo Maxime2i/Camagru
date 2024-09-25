@@ -18,17 +18,16 @@ class AccountModel {
         return $result['mail_notification'];
     }
 
-    public static function updateUserInfo($Username, $email, $Password, $mail_notification) {
+    public static function updateUserInfo($Username, $email, $mail_notification) {
         include "src/controllers/database.php";
         
         try {
             // Préparez et exécutez la requête SQL pour mettre à jour les informations de l'utilisateur
-            $query = "UPDATE users SET username = :username, email = :email, pass = :password, mail_notification = :mail_notification WHERE id = :user_id";
+            $query = "UPDATE users SET username = :username, email = :email, mail_notification = :mail_notification WHERE id = :user_id";
             $statement = $connexion->prepare($query);
             $statement->execute(array(
                 'username' => $Username,
                 'email' => $email,
-                'password' => $Password, // Remarque: vous devez hasher le mot de passe avant de le stocker dans la base de données pour des raisons de sécurité
                 'user_id' => $_SESSION['user_id'], // Vous devez récupérer l'ID de l'utilisateur connecté à partir de la session
                 'mail_notification' => $mail_notification
             ));
@@ -95,6 +94,7 @@ class AccountModel {
             throw new Exception("Erreur lors de la suppression de l'image : " . $e->getMessage());
         }
     }
+
 }
 
 ?>

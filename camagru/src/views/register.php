@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,8 +19,7 @@
             <input type="text" name="username" id="username" placeholder="Nom d'utilisateur" required>
             <input type="email" name="email" id="email" placeholder="E-mail" required>
             <input type="password" name="password" id="password" placeholder="Mot de passe" required>
-            <span id="username-error" class="error"></span>
-            <span id="password-error" class="error"></span>
+            <p class="error-message" id="error-message"> <?php if (isset($_SESSION['error']) && $_SESSION['error']): ?><?php echo $_SESSION['error']; ?> <?php endif; ?></p>
             <input type="submit" value="S'inscrire" name="submit">
         </form>
         <button onclick="window.location.href='index.php?page=login'" class="login-btn">Se connecter</button>
@@ -30,17 +32,11 @@
     function validateForm() {
         var fields = ['firstname', 'lastname', 'username', 'email', 'password'];
         var valid = true;
+        var errorElement = document.getElementById('error-message');
+        console.log(errorElement);
 
         fields.forEach(function(field) {
             var value = document.getElementById(field).value;
-            var errorElement = document.getElementById(field + '-error');
-            
-            if (!errorElement) {
-                errorElement = document.createElement('span');
-                errorElement.id = field + '-error';
-                errorElement.style.color = 'red';
-                document.getElementById(field).insertAdjacentElement('afterend', errorElement);
-            }
 
             var htmlRegex = /<\/?[a-z][\s\S]*>/i;
 

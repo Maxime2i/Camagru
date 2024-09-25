@@ -30,23 +30,20 @@ class LoginController {
         
         
             if ($username != '' && $password != '') {
-                $req = $connexion->prepare("SELECT * FROM users WHERE username = :username AND pass = :pass");
-                $req->execute(
-                    array(
-                        "username" => $username,
-                        "pass" => $password,
-                    )
-                );
-                $rep = $req->fetch();
-                if ($rep['id'] != false){
-                    if ($rep['is_verified'] == 1) {
-                        $_SESSION['user_id'] = $rep['id'];
-                        $_SESSION['username'] = $rep['username'];
-                        $_SESSION['email'] = $rep['email'];
+                // Récupérer l'utilisateur par son nom d'utilisateur uniquement
+                $req = $connexion->prepare("SELECT * FROM users WHERE username = :username");
+                $req->execute(["username" => $username]);
+                $user = $req->fetch();
+
+                if ($user && password_verify($password, $user['pass'])) {
+                    if ($user['is_verified'] == 1) {
+                        $_SESSION['user_id'] = $user['id'];
+                        $_SESSION['username'] = $user['username'];
+                        $_SESSION['email'] = $user['email'];
                         header("Location: index.php?page=homepage");
                         exit();
                     } else {
-                        $_SESSION['login_error'] = 'Votre compte n\'est pas encore vérifié. Veuillez vérifier votre email. <a href="index.php?page=login&action=resendVerification&user_id=' . $rep['id'] . '">Renvoyer l\'email de vérification</a>';
+                        $_SESSION['login_error'] = 'Votre compte n\'est pas encore vérifié. Veuillez vérifier votre email. <a href="index.php?page=login&action=resendVerification&user_id=' . $user['id'] . '">Renvoyer l\'email de vérification</a>';
                         header("Location: index.php?page=login");
                         exit();
                     }
@@ -115,4 +112,6 @@ class LoginController {
         header("Location: index.php?page=login");
         exit();
     }
+
+
 }

@@ -23,6 +23,7 @@ session_start();
             <input type="password" name="password" id="password" placeholder="Mot de passe" required>
             <span id="username-error" class="error"></span>
             <span id="password-error" class="error"></span>
+            <a href="index.php?page=sendPasswordEmail" class="forgot-password">Mot de passe oublié ?</a>
             <?php if (isset($_SESSION['login_error'])): ?>
                 <div class="error-message">
                     <?php 
