@@ -19,7 +19,8 @@ try {
         email VARCHAR(100) NOT NULL, 
         pass VARCHAR(100) NOT NULL,
         token VARCHAR(100) NOT NULL,
-        is_verified BOOLEAN DEFAULT 0
+        is_verified BOOLEAN DEFAULT 0,
+        mail_notification BOOLEAN DEFAULT 0
     )";
     $connexion->exec($sql);
     //echo "Table 'users' créée avec succès.<br>";
@@ -31,6 +32,7 @@ try {
         user_id INT(6) UNSIGNED, 
         liked_by VARCHAR(100),
         nb_like INT(6) UNSIGNED, 
+        description TEXT,
         FOREIGN KEY (user_id) REFERENCES users(id)
     )";
     $connexion->exec($sql);

@@ -11,6 +11,8 @@ class AccountController {
             
             // Utiliser le modèle pour récupérer les images de l'utilisateur
             $images = AccountModel::getMyImages($user_id);
+
+            $mail_notification = AccountModel::getMailNotification($user_id);
             
             // Inclure la vue pour afficher les images de l'utilisateur
             include 'src/views/account.php';
@@ -25,28 +27,35 @@ class AccountController {
     public function update() {
         session_start();
 
-       
-            if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])) {
-                // Récupérer les données soumises par le formulaire
-                $username = $_POST['username'];
-                $email = $_POST['email'];
-                $password = $_POST['password'];
-
-                // Mettez à jour les informations dans la base de données en utilisant le modèle approprié
-                $success = AccountModel::updateUserInfo($username, $email, $password);
-
-                if ($success) {
-                    // Envoyez une réponse de succès
-                    echo 'Informations mises à jour avec succès';
-                } else {
-                    // Envoyez une réponse d'erreur
-                    echo 'Erreur lors de la mise à jour des informations';
-                }
+        if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])) {
+            // Récupérer les données soumises par le formulaire
+            $username = $_POST['username'];
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $mail_notification = $_POST['email_notifications'];
+            
+            if ($mail_notification == "on") {
+                $mail_notification = 1;
             } else {
-                // Envoyez une réponse d'erreur si les données du formulaire sont manquantes
-                echo 'Données manquantes';
+                $mail_notification = 0;
             }
-        
+
+            // Mettez à jour les informations dans la base de données en utilisant le modèle approprié
+            
+
+            $success = AccountModel::updateUserInfo($username, $email, $password, $mail_notification);
+
+            if ($success) {
+                // Envoyez une réponse de succès
+                echo 'Informations mises à jour avec succès';
+            } else {
+                // Envoyez une réponse d'erreur
+                echo 'Erreur lors de la mise à jour des informations';
+            }
+        } else {
+            // Envoyez une réponse d'erreur si les données du formulaire sont manquantes
+            echo 'Données manquantes';
+        }
     }
 
 
@@ -71,6 +80,29 @@ class AccountController {
             echo "Paramètres manquants.";
         }
     }
+
+    public function deleteImage() {
+        session_start();
+
+        if (isset($_GET['image_id'])) {
+            $image_id = $_GET['image_id'];
+            $user_id = $_SESSION['user_id'];
+
+            $success = AccountModel::deleteImage($image_id, $user_id);
+
+            if ($success) {
+                echo "Image supprimée avec succès.";
+            } else {
+                echo "Erreur lors de la suppression de l'image.";
+            }
+        } else {
+            echo "Paramètres manquants.";
+        }
+
+        header("Location: index.php?page=account");
+        exit();
+    }
+        
         
 }
 

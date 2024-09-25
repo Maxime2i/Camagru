@@ -8,21 +8,23 @@
 </head>
 <body>
     <main>
-
+        <img src="src/assets/logoWithoutBackground.png" alt="Logo" class="logo">
         <form action="?page=register&action=submit" method="post" onsubmit="return validateForm()">
-            <h2>Register</h2>
-            <input type="text" name="firstname" id="firstname" placeholder="Firstname" required>
-            <input type="text" name="lastname" id="lastname" placeholder="Lastname" required>
-            <input type="text" name="username" id="username" placeholder="Username" required>
-            <span id="username-error" style="color: red;"></span>
+            <h2>Inscription</h2>
+            <input type="text" name="firstname" id="firstname" placeholder="Prénom" required>
+            <input type="text" name="lastname" id="lastname" placeholder="Nom" required>
+            <input type="text" name="username" id="username" placeholder="Nom d'utilisateur" required>
             <input type="email" name="email" id="email" placeholder="E-mail" required>
-            <input type="password" name="password" id="password" placeholder="Password" required>
-            <span id="password-error" style="color: red;"></span>
-            <input type="submit" value="Register" name="submit">
+            <input type="password" name="password" id="password" placeholder="Mot de passe" required>
+            <span id="username-error" class="error"></span>
+            <span id="password-error" class="error"></span>
+            <input type="submit" value="S'inscrire" name="submit">
         </form>
+        <button onclick="window.location.href='index.php?page=login'" class="login-btn">Se connecter</button>
     </main>
-
+    <script src="src/scripts/register-validation.js"></script>
 </body>
+</html>
 
 <script>
     function validateForm() {

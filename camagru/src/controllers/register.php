@@ -10,7 +10,7 @@ class RegisterController {
     public function submit() {
         include 'src/controllers/database.php';
         session_start();
-
+echo "test";
         if (isset($_POST['submit'])){
             extract($_POST);
 
@@ -27,7 +27,7 @@ class RegisterController {
             $token = bin2hex(random_bytes(50));
 
             try {
-                $requete = $connexion->prepare("INSERT INTO users VALUES (0, :firstname, :lastname, :username, :email, :pass, :token, :isVerified)");
+                $requete = $connexion->prepare("INSERT INTO users VALUES (0, :firstname, :lastname, :username, :email, :pass, :token, :isVerified, :mail_notification)");
                 $requete->execute(
                     array(
                         "firstname" => $firstname,
@@ -36,7 +36,8 @@ class RegisterController {
                         "email" => $email,
                         "pass" => $password,
                         "token" => $token,
-                        "isVerified" => 0
+                        "isVerified" => 0,
+                        "mail_notification" => 1
                     )
                 );
 

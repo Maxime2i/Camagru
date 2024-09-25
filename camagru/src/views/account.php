@@ -10,23 +10,29 @@
     <?php include 'header.php'; ?>
     <main>
         <div class="divInfo">
-            <h2>My infos</h2>
+            <h2>Mes informations</h2>
             <form class="formInfo" id="updateForm">
-                <input type="text" name="username" placeholder="Username" value="<?php echo $username; ?>" required>
-                <input type="email" name="email" placeholder="Email" value="<?php echo $email; ?>" required>
-                <input type="password" name="password" placeholder="Password" id="password" required>
-                <button type="submit" name="submit">Update</button>
+                <input type="text" name="username" placeholder="Nom d'utilisateur" value="<?php echo $username; ?>" required>
+                <input type="email" name="email" placeholder="E-mail" value="<?php echo $email; ?>" required>
+                <input type="password" name="password" placeholder="Mot de passe" id="password" required>
+                <!-- Nouvelle case à cocher pour les notifications par e-mail -->
+                <label>
+                    <input type="checkbox" name="email_notifications" <?php echo $mail_notification ? 'checked' : ''; ?>>
+                    Recevoir des e-mails pour les commentaires sur mes photos
+                </label>
+                <button type="submit" name="submit">Mettre à jour</button>
             </form>
         </div>
         <div class="divImage">
-            <h2>My images</h2>
-                <div class="images">
-                    <?php foreach ($images as $image): ?>
-                        <div class="image">
-                            <img src="src/uploads/<?php echo $image['img']; ?>" alt="Image">
-                        </div>
-                    <?php endforeach; ?>
-                </div>
+            <h2>Mes images</h2>
+            <div class="images">
+                <?php foreach ($images as $image): ?>
+                    <div class="image">
+                        <img src="src/uploads/<?php echo $image['img']; ?>" alt="Image">
+                        <a href="index.php?page=account&action=deleteImage&image_id=<?php echo $image['id']; ?>" class="deleteButton" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette image ?');">Supprimer</a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </div>
             
 

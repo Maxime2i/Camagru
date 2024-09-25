@@ -10,7 +10,9 @@
 
 <header>
     <div class="logo">
-        <img src="src/logo.jpg" alt="Logo">
+        <a href="index.php?page=homepage" class="logo-link">
+            <img src="src/assets/logoWithoutBackground.png" alt="Logo">
+        </a>
     </div>
     <div class="spacer">
         <nav class="nav">
