@@ -8,7 +8,7 @@ class ImageModel {
         $requete->execute(array(':id' => $imageId));
         $image = $requete->fetch();
 
-        return 'src/uploads/' . $image['img'];
+        return $image['img'];
     }
 }
 ?>

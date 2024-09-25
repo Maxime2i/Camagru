@@ -13,7 +13,6 @@ class MontageController {
 
     public function submit() {
         
-        echo 'submi;alalalalalalalalalat';
     }
 
 }
