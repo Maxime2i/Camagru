@@ -55,214 +55,151 @@
 <script>
     let SelectFilter = 0;
     document.addEventListener("DOMContentLoaded", function() {
-    // Récupérer les éléments vidéo et image téléchargée
-    var video = document.getElementById("videoElement");
-    var uploadedImage = document.getElementById("uploadedImage");
-    var canvas = document.getElementById('canvas');
-    var context = canvas.getContext('2d');
+        // Récupérer les éléments vidéo et image téléchargée
+        var video = document.getElementById("videoElement");
+        var uploadedImage = document.getElementById("uploadedImage");
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
 
-    // Vérifier si le navigateur prend en charge l'API MediaDevices
-    if (navigator.mediaDevices.getUserMedia) {
-        // Demander l'accès à la caméra
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(function(stream) {
-                // Afficher le flux de la caméra dans l'élément vidéo
-                video.srcObject = stream;
-            })
-            .catch(function(error) {
-                console.log("Erreur getUserMedia: ", error);
-            });
-    } else {
-        console.log("getUserMedia n'est pas pris en charge par ce navigateur.");
-    }
-
-    var captureButton = document.getElementById("captureButton");
-    captureButton.addEventListener("click", function() {
-        // Définir les dimensions du canvas en fonction des dimensions de la vidéo
-
-        // canvas.width = video.videoWidth;
-        // canvas.height = video.videoHeight;
-
-        // Dessiner l'image de la caméra ou l'image téléchargée redimensionnée sur le canvas
-        if (uploadedImage.style.display === 'none') {
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        // Vérifier si le navigateur prend en charge l'API MediaDevices
+        if (navigator.mediaDevices.getUserMedia) {
+            // Demander l'accès à la caméra
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+                    // Afficher le flux de la caméra dans l'élément vidéo
+                    video.srcObject = stream;
+                })
+                .catch(function(error) {
+                    console.log("Erreur getUserMedia: ", error);
+                });
         } else {
-            context.drawImage(uploadedImage, 0, 0, canvas.width, canvas.height);
+            console.log("getUserMedia n'est pas pris en charge par ce navigateur.");
         }
 
-        var imageData = canvas.toDataURL('image/png');
+        var captureButton = document.getElementById("captureButton");
+        captureButton.disabled = true; // Désactiver le bouton au chargement
 
-        var filterImageUrl = '';
-        if (SelectFilter !== 0) {
-            filterImageUrl = 'assets/filtre' + SelectFilter + '.png';
-        }
+        captureButton.addEventListener("click", function() {
+            // Définir les dimensions du canvas en fonction des dimensions de la vidéo
 
-        // Envoyer les données des images redimensionnées au serveur
-        sendImage(imageData, filterImageUrl);
-    });
+            // canvas.width = video.videoWidth;
+            // canvas.height = video.videoHeight;
 
-    function sendImage(imageData, filterImageUrl) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'src/save_image.php', true);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                // Traiter la réponse du serveur ici
-                var response = JSON.parse(xhr.responseText);
-                console.log('Images saved:', response.image_id);
-                // Rediriger vers la page de l'image sauvegardée
-                window.location.href = 'index.php?page=image&action=show&id=' + response.image_id;
+            // Dessiner l'image de la caméra ou l'image téléchargée redimensionnée sur le canvas
+            if (uploadedImage.style.display === 'none') {
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
             } else {
-                console.error('Erreur lors de la sauvegarde de l\'image:', xhr.statusText);
+                context.drawImage(uploadedImage, 0, 0, canvas.width, canvas.height);
             }
-        };
-        xhr.send('image=' + encodeURIComponent(imageData) + '&filter_image_url=' + encodeURIComponent(filterImageUrl));
-    }
 
-    var uploadImage = document.getElementById('uploadImage');
-    uploadImage.addEventListener('change', function(event) {
-        var file = event.target.files[0];
-        if (file) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                var img = new Image();
-                img.onload = function() {
-                    // Définir les dimensions du canvas en fonction des dimensions de la vidéo
+            var imageData = canvas.toDataURL('image/png');
 
-        // canvas.width = video.videoWidth;
-        // canvas.height = video.videoHeight;
+            var filterImageUrl = '';
+            if (SelectFilter !== 0) {
+                filterImageUrl = 'assets/filtre' + SelectFilter + '.png';
+            }
 
-                    // Dessiner l'image téléchargée redimensionnée sur le canvas
-                    context.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-                    // Convertir le canvas en URL de données
-                    var imageData = canvas.toDataURL('image/png');
-
-
-
-                    // Afficher l'image redimensionnée dans l'élément uploadedImage
-                    uploadedImage.src = imageData;
-                    uploadedImage.style.display = 'block';
-                    video.style.display = 'none';
-
-                    // Envoyer l'image redimensionnée au serveur
-                    sendImage(imageData, '');
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-
-
-
-
-
-
-
-document.getElementById('filterButton1').addEventListener('click', function() {
-            var img = new Image();
-            img.onload = function() {
-                document.getElementById('filterImage').src = img.src;
-                document.getElementById('filterImage').style.display = 'block';
-            };
-            img.src = 'src/assets/filtre1.png';
-            SelectFilter = 1;
+            // Envoyer les données des images redimensionnées au serveur
+            sendImage(imageData, filterImageUrl);
         });
 
-    document.getElementById('filterButton2').addEventListener('click', function() {
-        var img = new Image();
-        img.onload = function() {
-            document.getElementById('filterImage').src = img.src;
-            document.getElementById('filterImage').style.display = 'block';
-        };
-        img.src = 'src/assets/filtre2.png';
-        SelectFilter = 2;
+        function sendImage(imageData, filterImageUrl) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'src/save_image.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Traiter la réponse du serveur ici
+                    var response = JSON.parse(xhr.responseText);
+                    console.log('Images saved:', response.image_id);
+                    // Rediriger vers la page de l'image sauvegardée
+                    window.location.href = 'index.php?page=image&action=show&id=' + response.image_id;
+                } else {
+                    console.error('Erreur lors de la sauvegarde de l\'image:', xhr.statusText);
+                }
+            };
+            xhr.send('image=' + encodeURIComponent(imageData) + '&filter_image_url=' + encodeURIComponent(filterImageUrl));
+        }
+
+        var uploadImage = document.getElementById('uploadImage');
+        uploadImage.addEventListener('change', function(event) {
+            var file = event.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var img = new Image();
+                    img.onload = function() {
+                        // Obtenir les dimensions de la vidéo
+                        var videoWidth = video.videoWidth || video.clientWidth;
+                        var videoHeight = video.videoHeight || video.clientHeight;
+
+                        // Calculer le ratio pour redimensionner l'image
+                        var ratio = Math.min(videoWidth / img.width, videoHeight / img.height);
+                        var newWidth = img.width * ratio;
+                        var newHeight = img.height * ratio;
+
+                        // Créer un canvas temporaire pour redimensionner l'image
+                        var tempCanvas = document.createElement('canvas');
+                        tempCanvas.width = videoWidth;
+                        tempCanvas.height = videoHeight;
+                        var ctx = tempCanvas.getContext('2d');
+
+                        // Dessiner l'image redimensionnée au centre du canvas
+                        ctx.drawImage(img, 
+                            (videoWidth - newWidth) / 2, 
+                            (videoHeight - newHeight) / 2, 
+                            newWidth, 
+                            newHeight
+                        );
+
+                        // Afficher l'image redimensionnée
+                        uploadedImage.src = tempCanvas.toDataURL('image/png');
+                        uploadedImage.style.display = 'block';
+                        video.style.display = 'none';
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Fonction pour mettre à jour l'état du bouton de capture
+        function updateCaptureButtonState() {
+            captureButton.disabled = SelectFilter === 0;
+        }
+
+        // Modifier les gestionnaires d'événements des boutons de filtre
+        for (let i = 1; i <= 10; i++) {
+            document.getElementById('filterButton' + i).addEventListener('click', function() {
+                var img = new Image();
+                img.onload = function() {
+                    document.getElementById('filterImage').src = img.src;
+                    document.getElementById('filterImage').style.display = 'block';
+                };
+                if (i < 10) {
+                    img.src = 'src/assets/filtre' + i + '.png';
+                    SelectFilter = i;
+                } else {
+                    // Réinitialiser pour le bouton "Sans Filtre"
+                    document.getElementById('filterImage').src = '';
+                    document.getElementById('filterImage').style.display = 'none';
+                    SelectFilter = 0;
+                }
+                updateCaptureButtonState();
+            });
+        }
+
+        document.getElementById('filterButton10').addEventListener('click', function() {
+            // Réinitialiser le filtre sélectionné
+            SelectFilter = 0;
+
+            // Cacher l'image du filtre
+            var filterImage = document.getElementById('filterImage');
+            filterImage.src = '';  // Réinitialiser la source
+            filterImage.style.display = 'none';  // Cacher l'élément
+        });
+
+
     });
-
-    document.getElementById('filterButton3').addEventListener('click', function() {
-        var img = new Image();
-        img.onload = function() {
-            document.getElementById('filterImage').src = img.src;
-            document.getElementById('filterImage').style.display = 'block';
-        };
-        img.src = 'src/assets/filtre3.png';
-        SelectFilter = 3;
-    });
-
-    document.getElementById('filterButton4').addEventListener('click', function() {
-        var img = new Image();
-        img.onload = function() {
-            document.getElementById('filterImage').src = img.src;
-            document.getElementById('filterImage').style.display = 'block';
-        };
-        img.src = 'src/assets/filtre4.png';
-        SelectFilter = 4;
-    });
-
-    document.getElementById('filterButton5').addEventListener('click', function() {
-        var img = new Image();
-        img.onload = function() {
-            document.getElementById('filterImage').src = img.src;
-            document.getElementById('filterImage').style.display = 'block';
-        };
-        img.src = 'src/assets/filtre5.png';
-        SelectFilter = 5;
-    });
-
-    document.getElementById('filterButton6').addEventListener('click', function() {
-        var img = new Image();
-        img.onload = function() {
-            document.getElementById('filterImage').src = img.src;
-            document.getElementById('filterImage').style.display = 'block';
-        };
-        img.src = 'src/assets/filtre6.png';
-        SelectFilter = 6;
-    });
-
-    document.getElementById('filterButton7').addEventListener('click', function() {
-        var img = new Image();
-        img.onload = function() {
-            document.getElementById('filterImage').src = img.src;
-            document.getElementById('filterImage').style.display = 'block';
-        };
-        img.src = 'src/assets/filtre7.png';
-        SelectFilter = 7;
-    });
-
-    document.getElementById('filterButton8').addEventListener('click', function() {
-        var img = new Image();
-        img.onload = function() {
-            document.getElementById('filterImage').src = img.src;
-            document.getElementById('filterImage').style.display = 'block';
-        };
-        img.src = 'src/assets/filtre8.png';
-        SelectFilter = 8;
-    });
-
-    document.getElementById('filterButton9').addEventListener('click', function() {
-        var img = new Image();
-        img.onload = function() {
-            document.getElementById('filterImage').src = img.src;
-            document.getElementById('filterImage').style.display = 'block';
-        };
-        img.src = 'src/assets/filtre9.png';
-        SelectFilter = 9;
-    });
-
-    document.getElementById('filterButton10').addEventListener('click', function() {
-        // Réinitialiser le filtre sélectionné
-        SelectFilter = 0;
-
-        // Cacher l'image du filtre
-        var filterImage = document.getElementById('filterImage');
-        filterImage.src = '';  // Réinitialiser la source
-        filterImage.style.display = 'none';  // Cacher l'élément
-    });
-
-
-});
-
-
 </script>
 </html>

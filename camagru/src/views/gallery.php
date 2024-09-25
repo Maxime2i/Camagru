@@ -47,7 +47,7 @@
                             <span class="commentInfo">Commentaires :</span>
                             <ul class="commentUl">
                                 <?php foreach ($imageComments[$images[$i]['id']] as $comment): ?>
-                                    <li class="comment"><span class="commentUsername"><?php echo $comment['username']; ?> : </span><?php echo $comment['comment']; ?></li>
+                                    <li class="comment"><span class="commentUsername"><?php echo htmlspecialchars($comment['username']); ?> : </span><?php echo htmlspecialchars($comment['comment']); ?></li>
                                 <?php endforeach; ?>
                                
                             </ul>
@@ -95,7 +95,7 @@
                             <span class="commentInfo">Commentaires :</span>
                             <ul class="commentUl">
                                 <?php foreach ($imageComments[$images[$i]['id']] as $comment): ?>
-                                    <li class="comment"><span class="commentUsername"><?php echo $comment['username']; ?> : </span><?php echo $comment['comment']; ?></li>
+                                    <li class="comment"><span class="commentUsername"><?php echo htmlspecialchars($comment['username']); ?> : </span><?php echo htmlspecialchars($comment['comment']); ?></li>
                                 <?php endforeach; ?>
                             </ul>
                             </div>
