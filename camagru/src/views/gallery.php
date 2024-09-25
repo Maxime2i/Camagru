@@ -39,21 +39,24 @@
                                 ?>
                             </span>
                         </div>
-                    <div class="comments">
-                        <div class="commentList">
-                        <span class="commentInfo">Commentaires :</span>
-                        <ul class="commentUl">
-                            <?php foreach ($imageComments[$images[$i]['id']] as $comment): ?>
-                                <li class="comment"><span class="commentUsername"><?php echo $comment['username']; ?> : </span><?php echo $comment['comment']; ?></li>
-                            <?php endforeach; ?>
-                           
-                        </ul>
+                        <div class="description">
+                            <?php echo htmlspecialchars($images[$i]['description']); ?>
                         </div>
-                        <form action="?page=gallery" method="post" class="commentForm">
-                            <input class="commentInput" type="hidden" name="image_id" value="<?php echo $images[$i]['id']; ?>">
-                            <textarea class="commentArea1" name="comment" placeholder="..."></textarea>
-                            <button type="submit" class="submitBtn"></button>
-                        </form>
+                        <div class="comments">
+                            <div class="commentList">
+                            <span class="commentInfo">Commentaires :</span>
+                            <ul class="commentUl">
+                                <?php foreach ($imageComments[$images[$i]['id']] as $comment): ?>
+                                    <li class="comment"><span class="commentUsername"><?php echo $comment['username']; ?> : </span><?php echo $comment['comment']; ?></li>
+                                <?php endforeach; ?>
+                               
+                            </ul>
+                            </div>
+                            <form action="?page=gallery" method="post" class="commentForm">
+                                <input class="commentInput" type="hidden" name="image_id" value="<?php echo $images[$i]['id']; ?>">
+                                <textarea class="commentArea1" name="comment" placeholder="..."></textarea>
+                                <button type="submit" class="submitBtn"></button>
+                            </form>
                         </div>
                     </div>
                 <?php endfor; ?>
@@ -83,21 +86,24 @@
                                     }
                                 ?>
                             </span>
-                            </div>
-                            <div class="comments">
-                        <div class="commentList">
-                        <span class="commentInfo">Commentaires :</span>
-                        <ul class="commentUl">
-                            <?php foreach ($imageComments[$images[$i]['id']] as $comment): ?>
-                                <li class="comment"><span class="commentUsername"><?php echo $comment['username']; ?> : </span><?php echo $comment['comment']; ?></li>
-                            <?php endforeach; ?>
-                        </ul>
                         </div>
-                        <form action="?page=gallery" method="post" class="commentForm">
-                            <input class="commentInput" type="hidden" name="image_id" value="<?php echo $images[$i]['id']; ?>">
-                            <textarea class="commentArea2" name="comment" placeholder="..."></textarea>
-                            <button type="submit" class="submitBtn"></button>
-                        </form>
+                        <div class="description">
+                            <?php echo htmlspecialchars($images[$i]['description']); ?>
+                        </div>
+                        <div class="comments">
+                            <div class="commentList">
+                            <span class="commentInfo">Commentaires :</span>
+                            <ul class="commentUl">
+                                <?php foreach ($imageComments[$images[$i]['id']] as $comment): ?>
+                                    <li class="comment"><span class="commentUsername"><?php echo $comment['username']; ?> : </span><?php echo $comment['comment']; ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                            </div>
+                            <form action="?page=gallery" method="post" class="commentForm">
+                                <input class="commentInput" type="hidden" name="image_id" value="<?php echo $images[$i]['id']; ?>">
+                                <textarea class="commentArea2" name="comment" placeholder="..."></textarea>
+                                <button type="submit" class="submitBtn"></button>
+                            </form>
                         </div>
                     </div>
                     

@@ -201,3 +201,13 @@ body {
     color: #ddd;
     pointer-events: none;
 }
+
+.description {
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    font-style: italic;
+    color: #555;
+}
