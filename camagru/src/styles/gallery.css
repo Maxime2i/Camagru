@@ -172,29 +172,46 @@ body {
 /* Styles pour la pagination */
 .pagination {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
-.pagination a, .pagination span {
+.pagination .active {
+    background-color: transparent;
+    color: #4CAF50;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.current-page {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 1%;
+    color: #4CAF51;
+}
+
+.pagination-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination a, .pagination{
     color: #333;
     padding: 8px 16px;
     text-decoration: none;
     transition: background-color .3s;
-    border: 1px solid #ddd;
     margin: 0 4px;
+}
+
+.pagination a {
+    border: 1px solid #ddd;
 }
 
 .pagination a:hover {
     background-color: #ddd;
-}
-
-.pagination .active {
-    background-color: #4CAF50;
-    color: white;
-    border: 1px solid #4CAF50;
 }
 
 .pagination .disabled {
@@ -210,4 +227,64 @@ body {
     border-radius: 5px;
     font-style: italic;
     color: #555;
+}
+
+/* Ajoutez ces styles pour la réactivité */
+
+@media screen and (max-width: 1024px) {
+    .gallery {
+        flex-direction: column;
+    }
+
+    .column {
+        width: 100%;
+    }
+
+    .post1, .post2 {
+        width: 90%;
+        margin: 10px auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .imageAndInfo {
+        flex-direction: column;
+    }
+
+    .img {
+        width: 100%;
+        height: auto;
+    }
+
+    .info {
+        margin-top: 10px;
+    }
+
+    .commentArea1, .commentArea2 {
+        width: 100%;
+    }
+
+    .pagination {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pages {
+        margin-top: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .commentForm {
+        flex-direction: column;
+    }
+
+    .submitBtn {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .numberPage {
+        padding: 5px 8px;
+    }
 }

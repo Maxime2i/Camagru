@@ -17,7 +17,9 @@
                     <img id="filterImage" class="filterImage">
                 </div>
                 <button id="captureButton" class="captureButton">Capture Photo</button>
-                <input type="file" id="uploadImage" class="uploadImage" accept="image/*">
+                <label class="uploadImage">
+                    <input type="file" id="uploadImage" class="uploadImage" accept="image/*">
+                </label>
                 <canvas id="canvas" style="display: none;"></canvas>
                 <form method="POST" name="form1">
                     <input name="hidden_data" id='hidden_data' type="hidden"/>

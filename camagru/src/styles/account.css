@@ -85,3 +85,31 @@ h2 {
 .formInfo button:hover {
     background-color: #444444; /* Modifié pour correspondre au design de la galerie */
 }
+
+@media screen and (max-width: 768px) {
+    .divInfo {
+        width: 90%;
+    }
+
+    .formInfo {
+        width: 100%;
+    }
+
+    .image {
+        flex: 0 0 45%;
+    }
+
+    .formInfo button {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .image {
+        flex: 0 0 100%;
+    }
+
+    .formInfo input {
+        font-size: 14px;
+    }
+}

@@ -25,7 +25,7 @@
                         <img src="src/uploads/<?php echo $image['img']; ?>" alt="Photo récente">
                         <div class="image-info">
                             <span class="author"><?php echo $image['author']; ?></span>
-                            <span class="likes"><?php echo $image['nb_like']; ?> ❤️</span>
+                            <span class="likes"><?php echo $image['nb_like']; ?> 💚</span>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -35,7 +35,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2023 Camagru. Tous droits réservés.</p>
+        <p>&copy; 2024 Camagru. Tous droits réservés.</p>
     </footer>
 </body>
 </html>

@@ -40,7 +40,7 @@ main{
 }
 
 .captureButton{
-    background: #FF5733; /* Couleur du bouton de capture de la page galerie */
+    background: green;
     border: none;
     border-radius: 20px;
     height: 6%;
@@ -128,46 +128,89 @@ main{
 .filterButton1{
     background: url(../assets/filtre1.png) no-repeat center center;
     background-size: 100% 100%;
+    background-color: black;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: transparent;
 }
 
 .filterButton2{
     background: url(../assets/filtre2.png) no-repeat center center;
     background-size: 100% 100%;
+    background-color: black;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: transparent;
 }
 
 .filterButton3{
     background: url(../assets/filtre3.png) no-repeat center center;
     background-size: 100% 100%;
+    background-color: black;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: transparent;
 }
 
 .filterButton4{
     background: url(../assets/filtre4.png) no-repeat center center;
     background-size: 100% 100%;
+    background-color: black;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: transparent;
 }
 
 .filterButton5{
     background: url(../assets/filtre5.png) no-repeat center center;
     background-size: 100% 100%;
+    background-color: black;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: transparent;
 }
 
 .filterButton6{
     background: url(../assets/filtre6.png) no-repeat center center;
     background-size: 100% 100%;
+    background-color: black;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: transparent;
 }
 
 .filterButton7{
     background: url(../assets/filtre7.png) no-repeat center center;
     background-size: 100% 100%;
+    background-color: black;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: transparent;
 }
 
 .filterButton8{
     background: url(../assets/filtre8.png) no-repeat center center;
     background-size: 100% 100%;
+    background-color: black;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: transparent;
 }
 
 .filterButton9{
     background: url(../assets/filtre9.png) no-repeat center center;
     background-size: 100% 100%;
+    background-color: black;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: transparent;
+}
+
+.filterButton10{
+    color: green;
+    background-color: black;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
 
@@ -256,7 +299,140 @@ main{
 }
 
 
+/* Styles responsives */
+@media screen and (max-width: 768px) {
+    main {
+        height: auto;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .montage {
+        width: 90%;
+        height: auto;
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+        margin-top: 20px;
+        align-items: center;
+    }
+
+    .cameraCol {
+        height: auto;
+        order: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .videoContainer {
+        width: 100%;
+        max-width: 480px;
+        margin: 0 auto;
+    }
+
+    #videoElement {
+        width: 100%;
+        height: auto;
+    }
+
+    .recentImages {
+        position: static;
+        order: 3;
+        width: 95%;
+        height: auto;
+        margin: 20px auto;
+        padding: 10px 0;
+    }
+
+    .images {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        width: 100%;
+        height: auto;
+        padding: 10px 0;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .img {
+        flex: 0 0 auto;
+        width: auto;
+        height: 150px;
+        margin-right: 10px;
+        object-fit: cover;
+    }
+
+    .images::-webkit-scrollbar {
+        display: none;
+    }
+
+    .images {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .montage {
+        width: 95%;
+    }
+
+    .videoContainer {
+        max-width: 100%;
+    }
+
+    .img {
+        height: 120px;
+    }
+}
+
 #captureButton:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+.uploadImage {
+    position: relative;
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    width: 200px; /* Ajustez cette valeur selon vos besoins */
+    overflow: hidden;
+}
+
+.uploadImage:hover {
+    background-color: #45a049;
+}
+
+.uploadImage input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.uploadImage::before {
+    content: 'Choisir une image';
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    line-height: 40px; /* Ajustez cette valeur pour correspondre à la hauteur du bouton */
+    color: white;
+    pointer-events: none;
+}
+

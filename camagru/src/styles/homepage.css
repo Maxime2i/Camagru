@@ -103,3 +103,10 @@ footer {
     background-color: #f4f4f4;
     margin-top: 2rem;
 }
+
+.likes {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
