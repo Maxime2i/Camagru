@@ -44,14 +44,14 @@ if (isset($_POST['image']) && isset($_POST['filter_image_url'])) {
 
     // Insertion dans la base de données
     $user_id = $_SESSION['user_id'];
-    $requete = $connexion->prepare("INSERT INTO gallery VALUES (0, :img, :user_id, :liked_by, :nb_like, :description)");
+    $requete = $connexion->prepare("INSERT INTO gallery (img, user_id, liked_by, nb_like, description) VALUES (:img, :user_id, :liked_by, :nb_like, :description)");
     $requete->execute(
         array(
             "img" => $fileName,
             "user_id" => $user_id,
             "liked_by" => '',
             "nb_like" => 0,
-            "description" => '',
+            "description" => ''
         )
     );
 
@@ -59,7 +59,11 @@ if (isset($_POST['image']) && isset($_POST['filter_image_url'])) {
     $image_id = $connexion->lastInsertId();
 
     // Envoyer l'ID de l'image en réponse
-    echo json_encode(array("image_id" => $image_id));
+    if (true){  // Vérifier si l'insertion a réussi
+        echo json_encode(['success' => true, 'image_id' => $image_id]);
+    } else {
+        echo json_encode(['success' => false, 'error' => 'Échec de l\'insertion dans la base de données']);
+    }
     
 } else {
     echo json_encode(array("error" => "No image data received"));

@@ -1,7 +1,6 @@
  body{
     overflow: hidden;
     background: #F0F0F0; /* Couleur de fond de la page galerie */
-    border: 1px solid #CCCCCC; /* Bordure similaire à la page galerie */
 }
 
 main{

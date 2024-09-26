@@ -109,11 +109,16 @@
             xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             xhr.onload = function() {
                 if (xhr.status === 200) {
-                    // Traiter la réponse du serveur ici
-                    var response = JSON.parse(xhr.responseText);
-                    console.log('Images saved:', response.image_id);
-                    // Rediriger vers la page de l'image sauvegardée
-                    window.location.href = 'index.php?page=image&action=show&id=' + response.image_id;
+                    try {
+                        // Essayer de parser la réponse comme JSON
+                        var response = JSON.parse(xhr.responseText);
+                        console.log('Images sauvegardées:', response.image_id);
+                        // Rediriger vers la page de l'image sauvegardée
+                        window.location.href = 'index.php?page=image&action=show&id=' + response.image_id;
+                    } catch (e) {
+                        // Si le parsing échoue, afficher la réponse brute
+                        console.error('Erreur lors du parsing de la réponse:', xhr.responseText);
+                    }
                 } else {
                     console.error('Erreur lors de la sauvegarde de l\'image:', xhr.statusText);
                 }
