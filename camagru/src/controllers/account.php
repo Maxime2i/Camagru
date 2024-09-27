@@ -3,6 +3,7 @@ require_once("src/models/account.php");
 class AccountController {
     public function index() {
         session_start();
+
         // Vérifier si l'utilisateur est connecté
         if (isset($_SESSION['user_id'])) {
             $user_id = $_SESSION['user_id'];
@@ -26,6 +27,21 @@ class AccountController {
 
     public function update() {
         session_start();
+        
+        
+        $existingUsername = AccountModel::getUserByUsername($_POST['username']);
+        $existingEmail = AccountModel::getUserByEmail($_POST['email']);
+     
+        // Écrire le nom d'utilisateur dans la console
+        if ($existingUsername && $existingUsername['id'] != $_SESSION['user_id']) {
+            echo json_encode(['success' => false, 'message' => 'Le nom d\'utilisateur est déjà utilisé.']);
+            exit();
+        }
+
+        if ($existingEmail && $existingEmail['id'] != $_SESSION['user_id']) {
+            echo json_encode(['success' => false, 'message' => 'L\'adresse e-mail est déjà utilisée.']);
+            exit();
+        }
 
         if (isset($_POST['username']) && isset($_POST['email'])) {
             // Récupérer les données soumises par le formulair
@@ -46,14 +62,16 @@ class AccountController {
 
             if ($success) {
                 // Envoyez une réponse de succès
-                echo 'Informations mises à jour avec succès';
+                $_SESSION['username'] = $username;
+                $_SESSION['email'] = $email;
+                echo json_encode(['success' => true, 'message' => 'Les informations ont été mises à jour avec succès.']);
             } else {
                 // Envoyez une réponse d'erreur
-                echo 'Erreur lors de la mise à jour des informations';
+                echo json_encode(['success' => false, 'message' => 'Erreur lors de la mise à jour des informations']);
             }
         } else {
             // Envoyez une réponse d'erreur si les données du formulaire sont manquantes
-            echo 'Données manquantes';
+            echo json_encode(['success' => false, 'message' => 'Données manquantes']);
         }
     }
 
@@ -100,6 +118,18 @@ class AccountController {
 
         header("Location: index.php?page=account");
         exit();
+    }
+
+
+    public function clearError() {
+        
+    session_start();
+    if (isset($_SESSION['error'])) {
+        $_SESSION['error'] = '';
+    }
+    // Redirection vers la page du compte
+    header("Location: index.php?page=account");
+    exit();
     }
 
 

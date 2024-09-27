@@ -177,13 +177,7 @@ document.addEventListener("DOMContentLoaded", function() {
             };
             xhr.send('image_id=' + image_id);
 
-            // var xhr = new XMLHttpRequest();
-            // xhr.open('POST', 'src/like_image.php', true);
-            // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            // xhr.onload = function() {
-            //     console.log('Images saved:', xhr.responseText);
-            // };
-            // xhr.send('image_id=' + image_id);
+         
         });
     });
 

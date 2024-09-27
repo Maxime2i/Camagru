@@ -95,6 +95,24 @@ class AccountModel {
         }
     }
 
+    public static function getUserByUsername($name) {
+        include "src/controllers/database.php";
+
+        $requete = $connexion->prepare("SELECT * FROM users WHERE username = :username");
+        $requete->execute(array("username" => $name));
+        return $requete->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function getUserByEmail($email) {
+        include "src/controllers/database.php";
+
+        $requete = $connexion->prepare("SELECT * FROM users WHERE email = :email");
+        $requete->execute(array("email" => $email));
+        return $requete->fetch(PDO::FETCH_ASSOC);
+    }
+
+    
+
 }
 
 ?>
