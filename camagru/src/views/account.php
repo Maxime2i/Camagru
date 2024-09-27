@@ -109,42 +109,45 @@
 
             document.querySelectorAll('.deleteButton').forEach(button => {
                 button.addEventListener('click', function() {
-                // Remplacer le bouton supprimer par des boutons oui et non avec confirmation
-                const imageId = this.getAttribute('data-image-id');
-                const buttonContainer = this.parentElement;
+                    const imageId = this.getAttribute('data-image-id');
+                    const buttonContainer = this.parentElement;
 
-                // Cacher le bouton supprimer
-                this.style.display = 'none';
+                    // Cacher le bouton supprimer
+                    this.style.display = 'none';
 
-                // Créer le texte de confirmation
-                const confirmText = document.createElement('p');
-                confirmText.textContent = 'Êtes-vous sûr de vouloir supprimer cette image ?';
-                confirmText.classList.add('confirmText');
+                    // Créer le conteneur de confirmation
+                    const confirmContainer = document.createElement('div');
+                    confirmContainer.classList.add('confirmContainer');
 
-                // Créer le bouton "Oui"
-                const ouiButton = document.createElement('button');
-                ouiButton.textContent = 'Oui';
-                ouiButton.classList.add('confirmButton');
-                ouiButton.addEventListener('click', function() {
-                    // Rediriger vers la page de suppression
-                    window.location.href = `index.php?page=account&action=deleteImage&image_id=${imageId}`;
-                });
+                    // Créer le texte de confirmation
+                    const confirmText = document.createElement('span');
+                    confirmText.textContent = 'Supprimer ? ';
+                    confirmText.classList.add('confirmText');
 
-                // Créer le bouton "Non"
-                const nonButton = document.createElement('button');
-                nonButton.textContent = 'Non';
-                nonButton.classList.add('cancelButton');
-                nonButton.addEventListener('click', function() {
-                    // Restaurer le bouton supprimer original
-                    buttonContainer.innerHTML = '';
-                    buttonContainer.appendChild(button);
-                    button.style.display = 'block';
-                });
+                    // Créer le bouton "Oui"
+                    const ouiButton = document.createElement('button');
+                    ouiButton.innerHTML = 'Oui';
+                    ouiButton.classList.add('confirmButton');
+                    ouiButton.addEventListener('click', function() {
+                        window.location.href = `index.php?page=account&action=deleteImage&image_id=${imageId}`;
+                    });
 
-                // Ajouter le texte et les nouveaux boutons
-                buttonContainer.appendChild(confirmText);
-                buttonContainer.appendChild(ouiButton);
-                buttonContainer.appendChild(nonButton);
+                    // Créer le bouton "Non"
+                    const nonButton = document.createElement('button');
+                    nonButton.innerHTML = 'Non';
+                    nonButton.classList.add('cancelButton');
+                    nonButton.addEventListener('click', function() {
+                        buttonContainer.removeChild(confirmContainer);
+                        button.style.display = 'block';
+                    });
+
+                    // Ajouter les éléments au conteneur de confirmation
+                    confirmContainer.appendChild(confirmText);
+                    confirmContainer.appendChild(ouiButton);
+                    confirmContainer.appendChild(nonButton);
+
+                    // Ajouter le conteneur de confirmation au buttonContainer
+                    buttonContainer.appendChild(confirmContainer);
                 });
             });
         });
