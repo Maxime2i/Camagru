@@ -1,10 +1,11 @@
 <?php
+require_once 'src/models/login.php';
 
 class LoginController {
     public function index() {
+        session_start();
         include 'src/views/login.php';
 
-        session_start();
         if (isset($_SESSION['user_id'])) {
             header("Location: index.php?page=homepage");
             exit();
@@ -12,45 +13,28 @@ class LoginController {
     }
 
     public function submit() {
-        include 'src/controllers/database.php';
         session_start();
 
-        if (isset($_POST['submit'])){
-            extract($_POST);
-
-            if (strip_tags($username) !== $username || strip_tags($password) !== $password) {
-                $_SESSION['login_error'] = 'Les balises HTML ne sont pas autorisées.';
-                header("Location: index.php?page=login");
-                exit();
-            }
-        
-            // Échappement des Caractères HTML
-            $username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
-            $password = htmlspecialchars($password, ENT_QUOTES, 'UTF-8');
-        
+        if (isset($_POST['username']) && isset($_POST['password'])){
+            $username = htmlspecialchars($_POST['username'], ENT_QUOTES, 'UTF-8');
+            $password = htmlspecialchars($_POST['password'], ENT_QUOTES, 'UTF-8');
         
             if ($username != '' && $password != '') {
-                // Récupérer l'utilisateur par son nom d'utilisateur uniquement
-                $req = $connexion->prepare("SELECT * FROM users WHERE username = :username");
-                $req->execute(["username" => $username]);
-                $user = $req->fetch();
+                $user = LoginModel::getUserByUsername($username);
 
                 if ($user && password_verify($password, $user['pass'])) {
                     if ($user['is_verified'] == 1) {
                         $_SESSION['user_id'] = $user['id'];
                         $_SESSION['username'] = $user['username'];
                         $_SESSION['email'] = $user['email'];
-                        header("Location: index.php?page=homepage");
+                        echo json_encode(['success' => true, 'message' => 'Connexion réussie']);
                         exit();
                     } else {
-                        $_SESSION['login_error'] = 'Votre compte n\'est pas encore vérifié. Veuillez vérifier votre email. <a href="index.php?page=login&action=resendVerification&user_id=' . $user['id'] . '">Renvoyer l\'email de vérification</a>';
-                        header("Location: index.php?page=login");
+                        echo json_encode(['success' => false, 'message' => 'Votre compte n\'est pas encore vérifié. Veuillez vérifier votre e-mail pour activer votre compte.', 'needVerification' => true, 'user_id' => $user['id']]);
                         exit();
                     }
                 } else {
-                    $_SESSION['login_error'] = 'Nom d\'utilisateur ou mot de passe incorrect';
-                    error_log("Erreur de connexion : identifiants incorrects pour l'utilisateur " . $username);
-                    header("Location: index.php?page=login");
+                    echo json_encode(['success' => false, 'message' => 'Nom d\'utilisateur ou mot de passe incorrect']);
                     exit();
                 }
             }
@@ -67,49 +51,68 @@ class LoginController {
 
     public function resendVerification() {
         session_start();
-        include 'src/controllers/database.php';
-
-        echo "resendVerification---------";
 
         if (isset($_GET['user_id'])) {
             $user_id = $_GET['user_id'];
-            
-            // Récupérer les informations de l'utilisateur
-            $req = $connexion->prepare("SELECT email, username FROM users WHERE id = :id");
-            $req->execute(['id' => $user_id]);
-            $user = $req->fetch();
 
+            $user = LoginModel::getUserById($user_id);
 
             if ($user) {
-                // Générer un nouveau token de vérification
-                $verification_token = bin2hex(random_bytes(16));
+                $token = LoginModel::updateTokenById($user_id);
 
-                // Mettre à jour le token dans la base de données
-                $update = $connexion->prepare("UPDATE users SET token = :token WHERE id = :id");
-                $update->execute([
-                    'token' => $verification_token,
-                    'id' => $user_id
-                ]);
-
-                // Envoyer l'e-mail
-                echo $user['email'];
                 $to = $user['email'];
                 $subject = "Vérification de votre compte Camagru";
                 $message = "Bonjour " . $user['username'] . ",\n\n";
                 $message .= "Veuillez cliquer sur le lien suivant pour vérifier votre compte :\n";
-                $message .= "http://localhost:8098/index.php?page=account&action=confirmAccount&email=" . urlencode($user['email']) . "&token=" . $verification_token;
+                $message .= "http://localhost:8098/index.php?page=account&action=confirmAccount&email=" . urlencode($user['email']) . "&token=" . $token;
 
                 mail($to, $subject, $message);
 
-                $_SESSION['login_message'] = "Un nouvel e-mail de vérification a été envoyé. Veuillez vérifier votre boîte de réception.";
+                echo json_encode(['success' => true, 'message' => "Un nouvel e-mail de vérification a été envoyé. Veuillez vérifier votre boîte de réception."]);
+                exit();
             } else {
-                $_SESSION['login_error'] = "Utilisateur non trouvé.";
+                echo json_encode(['success' => false, 'message' => "Utilisateur non trouvé."]);
+                exit();
             }
         } else {
-            $_SESSION['login_error'] = "Identifiant utilisateur manquant.";
+            echo json_encode(['success' => false, 'message' => "Identifiant utilisateur manquant."]);
+            exit();
         }
 
-        header("Location: index.php?page=login");
+        exit();
+    }
+
+
+    public function forgotPassword() {
+        if (isset($_POST['email'])){
+            $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
+            $user = LoginModel::getUserByEmail($email);
+
+            if ($user) {
+                $token = LoginModel::updateTokenByEmail($email);
+                
+                $lien_reinitialisation = "http://localhost:8098/index.php?page=resetPassword&id=" . $user['id'] . "&token=" . $token;
+                
+                $sujet = "Réinitialisation de votre mot de passe";
+                $message = "Bonjour,\n\nVous avez demandé à réinitialiser votre mot de passe. Veuillez cliquer sur le lien suivant pour procéder :\n\n" . $lien_reinitialisation . "\n\nSi vous n'avez pas demandé cette réinitialisation, veuillez ignorer ce message.\n\nCordialement,\nL'équipe de votre site";
+                
+                if (mail($email, $sujet, $message)) {
+                    echo json_encode(['success' => true, 'message' => 'Un e-mail de réinitialisation a été envoyé à votre adresse.']);
+                    exit();
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Erreur lors de l\'envoi de l\'e-mail. Veuillez réessayer.']);
+                    exit();
+                }
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Adresse e-mail non trouvée.']);
+                exit();
+            }
+        }
+        
+        
+
+       
+
         exit();
     }
 
