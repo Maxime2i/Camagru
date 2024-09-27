@@ -54,7 +54,7 @@
                                
                             </ul>
                             </div>
-                            <form action="?page=gallery" method="post" class="commentForm">
+                            <form class="commentForm">
                                 <input class="commentInput" type="hidden" name="image_id" value="<?php echo $images[$i]['id']; ?>">
                                 <textarea class="commentArea1" name="comment" placeholder="..."></textarea>
                                 <button type="submit" class="submitBtn">Envoyer</button>
@@ -184,6 +184,40 @@ document.addEventListener("DOMContentLoaded", function() {
             //     console.log('Images saved:', xhr.responseText);
             // };
             // xhr.send('image_id=' + image_id);
+        });
+    });
+
+    // Gestion des commentaires
+    var commentForms = document.querySelectorAll('.commentForm');
+    commentForms.forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            console.log(form)
+            var formData = new FormData(form);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '?page=gallery&action=comment', true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        // Ajouter le nouveau commentaire à la liste
+                        var commentList = form.previousElementSibling.querySelector('.commentUl');
+                        var newComment = document.createElement('li');
+                        newComment.className = 'comment';
+                        newComment.innerHTML = '<span class="commentUsername">' + response.username + ' : </span>' + response.comment;
+                        commentList.appendChild(newComment);
+                        
+                        // Réinitialiser le formulaire
+                        form.reset();
+                    } else {
+                        alert('Erreur lors de l\'ajout du commentaire : ' + response.message);
+                    }
+                } else {
+                    console.error('Erreur lors de la requête:', xhr.status);
+                }
+            };
+            xhr.send(formData);
         });
     });
 });

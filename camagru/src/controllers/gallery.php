@@ -32,27 +32,7 @@ class GalleryController {
         
         //var_dump($imageComments);
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment']) && isset($_POST['image_id'])) {
-            $imageId = $_POST['image_id'];
-            // Récupération du user_id depuis la session
-            $userId = $_SESSION['user_id'] ?? null;
-            $comment = $_POST['comment'];
-
-            // Vérification que l'utilisateur est connecté
-            if ($userId === null) {
-                // Rediriger vers la page de connexion ou afficher un message d'erreur
-                header("Location: /login");
-                exit();
-            }
-
-            // Appel à la fonction pour ajouter le commentaire
-            GalleryModel::addComment($imageId, $userId, $comment);
-
-            // Rediriger vers la page actuelle pour éviter de soumettre à nouveau le formulaire lors du rechargement de la page
-            header("Location: {$_SERVER['REQUEST_URI']}");
-            exit();
-        }
-        
+      
         // Inclure la vue avec les images paginées
         include 'src/views/gallery.php';
     }
@@ -101,7 +81,43 @@ class GalleryController {
     }
 
 
-    // Autres méthodes pour d'autres actions de contrôle si nécessaire
+    public function comment() {
+        session_start();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment']) && isset($_POST['image_id'])) {
+            $imageId = $_POST['image_id'];
+            // Récupération du user_id depuis la session
+            $userId = $_SESSION['user_id'] ?? null;
+            $comment = $_POST['comment'];
+
+            // Vérification que l'utilisateur est connecté
+            if ($userId === null) {
+                // Rediriger vers la page de connexion ou afficher un message d'erreur
+                header("Location: /login");
+                exit();
+            }
+
+            // Appel à la fonction pour ajouter le commentaire
+            GalleryModel::addComment($imageId, $userId, $comment);
+
+            // Récupérer le commentaire et le nom d'utilisateur
+      
+                $username = GalleryModel::getUsername($userId);
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Commentaire ajouté',
+                    'comment' => $_POST['comment'],
+                    'username' => $username
+                ]);
+     
+              
+            exit(); // Arrêter l'exécution après avoir envoyé la réponse JSON
+
+            // Rediriger vers la page actuelle pour éviter de soumettre à nouveau le formulaire lors du rechargement de la page
+            header("Location: {$_SERVER['REQUEST_URI']}");
+            exit();
+        }
+        
+    } 
 }
 
 
