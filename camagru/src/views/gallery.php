@@ -21,7 +21,9 @@
                         <img class="img" src="src/uploads/<?php echo $images[$i]['img']; ?>" alt="<?php echo $images[$i]['user_id']; ?>">
                             <span class="info">Utilisateur : <?php echo '@', $username; ?> 
                                 <?php
-                                    if (strpos($images[$i]['liked_by'], ";" . $images[$i]['user_id'] . ";") !== false) {
+                                    $likedBy = json_decode($images[$i]['liked_by'], true);
+                                    $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+                                    if ($userId !== null && in_array($userId, $likedBy)) {
                                         ?>
                                             <span class="spanLike">
                                                 <span class="nb_like"><?php echo $images[$i]['nb_like']; ?></span> 
@@ -55,7 +57,7 @@
                             <form action="?page=gallery" method="post" class="commentForm">
                                 <input class="commentInput" type="hidden" name="image_id" value="<?php echo $images[$i]['id']; ?>">
                                 <textarea class="commentArea1" name="comment" placeholder="..."></textarea>
-                                <button type="submit" class="submitBtn"></button>
+                                <button type="submit" class="submitBtn">Envoyer</button>
                             </form>
                         </div>
                     </div>
@@ -69,7 +71,9 @@
                         <img class="img" src="src/uploads/<?php echo $images[$i]['img']; ?>" alt="<?php echo $images[$i]['user_id']; ?>">
                             <span class="info">Utilisateur : <?php echo '@', $username; ?>
                                 <?php
-                                    if (strpos($images[$i]['liked_by'], ";" . $images[$i]['user_id'] . ";") !== false) {
+                                     $likedBy = json_decode($images[$i]['liked_by'], true);
+                                     $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+                                     if ($userId !== null && in_array($userId, $likedBy)) {
                                         ?>
                                             <span class="spanLike">
                                                 <span class="nb_like"><?php echo $images[$i]['nb_like']; ?></span> 
@@ -102,7 +106,7 @@
                             <form action="?page=gallery" method="post" class="commentForm">
                                 <input class="commentInput" type="hidden" name="image_id" value="<?php echo $images[$i]['id']; ?>">
                                 <textarea class="commentArea2" name="comment" placeholder="..."></textarea>
-                                <button type="submit" class="submitBtn"></button>
+                                <button type="submit" class="submitBtn">Envoyer</button>
                             </form>
                         </div>
                     </div>
@@ -160,13 +164,26 @@ document.addEventListener("DOMContentLoaded", function() {
                 event.target.src = "src/assets/unlike.png";
             }
 
+            // Appel AJAX au contrôleur
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'src/like_image.php', true);
+            xhr.open('POST', '?page=gallery&action=like', true);
             xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             xhr.onload = function() {
-                console.log('Images saved:', xhr.responseText);
+                if (xhr.status === 200) {
+                    console.log('Réponse du serveur:', xhr.responseText);
+                } else {
+                    console.error('Erreur lors de la requête:', xhr.status);
+                }
             };
             xhr.send('image_id=' + image_id);
+
+            // var xhr = new XMLHttpRequest();
+            // xhr.open('POST', 'src/like_image.php', true);
+            // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            // xhr.onload = function() {
+            //     console.log('Images saved:', xhr.responseText);
+            // };
+            // xhr.send('image_id=' + image_id);
         });
     });
 });

@@ -49,7 +49,7 @@ if (isset($_POST['image']) && isset($_POST['filter_image_url'])) {
         array(
             "img" => $fileName,
             "user_id" => $user_id,
-            "liked_by" => '',
+            "liked_by" => json_encode(array()),
             "nb_like" => 0,
             "description" => ''
         )

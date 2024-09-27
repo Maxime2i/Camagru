@@ -58,6 +58,49 @@ class GalleryController {
     }
 
 
+    public function like() {
+        session_start();
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['image_id'])) {
+        $imageId = $_POST['image_id'];
+        $userId = $_SESSION['user_id'] ?? null;
+
+        if ($userId === null) {
+            echo json_encode(['success' => false, 'message' => 'Utilisateur non connecté']);
+            exit;
+        }
+
+        $image = GalleryModel::getImageById($imageId);
+        if (!$image) {
+            echo json_encode(['success' => false, 'message' => 'Image non trouvée']);
+            exit;
+        }
+
+        $likedBy = json_decode($image['liked_by'], true) ?? [];
+        $userIndex = array_search($userId, $likedBy);
+
+        if ($userIndex !== false) {
+            // L'utilisateur a déjà aimé l'image, on retire son like
+            unset($likedBy[$userIndex]);
+            $newLikeCount = $image['nb_like'] - 1;
+        } else {
+            // L'utilisateur n'a pas encore aimé l'image, on ajoute son like
+            $likedBy[] = $userId;
+            $newLikeCount = $image['nb_like'] + 1;
+        }
+
+        $success = GalleryModel::updateImageLikes($imageId, json_encode(array_values($likedBy)), $newLikeCount);
+
+        if ($success) {
+            echo json_encode(['success' => true, 'likeCount' => $newLikeCount]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Erreur lors de la mise à jour des likes']);
+        }
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Requête invalide']);
+    }
+    }
+
+
     // Autres méthodes pour d'autres actions de contrôle si nécessaire
 }
 

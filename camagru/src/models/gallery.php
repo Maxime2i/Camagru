@@ -96,6 +96,25 @@ class GalleryModel {
         $comments = $requete->fetchAll(PDO::FETCH_ASSOC);
         return $comments;
     }
+
+
+    public static function updateImageLikes($imageId, $likedBy, $newLikeCount) {
+        include "src/controllers/database.php";
+
+        $requete = $connexion->prepare("UPDATE gallery SET liked_by = ?, nb_like = ? WHERE id = ?");
+        $requete->execute([$likedBy, $newLikeCount, $imageId]);
+        return $requete->rowCount() > 0;
+    }
+
+    public static function getImageById($imageId) {
+        include "src/controllers/database.php";
+
+        $requete = $connexion->prepare("SELECT * FROM gallery WHERE id = ?");
+        $requete->execute([$imageId]);
+        return $requete->fetch(PDO::FETCH_ASSOC);
+    }
+
+
 }
 
 ?>
