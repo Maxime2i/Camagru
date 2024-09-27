@@ -41,9 +41,11 @@
                                 ?>
                             </span>
                         </div>
-                        <div class="description">
-                            <?php echo htmlspecialchars($images[$i]['description']); ?>
-                        </div>
+                        <?php if ($images[$i]['description']): ?>
+                            <div class="description">
+                                <?php echo htmlspecialchars($images[$i]['description']); ?>
+                            </div>
+                        <?php endif; ?>
                         <div class="comments">
                             <div class="commentList">
                             <span class="commentInfo">Commentaires :</span>
@@ -91,9 +93,11 @@
                                 ?>
                             </span>
                         </div>
-                        <div class="description">
-                            <?php echo htmlspecialchars($images[$i]['description']); ?>
-                        </div>
+                        <?php if ($images[$i]['description']): ?>
+                            <div class="description">
+                                <?php echo htmlspecialchars($images[$i]['description']); ?>
+                            </div>
+                        <?php endif; ?>
                         <div class="comments">
                             <div class="commentList">
                             <span class="commentInfo">Commentaires :</span>

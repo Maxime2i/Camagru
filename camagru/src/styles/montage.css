@@ -91,7 +91,6 @@ main{
     border: 2px solid #AAAAAA; /* Bordure plus épaisse pour la div montage */
     border-radius: 10px; /* Bordure arrondie */
     height: 100%;
-    position: absolute;
     right: 20px; /* Ajout d'un espace à droite */
     display: flex;
     flex-direction: column;

@@ -12,7 +12,7 @@ main {
 }
 
 h2 {
-    color: #E1E1E1; /* Modifié pour correspondre au design de la galerie */
+    color: green; /* Modifié pour correspondre au design de la galerie */
     text-align: center;
     width: 100%; /* Assure que le titre prend toute la largeur */
     margin-bottom: 15px; /* Ajoute un espace sous le titre */
@@ -95,7 +95,6 @@ h2 {
 }
 
 .success {
-    display: none;
     color: green;
     text-align: center;
 }

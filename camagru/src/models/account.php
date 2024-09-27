@@ -18,7 +18,30 @@ class AccountModel {
         return $result['mail_notification'];
     }
 
-    public static function updateUserInfo($Username, $email, $mail_notification) {
+    public static function updateUserInfo($Username, $email, $mail_notification, $Password) {
+        include "src/controllers/database.php";
+        
+        try {
+            // Préparez et exécutez la requête SQL pour mettre à jour les informations de l'utilisateur
+            $query = "UPDATE users SET username = :username, email = :email, pass = :pass, mail_notification = :mail_notification WHERE id = :user_id";
+            $statement = $connexion->prepare($query);
+            $statement->execute(array(
+                'username' => $Username,
+                'email' => $email,
+                'user_id' => $_SESSION['user_id'], // Vous devez récupérer l'ID de l'utilisateur connecté à partir de la session
+                'mail_notification' => $mail_notification,
+                'pass' => $Password
+            ));
+            return true;
+        } catch (PDOException $e) {
+            // Gérez les exceptions PDO ici
+            // Par exemple, journalisez l'erreur ou renvoyez false en cas d'échec
+            return false;
+        }
+    }
+
+
+    public static function updateUserInfoWithoutPassword($Username, $email, $mail_notification) {
         include "src/controllers/database.php";
         
         try {
@@ -29,10 +52,9 @@ class AccountModel {
                 'username' => $Username,
                 'email' => $email,
                 'user_id' => $_SESSION['user_id'], // Vous devez récupérer l'ID de l'utilisateur connecté à partir de la session
-                'mail_notification' => $mail_notification
-            ));
+                'mail_notification' => $mail_notification,
 
-            // Retourne true si la mise à jour a réussi
+            ));
             return true;
         } catch (PDOException $e) {
             // Gérez les exceptions PDO ici
@@ -40,6 +62,8 @@ class AccountModel {
             return false;
         }
     }
+
+
 
     public static function confirmUserAccount($email, $token) {
         include "src/controllers/database.php";
@@ -111,7 +135,7 @@ class AccountModel {
         return $requete->fetch(PDO::FETCH_ASSOC);
     }
 
-    
+
 
 }
 

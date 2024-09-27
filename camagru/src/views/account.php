@@ -17,6 +17,7 @@
             <form class="formInfo" id="updateForm">
                 <input type="text" name="username" placeholder="Nom d'utilisateur" value="<?php echo $username; ?>" required>
                 <input type="email" name="email" placeholder="E-mail" value="<?php echo $email; ?>" required>
+                <input type="password" name="password" placeholder="Mot de passe (laisser vide si vous ne voulez pas le changer)">
                 <!-- Nouvelle case à cocher pour les notifications par e-mail -->
                 <label>
                     <input type="checkbox" name="email_notifications" <?php echo $mail_notification ? 'checked' : ''; ?>>
@@ -67,17 +68,24 @@
                                 errorMessage.style.display = 'none';
                                 successMessage.textContent = response.message;
                                 successMessage.style.display = 'block';
-                                // Mettre à jour la page en fonction de la réponse du serveur
-                                // Par exemple, afficher un message de réussite ou d'erreur
-                                console.log(response.message);
+                                successMessage.style.opacity = '1';
+                                // Animation de fondu pour le message de succès
+                                setTimeout(function() {
+                                    fadeOut(successMessage);
+                                }, 3000);
                             } else {
                                 successMessage.style.display = 'none';
                                 errorMessage.textContent = response.message;
                                 errorMessage.style.display = 'block';
+                                errorMessage.style.opacity = '1';
+                                // Animation de fondu pour le message d'erreur
+                                setTimeout(function() {
+                                    fadeOut(errorMessage);
+                                }, 3000);
                             }
                             // Mettre à jour la page en fonction de la réponse du serveur
                             // Par exemple, afficher un message de réussite ou d'erreur
-                            console.log(xhr.responseText);
+                            console.log(response.message);
                         } else {
                             console.error('Une erreur s\'est produite');
                         }
@@ -86,8 +94,18 @@
                 xhr.send(formData);
             });
 
-
-
+            // Fonction pour l'animation de fondu
+            function fadeOut(element) {
+                var opacity = 1;
+                var timer = setInterval(function() {
+                    if (opacity <= 0.1) {
+                        clearInterval(timer);
+                        element.style.display = 'none';
+                    }
+                    element.style.opacity = opacity;
+                    opacity -= opacity * 0.1;
+                }, 50);
+            }
 
             document.querySelectorAll('.deleteButton').forEach(button => {
                 button.addEventListener('click', function() {

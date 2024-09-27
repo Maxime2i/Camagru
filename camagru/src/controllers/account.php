@@ -48,7 +48,14 @@ class AccountController {
             $username = $_POST['username'];
             $email = $_POST['email'];
             $mail_notification = $_POST['email_notifications'];
-            
+            $password = $_POST['password'] ?? null;
+
+            if ($password) {
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            } else {
+                $hashed_password = null;
+            }
+
             if ($mail_notification == "on") {
                 $mail_notification = 1;
             } else {
@@ -58,7 +65,11 @@ class AccountController {
             // Mettez à jour les informations dans la base de données en utilisant le modèle approprié
             
 
-            $success = AccountModel::updateUserInfo($username, $email, $mail_notification);
+            if ($hashed_password) {
+                $success = AccountModel::updateUserInfo($username, $email, $mail_notification, $hashed_password);
+            } else {
+                $success = AccountModel::updateUserInfoWithoutPassword($username, $email, $mail_notification);
+            }
 
             if ($success) {
                 // Envoyez une réponse de succès
@@ -121,20 +132,8 @@ class AccountController {
     }
 
 
-    public function clearError() {
-        
-    session_start();
-    if (isset($_SESSION['error'])) {
-        $_SESSION['error'] = '';
-    }
-    // Redirection vers la page du compte
-    header("Location: index.php?page=account");
-    exit();
-    }
-
-
     
-        
+   
         
 }
 
