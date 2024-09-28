@@ -1,11 +1,11 @@
 <?php
 
 class RegisterModel {
-    public static function isUsernameAlreadyTake($username) {
+    public static function isUsernameAlreadyTake($Username) {
         include "src/controllers/database.php";
 
         $checkUsername = $connexion->prepare("SELECT COUNT(*) FROM users WHERE username = :username");
-        $checkUsername->execute(["username" => $username]);
+        $checkUsername->execute(["username" => $Username]);
         $usernameExists = $checkUsername->fetchColumn();
 
         if ($usernameExists){
@@ -31,7 +31,7 @@ class RegisterModel {
         }
     }
 
-    public static function createAccount($firstname, $lastname, $username, $email, $password){
+    public static function createAccount($firstname, $lastname, $Username, $email, $Password){
         include "src/controllers/database.php";
 
         $token = bin2hex(random_bytes(16));
@@ -41,9 +41,9 @@ class RegisterModel {
             array(
                 "firstname" => $firstname,
                 "lastname" => $lastname,
-                "username" => $username,
+                "username" => $Username,
                 "email" => $email,
-                "pass" => $password,
+                "pass" => $Password,
                 "token" => $token,
                 "isVerified" => 0,
                 "mail_notification" => 1

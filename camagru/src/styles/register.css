@@ -93,3 +93,14 @@ input[type="submit"]:hover {
     margin-top: 5px;
     text-align: center;
 }
+
+.success-message {
+    color: green;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+a.button {
+    text-decoration: none;
+    text-align: center;
+}

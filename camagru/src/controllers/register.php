@@ -4,25 +4,19 @@ require_once 'src/models/register.php';
 class RegisterController {
     public function index() {
         include 'src/views/register.php';
-        $_SESSION['error'] = "";
     }
 
     public function submit() {
         session_start();
 
-        if (isset($_POST['submit'])){
-            extract($_POST);
-
-            if (strip_tags($username) !== $username || strip_tags($password) !== $password || strip_tags($firstname) !== $firstname || strip_tags($lastname) !== $lastname || strip_tags($email) !== $email) {
-                die('Les balises HTML ne sont pas autorisées.');
-            }
+        if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['email'])){
         
-            $username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
-            $password = htmlspecialchars($password, ENT_QUOTES, 'UTF-8');
+            $username = htmlspecialchars($_POST['username'], ENT_QUOTES, 'UTF-8');
+            $password = htmlspecialchars($_POST['password'], ENT_QUOTES, 'UTF-8');
             $password = password_hash($password, PASSWORD_DEFAULT);
-            $firstname = htmlspecialchars($firstname, ENT_QUOTES, 'UTF-8');
-            $lastname = htmlspecialchars($lastname, ENT_QUOTES, 'UTF-8');
-            $email = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
+            $firstname = htmlspecialchars($_POST['firstname'], ENT_QUOTES, 'UTF-8');
+            $lastname = htmlspecialchars($_POST['lastname'], ENT_QUOTES, 'UTF-8');
+            $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
 
             try {
                 $UsernameAlreadyExist = RegisterModel::isUsernameAlreadyTake($username);
@@ -30,14 +24,12 @@ class RegisterController {
                 $EmailAlreadyExist = RegisterModel::isEmailAlreadyTake($email);
 
                 if ($UsernameAlreadyExist) {
-                    $_SESSION['error'] = "Le nom d'utilisateur est déjà utilisé.";
-                    header("Location: index.php?page=register");
+                    echo json_encode(['success' => false, 'message' => 'Le nom d\'utilisateur est déjà utilisé.']);
                     exit();
                 }
 
                 if ($EmailAlreadyExist) {
-                    $_SESSION['error'] = "L'adresse email est déjà utilisée.";
-                    header("Location: index.php?page=register");
+                    echo json_encode(['success' => false, 'message' => 'L\'adresse email est déjà utilisée.']);
                     exit();
                 }
 
@@ -54,14 +46,14 @@ class RegisterController {
 
             if (mail($to, $subject, $message, $headers))
             {
-                $_SESSION['success'] = "Compte créé avec succès. Veuillez vérifier votre email pour confirmer votre compte.";
-                header("Location: index.php?page=login");
+                echo json_encode(['success' => true, 'message' => 'Compte créé avec succès. Veuillez vérifier votre email pour confirmer votre compte.']);
+                exit();
             }
 
             exit();
         } catch (PDOException $e) {
-            $_SESSION['error'] = "Erreur lors de l'ajout de l'utilisateur : " . $e->getMessage();
-            header("Location: index.php?page=register");
+            echo json_encode(['success' => false, 'message' => 'Erreur lors de l\'ajout de l\'utilisateur : ' . $e->getMessage()]);
+            exit();
         }
         }
     }

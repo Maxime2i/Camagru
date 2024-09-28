@@ -24,7 +24,6 @@ session_start();
         </form>
         <button onclick="window.location.href='index.php?page=login'" class="login-btn">Se connecter</button>
     </main>
-    <script src="src/scripts/register-validation.js"></script>
 </body>
 </html>
 
@@ -63,7 +62,37 @@ session_start();
                 }
             }
         });
-        return valid;
+
+        if (valid) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '?page=register&action=submit', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    console.log(xhr)
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        // Vider les champs du formulaire
+                        document.getElementById('firstname').value = '';
+                        document.getElementById('lastname').value = '';
+                        document.getElementById('username').value = '';
+                        document.getElementById('email').value = '';
+                        document.getElementById('password').value = '';
+                        errorElement.innerHTML = '<p class="success-message">' + response.message + '</p><a href="index.php?page=login" class="button">Retour à la connexion</a>';
+                    } else {
+                        errorElement.textContent = response.message;
+                    }
+                } else {
+                    errorElement.textContent = "Une erreur s'est produite. Veuillez réessayer.";
+                }
+            };
+            var formData = new FormData(document.querySelector('form'));
+            xhr.send(new URLSearchParams(formData));
+        }
+
+
+        
+        return false;
     }
 </script>
 </html>

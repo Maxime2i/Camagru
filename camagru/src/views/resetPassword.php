@@ -13,11 +13,12 @@ session_start();
     <div class="container">
         <div class="form-wrapper">
             <h2>Réinitialisation du mot de passe</h2>
-                <form method="post" onsubmit="return validatePassword()">
+                <form action="?page=resetPassword&action=submit" method="POST" onsubmit="return validatePassword()">
                     <div class="input-group">
                         <label for="password">Nouveau mot de passe</label>
                         <input type="password" id="password" name="password" required>
                     </div>
+                    <div id="error-message" class="error-message"></div>
                     <button type="submit" class="button">Valider</button>
                 </form>
         </div>
@@ -27,8 +28,11 @@ session_start();
 
     function validatePassword() {
         var password = document.getElementById('password').value;
+        var id = '<?php echo htmlspecialchars($_GET['id'], ENT_QUOTES, 'UTF-8'); ?>';
+        var token = '<?php echo htmlspecialchars($_GET['token'], ENT_QUOTES, 'UTF-8'); ?>';
         var errorElement = document.getElementById('error-message');
         var valid = true;
+
         if (password.length < 8) {
             errorElement.textContent = "Le mot de passe doit contenir au moins 8 caractères.";
             valid = false;
@@ -45,7 +49,6 @@ session_start();
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.onload = function() {
                 if (xhr.status === 200) {
-                    console.log(xhr);
                     var response = JSON.parse(xhr.responseText);
                     if (response.success) {
                         document.querySelector('.form-wrapper').innerHTML = '<p class="success-message">' + response.message + '</p><a href="index.php?page=login" class="button">Retour à la connexion</a>';
@@ -56,11 +59,11 @@ session_start();
                     errorElement.textContent = "Une erreur s'est produite. Veuillez réessayer.";
                 }
             };
-            xhr.send('password=' + encodeURIComponent(password));
+            xhr.send('password=' + encodeURIComponent(password) + '&id=' + encodeURIComponent(id) + '&token=' + encodeURIComponent(token));
         } else {
             return false;
         }
-        return true;
+        return false;
     }
 </script>
 </html>
