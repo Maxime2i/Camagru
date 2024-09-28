@@ -92,6 +92,12 @@ class AccountModel {
         include "src/controllers/database.php";
 
         try {
+            $connexion->beginTransaction();
+
+            // Supprimer d'abord les commentaires associés à l'image
+            $deleteComments = $connexion->prepare("DELETE FROM comments WHERE gallery_id = :image_id");
+            $deleteComments->execute(array("image_id" => $image_id));
+
             // Récupérer le nom du fichier avant de le supprimer de la base de données
             $query = $connexion->prepare("SELECT img FROM gallery WHERE id = :image_id AND user_id = :user_id");
             $query->execute(array("image_id" => $image_id, "user_id" => $user_id));
@@ -110,11 +116,14 @@ class AccountModel {
                     unlink($file_path);
                 }
 
+                $connexion->commit();
                 return true;
             }
 
+            $connexion->rollBack();
             return false;
         } catch (PDOException $e) {
+            $connexion->rollBack();
             throw new Exception("Erreur lors de la suppression de l'image : " . $e->getMessage());
         }
     }

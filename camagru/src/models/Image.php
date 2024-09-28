@@ -11,7 +11,7 @@ class ImageModel {
         return $image['img'];
     }
 
-    public static function getImageByUrl($imageUrl) {
+    public static function getImageByUrl($imageUrl, $userId) {
         include 'src/controllers/database.php';
 
         $requete = $connexion->prepare("SELECT id FROM gallery WHERE img = :img AND user_id = :user_id");
@@ -26,6 +26,7 @@ class ImageModel {
 
         $requete = $connexion->prepare("UPDATE gallery SET description = :description WHERE id = :id");
         $requete->execute(array(':description' => $description, ':id' => $imageId));
+        return $requete;
     }
 
     public static function deleteImage($imageUrl, $userId) {

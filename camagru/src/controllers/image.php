@@ -3,50 +3,46 @@ require_once 'src/models/image.php';
 
 class ImageController {
     public function show() {
-        include 'src/views/image.php';
-
         $imageId = $_GET['id'];
 
         $imageUrl = ImageModel::getImageUrlById($imageId);
         $imageCompleteUrl = 'src/uploads/' . $imageUrl;
 
+        include 'src/views/image.php';
     }
 
     public function addDescription() {
-        include 'src/views/image.php';
-
         session_start();
-
-        $message = '';
-        $success = false;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $description = $_POST['description'];
             $imageUrl = $_POST['imageUrl'];
             $userId = $_SESSION['user_id'];
 
-            $image = ImageModel::getImageByUrl($imageUrl);
+            $image = ImageModel::getImageByUrl($imageUrl, $userId);
 
             if ($image) {
                 $result = ImageModel::updateImageDescription($image['id'], $description);
 
                 if ($result) {
-                    $success = true;
-                    $message = "La description a été ajoutée avec succès.";
+                    echo json_encode(['success' => true, 'message' => 'Description ajoutée avec succès', 'imageUrl' => $imageUrl, 'description' => $description]);
+                    exit();
                 } else {
-                    $message = "Une erreur est survenue lors de l'ajout de la description.";
+                    echo json_encode(['success' => false, 'message' => 'Une erreur est survenue lors de l\'ajout de la description']);
+                    exit();
                 }
             } else {
-                $message = "L'image n'a pas été trouvée dans la galerie.";
+                echo json_encode(['success' => false, 'message' => 'L\'image n\'a pas été trouvée dans la galerie']);
+                exit();
             }
         }
+
+        include 'src/views/image.php';
 
     }
 
 
     public function deleteImage() {
-        include 'src/views/image.php';
-
         session_start();
 
         $delete = false;
@@ -66,6 +62,8 @@ class ImageController {
         } else {
             exit();
         }
+        include 'src/views/image.php';
+
     }
 }
 ?>
