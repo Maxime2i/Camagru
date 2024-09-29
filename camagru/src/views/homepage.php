@@ -33,9 +33,8 @@
             <a href="index.php?page=gallery" class="view-more">Voir plus</a>
         </section>
     </main>
+    <?php include 'footer.php'; ?>
 
-    <footer>
-        <p>&copy; 2024 Camagru. Tous droits réservés.</p>
-    </footer>
+    
 </body>
 </html>

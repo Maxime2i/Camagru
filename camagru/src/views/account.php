@@ -45,6 +45,8 @@
 
         
     </main>
+    <?php include 'footer.php'; ?>
+
     <script>
 
         document.addEventListener('DOMContentLoaded', function() {
