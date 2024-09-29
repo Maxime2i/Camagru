@@ -104,3 +104,9 @@ a.button {
     text-decoration: none;
     text-align: center;
 }
+
+@media screen and (max-width: 480px) {
+    main {
+        width: 70%;
+    }
+}

@@ -12,7 +12,9 @@
         <div class="montage">
             <div class="cameraCol">
                 <div class="videoContainer">
-                    <video id="videoElement" autoplay></video>
+                    <video id="videoElement" autoplay>
+                        
+                    </video>
                     <img id="uploadedImage" class="uploadedImage" style="display:none;">
                     <img id="filterImage" class="filterImage">
                 </div>

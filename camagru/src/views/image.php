@@ -82,7 +82,7 @@ function shareOnTwitter() {
 function validateDescription(form) {
     var description = form.description.value.trim();
     if (description === '') {
-        alert('Veuillez entrer une description.');
+        window.location.href = 'index.php?page=gallery';
         return false;
     }
 
