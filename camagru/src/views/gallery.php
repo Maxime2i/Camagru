@@ -126,12 +126,10 @@
                 <?php endif; ?>
 
                 <?php
-                // Nombre maximum de pages à afficher
                 $maxPagesToShow = 5;
                 $startPage = max(1, $currentPage - intval($maxPagesToShow / 2));
                 $endPage = min($totalPages, $startPage + $maxPagesToShow - 1);
 
-                // Ajuster le startPage si l'endPage est proche de totalPages
                 $startPage = max(1, $endPage - $maxPagesToShow + 1);
 
                 for ($i = $startPage; $i <= $endPage; $i++): ?>
@@ -160,7 +158,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if (event.target.src.endsWith("src/assets/unlike.png")) {
                 event.target.src = "src/assets/like.png";
-                console.log(event.target.parentNode.querySelector('.nb_like'))
                 
                 var nbLikeSpan = event.target.parentNode.querySelector('.nb_like');
                 nbLikeSpan.textContent = parseInt(nbLikeSpan.textContent) + 1;
@@ -170,13 +167,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 event.target.src = "src/assets/unlike.png";
             }
 
-            // Appel AJAX au contrôleur
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '?page=gallery&action=like', true);
             xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             xhr.onload = function() {
                 if (xhr.status === 200) {
-                    console.log('Réponse du serveur:', xhr.responseText);
                 } else {
                     console.error('Erreur lors de la requête:', xhr.status);
                 }
@@ -187,13 +182,11 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // Gestion des commentaires
     var commentForms = document.querySelectorAll('.commentForm');
     commentForms.forEach(function(form) {
         form.addEventListener('submit', function(event) {
             event.preventDefault();
             
-            console.log(form)
             var formData = new FormData(form);
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '?page=gallery&action=comment', true);
@@ -201,14 +194,12 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (xhr.status === 200) {
                     var response = JSON.parse(xhr.responseText);
                     if (response.success) {
-                        // Ajouter le nouveau commentaire à la liste
                         var commentList = form.previousElementSibling.querySelector('.commentUl');
                         var newComment = document.createElement('li');
                         newComment.className = 'comment';
                         newComment.innerHTML = '<span class="commentUsername">' + response.username + ' : </span>' + response.comment;
                         commentList.appendChild(newComment);
                         
-                        // Réinitialiser le formulaire
                         form.reset();
                     } else {
                         alert('Erreur lors de l\'ajout du commentaire : ' + response.message);

@@ -32,7 +32,6 @@ session_start();
         var fields = ['firstname', 'lastname', 'username', 'email', 'password'];
         var valid = true;
         var errorElement = document.getElementById('error-message');
-        console.log(errorElement);
 
         fields.forEach(function(field) {
             var value = document.getElementById(field).value;
@@ -69,10 +68,8 @@ session_start();
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.onload = function() {
                 if (xhr.status === 200) {
-                    console.log(xhr)
                     var response = JSON.parse(xhr.responseText);
                     if (response.success) {
-                        // Vider les champs du formulaire
                         document.getElementById('firstname').value = '';
                         document.getElementById('lastname').value = '';
                         document.getElementById('username').value = '';

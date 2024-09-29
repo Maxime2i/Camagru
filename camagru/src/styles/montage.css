@@ -1,10 +1,9 @@
- body{
+body{
     overflow: hidden;
-    background: #F0F0F0; /* Couleur de fond de la page galerie */
+    background: #F0F0F0;
 }
 
 main{
-    
     height: 90vh;
     display: flex;
     justify-content: center;
@@ -14,25 +13,23 @@ main{
     display: flex;
     flex-direction: column-reverse;
     justify-content: space-between;
-    width: 60%; /* Plus large */
-    height: 85%; /* Moins haute */
-    background: #fff; /* Fond différent pour la div montage */
-    border: 2px solid #AAAAAA; /* Bordure plus épaisse pour la div montage */
-    border-radius: 15px; /* Bordure arrondie */
-    padding: 20px; /* Espacement intérieur */
-    margin: 20px; /* Espacement extérieur */
+    width: 60%;
+    height: 85%;
+    background: #fff;
+    border: 2px solid #AAAAAA;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px;
 }
 
 .cameraCol{
-    height: 80%; /* Ajustement de la hauteur pour s'adapter à l'encadrement */
+    height: 80%;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    
 }
-
 
 .videoElement {
     border: 1px solid black;
@@ -56,7 +53,6 @@ main{
     flex-direction: row;
     justify-content: space-evenly;
 } 
-
 
 .filterImage{
     display: none;
@@ -87,20 +83,20 @@ main{
 }
 
 .recentImages{
-    background: #fff; /* Couleur de fond des images récentes de la page galerie */
-    border: 2px solid #AAAAAA; /* Bordure plus épaisse pour la div montage */
-    border-radius: 10px; /* Bordure arrondie */
+    background: #fff;
+    border: 2px solid #AAAAAA;
+    border-radius: 10px;
     height: 85%;
-    right: 20px; /* Ajout d'un espace à droite */
+    right: 20px;
     display: flex;
     flex-direction: column;
-    padding: 20px 0; /* Espacement intérieur */
-    margin: 20px 0 ; /* Espacement extérieur */
+    padding: 20px 0;
+    margin: 20px 0;
 }
 
 .recentImages h2{
-    color: #333333; /* Couleur du texte des titres des images récentes de la page galerie */
-    border-bottom: 1px solid #CCCCCC; /* Bordure similaire à la page galerie */
+    color: #333333;
+    border-bottom: 1px solid #CCCCCC;
     margin-top: 0;
     margin-bottom: 0;
     margin-left: auto;
@@ -212,14 +208,11 @@ main{
     background-position: center center;
 }
 
-
-/* Pour les écrans de petite taille (tels que les smartphones) */
 @media only screen and (max-width: 600px) {
     main {
         flex-direction: column;
         align-items: center;
     }
-
 
     .filterCol {
         flex-wrap: wrap;
@@ -257,7 +250,6 @@ main{
     }
 }
 
-/* Pour les écrans de taille moyenne à grande */
 @media only screen and (min-width: 601px) and (max-width: 768px) {
     main {
         flex-direction: column;
@@ -297,8 +289,6 @@ main{
     }
 }
 
-
-/* Styles responsives */
 @media screen and (max-width: 768px) {
     main {
         height: auto;
@@ -323,22 +313,22 @@ main{
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 2%; /* Ajoute de l'espace entre les éléments */
+        gap: 2%;
     }
 
     .videoContainer {
         width: 100%;
         max-width: 480px;
         margin: 0 auto;
-        margin-bottom: 2%; /* Ajoute de l'espace sous la vidéo */
+        margin-bottom: 2%;
     }
 
     .captureButton {
-        margin-bottom: 2%; /* Ajoute de l'espace sous le bouton de capture */
+        margin-bottom: 2%;
     }
 
     .uploadImage {
-        margin-bottom: 2%; /* Ajoute de l'espace sous l'input de fichier */
+        margin-bottom: 2%;
     }
 
     .recentImages {
@@ -456,7 +446,7 @@ main{
     font-size: 16px;
     transition: background-color 0.3s ease;
     text-align: center;
-    width: 200px; /* Ajustez cette valeur selon vos besoins */
+    width: 200px;
     overflow: hidden;
 }
 
@@ -480,8 +470,7 @@ main{
     left: 0;
     right: 0;
     text-align: center;
-    line-height: 40px; /* Ajustez cette valeur pour correspondre à la hauteur du bouton */
+    line-height: 40px; 
     color: white;
     pointer-events: none;
 }
-

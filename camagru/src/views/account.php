@@ -51,15 +51,13 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('updateForm').addEventListener('submit', function(event) {
-                event.preventDefault(); // Empêcher le comportement de soumission par défaut
+                event.preventDefault(); 
 
                 var errorMessage = document.getElementById('errorMessage');
                 var successMessage = document.getElementById('successMessage');
                 
-                // Récupérer les données du formulaire
                 var formData = new FormData(this);
                 
-                // Envoyer une requête AJAX
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', 'index.php?page=account&action=update', true);
                 xhr.onreadystatechange = function() {
@@ -71,7 +69,7 @@
                                 successMessage.textContent = response.message;
                                 successMessage.style.display = 'block';
                                 successMessage.style.opacity = '1';
-                                // Animation de fondu pour le message de succès
+
                                 setTimeout(function() {
                                     fadeOut(successMessage);
                                 }, 3000);
@@ -80,14 +78,11 @@
                                 errorMessage.textContent = response.message;
                                 errorMessage.style.display = 'block';
                                 errorMessage.style.opacity = '1';
-                                // Animation de fondu pour le message d'erreur
+
                                 setTimeout(function() {
                                     fadeOut(errorMessage);
                                 }, 3000);
                             }
-                            // Mettre à jour la page en fonction de la réponse du serveur
-                            // Par exemple, afficher un message de réussite ou d'erreur
-                            console.log(response.message);
                         } else {
                             console.error('Une erreur s\'est produite');
                         }
@@ -96,7 +91,6 @@
                 xhr.send(formData);
             });
 
-            // Fonction pour l'animation de fondu
             function fadeOut(element) {
                 var opacity = 1;
                 var timer = setInterval(function() {
@@ -114,19 +108,15 @@
                     const imageId = this.getAttribute('data-image-id');
                     const buttonContainer = this.parentElement;
 
-                    // Cacher le bouton supprimer
                     this.style.display = 'none';
 
-                    // Créer le conteneur de confirmation
                     const confirmContainer = document.createElement('div');
                     confirmContainer.classList.add('confirmContainer');
 
-                    // Créer le texte de confirmation
                     const confirmText = document.createElement('span');
                     confirmText.textContent = 'Supprimer ? ';
                     confirmText.classList.add('confirmText');
 
-                    // Créer le bouton "Oui"
                     const ouiButton = document.createElement('button');
                     ouiButton.innerHTML = 'Oui';
                     ouiButton.classList.add('confirmButton');
@@ -134,7 +124,6 @@
                         window.location.href = `index.php?page=account&action=deleteImage&image_id=${imageId}`;
                     });
 
-                    // Créer le bouton "Non"
                     const nonButton = document.createElement('button');
                     nonButton.innerHTML = 'Non';
                     nonButton.classList.add('cancelButton');
@@ -143,12 +132,10 @@
                         button.style.display = 'block';
                     });
 
-                    // Ajouter les éléments au conteneur de confirmation
                     confirmContainer.appendChild(confirmText);
                     confirmContainer.appendChild(ouiButton);
                     confirmContainer.appendChild(nonButton);
 
-                    // Ajouter le conteneur de confirmation au buttonContainer
                     buttonContainer.appendChild(confirmContainer);
                 });
             });

@@ -9,9 +9,7 @@ class HomepageModel {
 
         $images = $requete->fetchAll();
 
-        // Récupérer l'auteur et le nombre de likes pour chaque image
         foreach ($images as &$image) {
-            // Récupérer l'auteur
             $requeteAuteur = $connexion->prepare('SELECT username FROM users WHERE id = :user_id');
             $requeteAuteur->execute(['user_id' => $image['user_id']]);
             $auteur = $requeteAuteur->fetch(PDO::FETCH_ASSOC);

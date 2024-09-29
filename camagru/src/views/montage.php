@@ -60,37 +60,28 @@
 <script>
     let SelectFilter = 0;
     document.addEventListener("DOMContentLoaded", function() {
-        // Récupérer les éléments vidéo et image téléchargée
         var video = document.getElementById("videoElement");
         var uploadedImage = document.getElementById("uploadedImage");
         var canvas = document.getElementById('canvas');
         var context = canvas.getContext('2d');
 
-        // Vérifier si le navigateur prend en charge l'API MediaDevices
         if (navigator.mediaDevices.getUserMedia) {
-            // Demander l'accès à la caméra
             navigator.mediaDevices.getUserMedia({ video: true })
                 .then(function(stream) {
-                    // Afficher le flux de la caméra dans l'élément vidéo
                     video.srcObject = stream;
                 })
                 .catch(function(error) {
-                    console.log("Erreur getUserMedia: ", error);
+                    console.error("Erreur getUserMedia: ", error);
                 });
         } else {
-            console.log("getUserMedia n'est pas pris en charge par ce navigateur.");
+            console.error("getUserMedia n'est pas pris en charge par ce navigateur.");
         }
 
         var captureButton = document.getElementById("captureButton");
-        captureButton.disabled = true; // Désactiver le bouton au chargement
+        captureButton.disabled = true; 
 
         captureButton.addEventListener("click", function() {
-            // Définir les dimensions du canvas en fonction des dimensions de la vidéo
 
-            // canvas.width = video.videoWidth;
-            // canvas.height = video.videoHeight;
-
-            // Dessiner l'image de la caméra ou l'image téléchargée redimensionnée sur le canvas
             if (uploadedImage.style.display === 'none') {
                 context.drawImage(video, 0, 0, canvas.width, canvas.height);
             } else {
@@ -104,7 +95,6 @@
                 filterImageUrl = 'assets/filtre' + SelectFilter + '.png';
             }
 
-            // Envoyer les données des images redimensionnées au serveur
             sendImage(imageData, filterImageUrl);
         });
 
@@ -115,13 +105,9 @@
             xhr.onload = function() {
                 if (xhr.status === 200) {
                     try {
-                        // Essayer de parser la réponse comme JSON
                         var response = JSON.parse(xhr.responseText);
-                        console.log('Images sauvegardées:', response.image_id);
-                        // Rediriger vers la page de l'image sauvegardée
                         window.location.href = 'index.php?page=image&action=show&id=' + response.image_id;
                     } catch (e) {
-                        // Si le parsing échoue, afficher la réponse brute
                         console.error('Erreur lors du parsing de la réponse:', xhr.responseText);
                     }
                 } else {
@@ -139,22 +125,18 @@
                 reader.onload = function(e) {
                     var img = new Image();
                     img.onload = function() {
-                        // Obtenir les dimensions de la vidéo
                         var videoWidth = video.videoWidth || video.clientWidth;
                         var videoHeight = video.videoHeight || video.clientHeight;
 
-                        // Calculer le ratio pour redimensionner l'image
                         var ratio = Math.min(videoWidth / img.width, videoHeight / img.height);
                         var newWidth = img.width * ratio;
                         var newHeight = img.height * ratio;
 
-                        // Créer un canvas temporaire pour redimensionner l'image
                         var tempCanvas = document.createElement('canvas');
                         tempCanvas.width = videoWidth;
                         tempCanvas.height = videoHeight;
                         var ctx = tempCanvas.getContext('2d');
 
-                        // Dessiner l'image redimensionnée au centre du canvas
                         ctx.drawImage(img, 
                             (videoWidth - newWidth) / 2, 
                             (videoHeight - newHeight) / 2, 
@@ -162,7 +144,6 @@
                             newHeight
                         );
 
-                        // Afficher l'image redimensionnée
                         uploadedImage.src = tempCanvas.toDataURL('image/png');
                         uploadedImage.style.display = 'block';
                         video.style.display = 'none';
@@ -173,12 +154,10 @@
             }
         });
 
-        // Fonction pour mettre à jour l'état du bouton de capture
         function updateCaptureButtonState() {
             captureButton.disabled = SelectFilter === 0;
         }
 
-        // Modifier les gestionnaires d'événements des boutons de filtre
         for (let i = 1; i <= 10; i++) {
             document.getElementById('filterButton' + i).addEventListener('click', function() {
                 var img = new Image();
@@ -190,7 +169,6 @@
                     img.src = 'src/assets/filtre' + i + '.png';
                     SelectFilter = i;
                 } else {
-                    // Réinitialiser pour le bouton "Sans Filtre"
                     document.getElementById('filterImage').src = '';
                     document.getElementById('filterImage').style.display = 'none';
                     SelectFilter = 0;
@@ -200,13 +178,11 @@
         }
 
         document.getElementById('filterButton10').addEventListener('click', function() {
-            // Réinitialiser le filtre sélectionné
             SelectFilter = 0;
 
-            // Cacher l'image du filtre
             var filterImage = document.getElementById('filterImage');
-            filterImage.src = '';  // Réinitialiser la source
-            filterImage.style.display = 'none';  // Cacher l'élément
+            filterImage.src = '';  
+            filterImage.style.display = 'none';  
         });
 
 

@@ -30,8 +30,8 @@ body {
     height: auto;
     border: 1px solid #ddd;
     border-radius: 4px;
-    width: 80%; /* Augmente la taille de l'image */
-    margin: 0 auto; /* Centre l'image */
+    width: 80%; 
+    margin: 0 auto; 
 }
 
 .no-image {
@@ -47,7 +47,7 @@ body {
 }
 
 .description-form textarea {
-    width: 80%; /* Ajustez la largeur selon vos besoins */
+    width: 80%;
     height: 100px;
     padding: 10px;
     border: 1px solid #ccc;

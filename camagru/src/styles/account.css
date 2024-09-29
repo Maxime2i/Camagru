@@ -1,6 +1,5 @@
 body {
-    background: #f0f0f0; /* Modifié pour correspondre au design de la galerie */
-    
+    background: #f0f0f0;
 }
 
 main {
@@ -8,21 +7,21 @@ main {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    align-items: center; /* Ajouté pour centrer les éléments */
+    align-items: center;
 }
 
 h2 {
-    color: green; /* Modifié pour correspondre au design de la galerie */
+    color: green;
     text-align: center;
-    width: 100%; /* Assure que le titre prend toute la largeur */
-    margin-bottom: 15px; /* Ajoute un espace sous le titre */
+    width: 100%;
+    margin-bottom: 15px;
 }
 
 .divInfo {
-    background-color: #fff; /* Modifié pour correspondre au design de la galerie */
-    padding: 20px; /* Ajouté pour espacer le contenu */
-    border-radius: 10px; /* Ajouté pour des coins arrondis */
-    border: 2px solid #AAAAAA; /* Bordure plus épaisse pour la div montage */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #AAAAAA;
     width: 50%;
 }
 
@@ -39,24 +38,24 @@ h2 {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-top: 20px; /* Ajout d'une marge en haut */
+    margin-top: 20px;
 }
 
 .images{
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* Modifié pour centrer les images */
-    gap: 10px; /* Ajouté pour espacer les images */
+    justify-content: center;
+    gap: 10px;
 }
 
 .image{
-    flex: 0 0 30%; /* Modifié pour ajuster la taille des images */
-    padding: 5px; /* Modifié pour réduire l'espacement */
+    flex: 0 0 30%;
+    padding: 5px;
     width: 100%;
     height: auto;
     display: block;
-    border: 2px solid #AAAAAA; /* Bordure plus épaisse pour la div montage */
-    border-radius: 5px; /* Ajouté pour des coins arrondis */
+    border: 2px solid #AAAAAA;
+    border-radius: 5px;
     background-color: #fff;
 }
 
@@ -64,28 +63,28 @@ h2 {
     width: 100%;
     padding: 10px 0;
     font-size: 16px;
-    color: #000000; /* Modifié pour correspondre au design de la galerie */
+    color: #000000;
     margin-bottom: 30px;
     border: none;
-    border-bottom: 1px solid #555555; /* Modifié pour correspondre au design de la galerie */
+    border-bottom: 1px solid #555555;
     outline: none;
     background: transparent;
 }
 
 .formInfo button{
     height: 40px;
-    color: #fff; /* Modifié pour correspondre au design de la galerie */
-    background-color: #333333; /* Modifié pour correspondre au design de la galerie */
+    color: #fff;
+    background-color: #333333;
     width: 50%;
     margin: auto;
-    border: 1px solid #555555; /* Modifié pour correspondre au design de la galerie */
-    border-radius: 5px; /* Ajouté pour des coins arrondis */
-    cursor: pointer; /* Ajouté pour changer le curseur au survol */
-    transition: background-color 0.3s; /* Ajouté pour une transition douce */
+    border: 1px solid #555555;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .formInfo button:hover {
-    background-color: #444444; /* Modifié pour correspondre au design de la galerie */
+    background-color: #444444;
 }
 
 .error {
@@ -136,8 +135,6 @@ label input[type="checkbox"] {
     margin-right: 10px;
     width: 20px;
     margin-top: 10%;
-
-
 }
 
 .confirmContainer {

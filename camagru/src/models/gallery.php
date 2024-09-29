@@ -39,38 +39,31 @@ class GalleryModel {
 
     public static function addComment($imageId, $userId, $comment) {
         include "src/controllers/database.php";
-        // Vérifier si l'image existe
         $requete_check_image = $connexion->prepare("SELECT COUNT(*) AS total FROM gallery WHERE id = ?");
         $requete_check_image->execute([$imageId]);
         $result = $requete_check_image->fetch(PDO::FETCH_ASSOC);
     
         if ($result['total'] == 0) {
-            // L'image n'existe pas, retourner une erreur ou effectuer une autre action appropriée
             return false;
         }
     
-        // Insérer le commentaire dans la table des commentaires
         $requete_add_comment = $connexion->prepare("INSERT INTO comments (gallery_id, user_id, comment) VALUES (?, ?, ?)");
         $requete_add_comment->execute([$imageId, $userId, $comment]);
 
-        // Récupérer l'utilisateur propriétaire de l'image
         $requete_user = $connexion->prepare("SELECT user_id FROM gallery WHERE id = ?");
         $requete_user->execute([$imageId]);
         $image_owner = $requete_user->fetch(PDO::FETCH_ASSOC);
 
         if ($image_owner) {
-            // Récupérer l'email de l'utilisateur propriétaire
             $requete_email = $connexion->prepare("SELECT email FROM users WHERE id = ?");
             $requete_email->execute([$image_owner['user_id']]);
             $user_email = $requete_email->fetch(PDO::FETCH_ASSOC);
 
             if ($user_email) {
-                // Récupérer le nom de l'utilisateur qui a commenté
                 $requete_commenter = $connexion->prepare("SELECT username FROM users WHERE id = ?");
                 $requete_commenter->execute([$userId]);
                 $commenter = $requete_commenter->fetch(PDO::FETCH_ASSOC);
 
-                // Envoyer un email à l'utilisateur
                 $to = $user_email['email'];
                 $subject = "Nouveau commentaire sur votre photo";
                 $message = "Un nouveau commentaire a été ajouté à votre photo sur Camagru par " . $commenter['username'] . ". Le commentaire est : \"" . $comment . "\".";

@@ -22,20 +22,17 @@ class AccountModel {
         include "src/controllers/database.php";
         
         try {
-            // Préparez et exécutez la requête SQL pour mettre à jour les informations de l'utilisateur
             $query = "UPDATE users SET username = :username, email = :email, pass = :pass, mail_notification = :mail_notification WHERE id = :user_id";
             $statement = $connexion->prepare($query);
             $statement->execute(array(
                 'username' => $Username,
                 'email' => $email,
-                'user_id' => $_SESSION['user_id'], // Vous devez récupérer l'ID de l'utilisateur connecté à partir de la session
+                'user_id' => $_SESSION['user_id'], 
                 'mail_notification' => $mail_notification,
                 'pass' => $Password
             ));
             return true;
         } catch (PDOException $e) {
-            // Gérez les exceptions PDO ici
-            // Par exemple, journalisez l'erreur ou renvoyez false en cas d'échec
             return false;
         }
     }
@@ -45,20 +42,17 @@ class AccountModel {
         include "src/controllers/database.php";
         
         try {
-            // Préparez et exécutez la requête SQL pour mettre à jour les informations de l'utilisateur
             $query = "UPDATE users SET username = :username, email = :email, mail_notification = :mail_notification WHERE id = :user_id";
             $statement = $connexion->prepare($query);
             $statement->execute(array(
                 'username' => $Username,
                 'email' => $email,
-                'user_id' => $_SESSION['user_id'], // Vous devez récupérer l'ID de l'utilisateur connecté à partir de la session
+                'user_id' => $_SESSION['user_id'], 
                 'mail_notification' => $mail_notification,
 
             ));
             return true;
         } catch (PDOException $e) {
-            // Gérez les exceptions PDO ici
-            // Par exemple, journalisez l'erreur ou renvoyez false en cas d'échec
             return false;
         }
     }
@@ -94,11 +88,9 @@ class AccountModel {
         try {
             $connexion->beginTransaction();
 
-            // Supprimer d'abord les commentaires associés à l'image
             $deleteComments = $connexion->prepare("DELETE FROM comments WHERE gallery_id = :image_id");
             $deleteComments->execute(array("image_id" => $image_id));
 
-            // Récupérer le nom du fichier avant de le supprimer de la base de données
             $query = $connexion->prepare("SELECT img FROM gallery WHERE id = :image_id AND user_id = :user_id");
             $query->execute(array("image_id" => $image_id, "user_id" => $user_id));
             $result = $query->fetch(PDO::FETCH_ASSOC);
@@ -106,11 +98,9 @@ class AccountModel {
             if ($result) {
                 $image_path = $result['img'];
 
-                // Supprimer l'entrée de la base de données
                 $delete = $connexion->prepare("DELETE FROM gallery WHERE id = :image_id AND user_id = :user_id");
                 $delete->execute(array("image_id" => $image_id, "user_id" => $user_id));
 
-                // Supprimer le fichier du dossier uploads
                 $file_path = "src/uploads/" . $image_path;
                 if (file_exists($file_path)) {
                     unlink($file_path);

@@ -64,13 +64,11 @@ input[type="submit"]:hover {
     margin-top: 0.2rem;
 }
 
-/* Ajoutez ces styles pour améliorer l'apparence des messages d'erreur */
 #username-error, #password-error {
     text-align: left;
     margin-top: -0.5rem;
 }
 
-/* Ajoutez ces styles à la fin du fichier CSS existant */
 
 .login-btn {
     background: none;
@@ -103,10 +101,4 @@ input[type="submit"]:hover {
 a.button {
     text-decoration: none;
     text-align: center;
-}
-
-@media screen and (max-width: 480px) {
-    main {
-        width: 70%;
-    }
 }

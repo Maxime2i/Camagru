@@ -17,15 +17,15 @@ header {
 }
 
 .spacer {
-    flex-grow: 1; /* Fait en sorte que cet élément prenne autant d'espace que possible */
+    flex-grow: 1;
     margin: 2%;
 }
 
 .profile img {
-    width: 50px; /* Largeur de la photo de profil */
-    height: auto; /* Hauteur automatique pour conserver les proportions */
-    border-radius: 50%; /* Pour obtenir une forme de cercle */
-    border: 2px solid #fff; /* Bordure autour de la photo de profil */
+    width: 50px;
+    height: auto;
+    border-radius: 50%;
+    border: 2px solid #fff;
 }
 
 .nav {
@@ -50,7 +50,7 @@ a {
 }
 
 a:hover {
-    background-color: #555; /* Couleur de fond au survol */
+    background-color: #555;
 }
 
 .logo-link {
@@ -61,7 +61,6 @@ a:hover {
 }
 
 .logo-link:hover {
-    /* Fond transparent au survol */
     background-color: transparent;
 }
 
@@ -115,7 +114,6 @@ a:hover {
     }
 }
 
-/* Pour les écrans de petite taille (tels que les smartphones) */
 @media only screen and (max-width: 600px) {
     .logo img {
         width: 40px;
@@ -137,14 +135,12 @@ a:hover {
     }
 }
 
-/* Pour les écrans de taille moyenne à grande */
 @media only screen and (min-width: 601px) and (max-width: 768px){
 
 }
 
-/* Style pour le bouton de déconnexion */
 #logout {
-    background-color: #2ecc71; /* Vert vif */
+    background-color: #2ecc71;
     color: white;
     padding: 6px 12px;
     border: none;
@@ -155,6 +151,6 @@ a:hover {
 }
 
 #logout:hover {
-    background-color: #27ae60; /* Vert plus foncé au survol */
+    background-color: #27ae60;
     transform: scale(1.05);
 }
