@@ -35,3 +35,8 @@ RUN apt-get update && apt-get install -y \
         libpng-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd
+
+# Ajoutez ces lignes à la fin du Dockerfile
+RUN mkdir -p /var/www/camagru/src/uploads \
+    && chown -R www-data:www-data /var/www/camagru/src/uploads \
+    && chmod -R 775 /var/www/camagru/src/uploads
