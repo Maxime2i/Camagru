@@ -187,6 +187,9 @@ document.addEventListener("DOMContentLoaded", function() {
         form.addEventListener('submit', function(event) {
             event.preventDefault();
             
+            var submitButton = form.querySelector('.submitBtn');
+            submitButton.disabled = true; // Désactiver le bouton
+            
             var formData = new FormData(form);
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '?page=gallery&action=comment', true);
@@ -207,6 +210,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 } else {
                     console.error('Erreur lors de la requête:', xhr.status);
                 }
+                submitButton.disabled = false; // Réactiver le bouton
             };
             xhr.send(formData);
         });

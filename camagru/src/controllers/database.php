@@ -1,9 +1,9 @@
 <?php
 
 $servername = "mysql";
-$username = "user";
-$password = "password";
-$dbname = "camagru";
+$username = getenv('MYSQL_USER') ?: "user";
+$password = getenv('MYSQL_PASSWORD') ?: "password";
+$dbname = getenv('MYSQL_DATABASE') ?: "camagru";
 
 try {
     $connexion = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);

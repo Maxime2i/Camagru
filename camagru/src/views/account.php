@@ -55,6 +55,7 @@
 
                 var errorMessage = document.getElementById('errorMessage');
                 var successMessage = document.getElementById('successMessage');
+                var passwordInput = document.querySelector('input[name="password"]');
                 
                 var formData = new FormData(this);
                 
@@ -69,6 +70,9 @@
                                 successMessage.textContent = response.message;
                                 successMessage.style.display = 'block';
                                 successMessage.style.opacity = '1';
+                                
+                                // Effacer le champ du mot de passe
+                                passwordInput.value = '';
 
                                 setTimeout(function() {
                                     fadeOut(successMessage);

@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: docker/nginx/nginx.Dockerfile
     ports:
-      - 8098:80
+      - 8080:80
     volumes:
       - ./camagru:/var/www/camagru
     depends_on:
@@ -28,20 +28,19 @@ services:
   mysql:
       image: mysql:8
       environment:
-        # 🚨 Changer si vous utilisez cette configuration en production
-        MYSQL_ROOT_PASSWORD: root
-        MYSQL_DATABASE: camagru
-        MYSQL_USER: user
-        MYSQL_PASSWORD: password
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       volumes:
         - dbdat:/var/lib/mysql
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
       PMA_HOST: mysql
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
-      - "8081:80"
+      - 8081:80
 
 volumes:
   dbdat:
