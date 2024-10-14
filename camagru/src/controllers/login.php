@@ -64,7 +64,7 @@ class LoginController {
                 $subject = "Vérification de votre compte Camagru";
                 $message = "Bonjour " . $user['username'] . ",\n\n";
                 $message .= "Veuillez cliquer sur le lien suivant pour vérifier votre compte :\n";
-                $message .= "http://localhost:8098/index.php?page=account&action=confirmAccount&email=" . urlencode($user['email']) . "&token=" . $token;
+                $message .= "http://localhost:8080/index.php?page=account&action=confirmAccount&email=" . urlencode($user['email']) . "&token=" . $token;
 
                 mail($to, $subject, $message);
 
@@ -91,7 +91,7 @@ class LoginController {
             if ($user) {
                 $token = LoginModel::updateTokenByEmail($email);
                 
-                $lien_reinitialisation = "http://localhost:8098/index.php?page=resetPassword&id=" . $user['id'] . "&token=" . $token;
+                $lien_reinitialisation = "http://localhost:8080/index.php?page=resetPassword&id=" . $user['id'] . "&token=" . $token;
                 
                 $sujet = "Réinitialisation de votre mot de passe";
                 $message = "Bonjour,\n\nVous avez demandé à réinitialiser votre mot de passe. Veuillez cliquer sur le lien suivant pour procéder :\n\n" . $lien_reinitialisation . "\n\nSi vous n'avez pas demandé cette réinitialisation, veuillez ignorer ce message.\n\nCordialement,\nL'équipe de votre site";

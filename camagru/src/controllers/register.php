@@ -38,7 +38,7 @@ class RegisterController {
                 $to = $email;
                 $subject = "Confirmez votre inscription";
                 $message = "Cliquez sur ce lien pour confirmer votre compte : ";
-                $message .= "http://localhost:8098/index.php?page=account&action=confirmAccount&email=$email&token=$token";
+                $message .= "http://localhost:8080/index.php?page=account&action=confirmAccount&email=$email&token=$token";
                 $headers = 'From: maxime.lngls21@gmail.com' . "\r\n" .
     'Reply-To: maxime.lngls21@gmail.com' . "\r\n" .
     'X-Mailer: PHP/' . phpversion();
