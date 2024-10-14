@@ -7,7 +7,6 @@ const DBNAME = getenv('MYSQL_DATABASE') ?: 'camagru';
 const DBPORT = '3306';
 
 $dsn = 'mysql:host=' . DBHOST . ';port=' . DBPORT . ';dbname=' . DBNAME;
-echo $dsn;
 
 try {
     $pdo = new PDO($dsn, DBUSER, DBPASS);

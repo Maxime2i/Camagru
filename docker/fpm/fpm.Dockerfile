@@ -9,6 +9,9 @@ RUN apt-get update && apt-get install -y msmtp
 
 ARG GMAIL_USER
 ARG GMAIL_PASSWORD
+ARG MYSQL_USER
+ARG MYSQL_PASSWORD
+ARG MYSQL_DATABASE
 
 # Créer le fichier de configuration /etc/msmtprc
 RUN echo "defaults\n\

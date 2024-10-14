@@ -20,9 +20,15 @@ services:
       args:
         GMAIL_USER: ${GMAIL_USER}
         GMAIL_PASSWORD: ${GMAIL_PASSWORD}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
     environment:
       GMAIL_USER: ${GMAIL_USER}
       GMAIL_PASSWORD: ${GMAIL_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     volumes:
       - ./camagru:/var/www/camagru
   mysql:
