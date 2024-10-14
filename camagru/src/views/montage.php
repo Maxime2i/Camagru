@@ -19,7 +19,7 @@
                     <img id="filterImage" class="filterImage">
                 </div>
                 <button id="captureButton" class="captureButton">Capture Photo</button>
-                <label class="uploadImage">
+                <label class="uploadImage">Choisir une image
                     <input type="file" id="uploadImage" class="uploadImage" accept="image/*">
                 </label>
                 <canvas id="canvas" style="display: none;"></canvas>

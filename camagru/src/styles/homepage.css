@@ -35,7 +35,7 @@ main {
 
 .cta-button, .start-button {
     display: inline-block;
-    background-color: #007bff;
+    background-color: #27ae60;
     color: white;
     padding: 0.5rem 1rem;
     text-decoration: none;
@@ -44,7 +44,7 @@ main {
 }
 
 .cta-button:hover, .start-button:hover {
-    background-color: #0056b3;
+    background-color: #2dc86d;
 }
 
 .create-section, .recent-photos {
@@ -93,8 +93,12 @@ main {
     display: block;
     text-align: center;
     margin-top: 1rem;
-    color: #007bff;
+    color: #27ae60;
     text-decoration: none;
+}
+
+.view-more:hover {
+    background-color: #fff;
 }
 
 footer {

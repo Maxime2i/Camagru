@@ -465,7 +465,6 @@ main{
 }
 
 .uploadImage::before {
-    content: 'Choisir une image';
     position: absolute;
     left: 0;
     right: 0;
