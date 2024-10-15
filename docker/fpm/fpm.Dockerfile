@@ -36,8 +36,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd
 
-# Ajoutez cette ligne pour exécuter un script au démarrage du conteneur
-COPY docker-entrypoint.sh /usr/local/bin/
+# Assurez-vous que le chemin est correct
+COPY ./docker/fpm/docker-entrypoint.sh /usr/local/bin/
+
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["php-fpm"]

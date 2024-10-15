@@ -59,7 +59,11 @@ class GalleryModel {
             $requete_email->execute([$image_owner['user_id']]);
             $user_email = $requete_email->fetch(PDO::FETCH_ASSOC);
 
-            if ($user_email) {
+            $requete_notification = $connexion->prepare("SELECT mail_notification FROM users WHERE id = ?");
+            $requete_notification->execute([$image_owner['user_id']]);
+            $mail_notification = $requete_notification->fetch(PDO::FETCH_ASSOC);     
+
+            if ($user_email && $mail_notification['mail_notification'] == 1) {
                 $requete_commenter = $connexion->prepare("SELECT username FROM users WHERE id = ?");
                 $requete_commenter->execute([$userId]);
                 $commenter = $requete_commenter->fetch(PDO::FETCH_ASSOC);
